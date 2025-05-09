@@ -2,15 +2,17 @@
 local event_started = false
 
 local function update_flag(client)
-  local sewers_flag = tonumber(eq.get_data(client:CharacterID() .. "-god_sewers")) or 0
-  local snpool_key = string.format("%s-god_snpool", client:CharacterID())
+  local sewers_flag = tonumber(client:GetAccountBucket("god.flags.sewers")) or 0
+  local plant_flag = tonumber(client:GetAccountBucket("god.flags.plant")) or 0
+  local crem_flag = tonumber(client:GetAccountBucket("god.flags.crematory")) or 0
+  local lair_flag = tonumber(client:GetAccountBucket("god.flags.lair")) or 0
 
-  if sewers_flag < 4 then
-    eq.set_data(snpool_key, "T")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
-  else
-    eq.set_data(snpool_key, "1")
+  if sewers_flag == 1 and plant_flag == 3 and crem_flag == 3 and lair_flag == 3 then
+    client:SetAccountBucket("god.flags.pool", "2") 
     client:Message(MT.Yellow, "You have gained a character flag!  The passage through the mountains is now clear in your mind.")
+  else
+    client:SetAccountBucket("god.flags.pool", "1")
+    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
   end
 end
 
@@ -23,9 +25,12 @@ function event_spawn(e)
 end
 
 function event_say(e)
-  local sewers_flag = tonumber(eq.get_data(e.other:CharacterID() .. "-god_sewers")) or 0
-  local snpool_complete = (eq.get_data(e.other:CharacterID() .. "-god_snpool") == "1")
-  local on_progression = (sewers_flag == 4 and not snpool_complete)
+  local sewers_flag = tonumber(e.other:GetAccountBucket('god.flags.sewers')) or 0
+  local plant_flag = tonumber(e.other:GetAccountBucket('god.flags.plant')) or 0
+  local crem_flag = tonumber(e.other:GetAccountBucket('god.flags.crematory')) or 0
+  local lair_flag = tonumber(e.other:GetAccountBucket('god.flags.lair')) or 0
+  local pool_flag = tonumber(e.other:GetAccountBucket('god.flags.pool')) or 0
+  local on_progression = (sewers_flag == 1 and plant_flag == 3 and crem_flag == 3 and lair_flag == 3 and pool_flag == 0)
 
   if on_progression and (e.message:findi("hail") or e.message:find("hello")) then
     e.other:Message(MT.NPCQuestSay, "Utandi tells you, 'Wh, who are you?'  Utandi's voice quivers with fear.  'I have nothing of value if you are planning to rob me.  What's that?  You will not harm me?  You seek treasures elsewhere?  You think like I do.  I myself am in search of treasures.  There is only one [" .. eq.say_link("problem") .. "] though.'")

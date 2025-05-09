@@ -15,14 +15,13 @@ local function spawn_stonemites()
 end
 
 local function update_flag(client)
-  local sewers_flag = tonumber(eq.get_data(client:CharacterID() .. "-god_sewers")) or 0
-  local snplant_key = string.format("%s-god_snplant", client:CharacterID())
+  local sewers_flag = tonumber(client:GetAccountBucket("god.flags.sewers")) or 0
 
   if sewers_flag == 0 then -- never received preflag by hailing high priest
-    eq.set_data(snplant_key, "T")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Andaru is happy that you have helped your friends slay the Ancient Kayserops.  Perhaps you should find the High Priest in Barindu and ask him how else you can help the Taelosians.")
+    client:SetAccountBucket("god.flags.plant", "1")
+    client:message(MT.Yellow, "You have gained a temporary character flag!  Andaru is happy that you have helped your friends slay the Ancient Kayserops.  Perhaps you should find the High Priest in Barindu for more information.")
   else
-    eq.set_data(snplant_key, "1")
+    client:SetAccountBucket("god.flags.plant", "2")
     client:Message(MT.Yellow, "You have gained a character flag!  The destruction of the Ancient Kayserops should earn the trust of High Priest Diru.")
   end
 end
@@ -63,19 +62,19 @@ function ansharu_spawn(e)
 end
 
 function ansharu_say(e)
-  local sewers_flag = tonumber(eq.get_data(e.other:CharacterID() .. "-god_sewers")) or 0
-  local snplant_complete = (eq.get_data(string.format("%s-god_snplant", e.other:CharacterID())) == "1")
+  local sewers_flag = tonumber(e.other:GetAccountBucket("god.flags.sewers")) or 0
+  local plant_flag = tonumber(e.other:GetAccountBucket("god.flags.plant")) or 0
 
   if e.message:findi("hail") then
     if sewers_flag == 0 then
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'Please, keep your voice down.  I am here against the wishes of the invaders.  I must study the entomology of the stonemites that infest this area of the sewers.  So now, you must leave from my sight before you draw attention to me.'")
-    elseif sewers_flag == 1 and not snplant_complete then
+    elseif sewers_flag == 1 and plant_flag == 0 then
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'Diru sent you yes?  I am so happy you have come to help us.  I have determined that the source of the problem lies in the alpha leader of these stonemites.  It is a large and ancient stonemite that I have named the Kayserops.  I noticed that when together with it they are able to move about more effectively, as if it is able to communicate with them where to go.  Without this alpha leader, I think they would lose this ability and may have a harder time finding their way in to the city.  Find the aged stonemites. I have seen the Kayserops protecting these elders.  Defeating them may draw its attention.'")
       if event == state.None then
         spawn_stonemites()
         event = state.Spawned
       end
-    elseif sewers_flag == 1 then -- haven't hailed high priest after completing
+    elseif sewers_flag == 1 and (plant_flag == 1 or plant_flag == 2) then -- haven't hailed high priest after completing
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'I heard the squeal of the massive Kayserops even here.  Excellent work!  I hope that another leader does not rise to take its place any time soon.  You must go back and tell Diru of what has happened here!'")
     else
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'I heard from Diru that you have begun to help us in with our problems.  I cannot thank you enough for this.  Long have we been plagued with these invaders, and anything that you do to help gives us hope that one day we can live free.  Thank you again and safe journey to you.'")

@@ -3,15 +3,16 @@ local turned_in_seal = false
 local tool_count = 0
 
 local function update_flag(client)
-  local sewers_flag = tonumber(eq.get_data(client:CharacterID() .. "-god_sewers")) or 0
-  local snlair_key = string.format("%s-god_snlair", client:CharacterID())
+  local sewers_flag = tonumber(client:GetAccountBucket("god.flags.sewers")) or 0
+  local plant_flag = tonumber(client:GetAccountBucket("god.flags.plant")) or 0
+  local crem_flag = tonumber(client:GetAccountBucket("god.flags.crematory")) or 0
 
-  if sewers_flag < 3 then
-    eq.set_data(snlair_key, "T")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
-  else
-    eq.set_data(snlair_key, "1")
+  if sewers_flag == 1 and plant_flag == 3 and crem_flag == 3 then
+    client:SetAccountBucket("god.flags.lair", "2")
     client:Message(MT.Yellow, "You have gained a character flag!  All of High Priest Diru's tasks have been completed.  He will now tell you who to talk to for passage through the mountains.")
+  else
+    client:SetAccountBucket("god.flags.lair", "1")
+    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest to find out more information.")
   end
 end
 

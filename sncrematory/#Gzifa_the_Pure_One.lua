@@ -1,15 +1,14 @@
 -- items: 55608, 55609, 55610, 55611
 local function update_flag(client)
-  local sewers_flag = tonumber(eq.get_data(client:CharacterID() .. "-god_sewers")) or 0
-  local sncrematory_key = string.format("%s-god_sncrematory", client:CharacterID())
-
-  if sewers_flag < 2 then
-    eq.set_data(sncrematory_key, "T")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
-  else
-    eq.set_data(sncrematory_key, "1")
-    client:Message(MT.Yellow, "You have gained a character flag!  Freedom for the souls that were trapped should earn the respect of High Priest Diru.")
-  end
+    local sewers_bucket = tonumber(client:GetAccountBucket("god.flags.sewers")) or 0
+    local plant_bucket = tonumber(client:GetAccountBucket("god.flags.plant")) or 0
+    if sewers_bucket == 1 and plant_bucket == 3 then
+        client:SetAccountBucket("god.flags.crematory", "2")
+        client:Message(MT.Yellow, "You have gained a character flag!  Freedom for the souls that were trapped should earn the respect of High Priest Diru.")
+    else
+	client:SetAccountBucket("god.flags.crematory", "1")
+	client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest to find out more information.")
+    end
 end
 
 function event_spawn(e)

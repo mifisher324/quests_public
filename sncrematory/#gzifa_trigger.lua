@@ -22,9 +22,11 @@ function event_enter(e)
   -- spawns but anyone can have the skulls. live seems to just poll the area.
   -- skulls cannot be spread between characters, one character must have them all
   if not event_started then
-    local sewers_flag = tonumber(eq.get_data(e.other:CharacterID() .. "-god_sewers")) or 0
+    local sewers_flag = tonumber(e.other:GetAccountBucket('god.flags.sewers')) or 0
+    local plant_flag = tonumber(e.other:GetAccountBucket('god.flags.plant')) or 0
+    eq.debug(string.format("sewers_flag: %s, plant_flag: %s", sewers_flag, plant_flag))
 
-    if sewers_flag == 2 then
+    if sewers_flag == 1 and plant_flag == 3 then
       chars_with_flag_inside[e.other:CharacterID()] = true
     end
 
