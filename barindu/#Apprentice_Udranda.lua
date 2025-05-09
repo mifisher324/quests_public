@@ -39,8 +39,8 @@ function event_say(e)
   local vxed_flag = tonumber(e.other:GetAccountBucket('god.flags.vxed')) or 0
   local tipt_flag = tonumber(e.other:GetAccountBucket('god.flags.tipt')) or 0
   local pool_flag = tonumber(e.other:GetAccountBucket('god.flags.pool')) or 0
-  local has_vxed_access = (vxed_flag == 1) -- sewers or rondo complete
-  local has_tipt_access = (tipt_flag == 1) -- has_permanent_vxed
+  local has_vxed_access = (vxed_flag == 2) -- sewers or rondo complete
+  local has_tipt_access = (tipt_flag == 2) -- has_permanent_vxed
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
 

@@ -4,18 +4,8 @@ local function convert_temp_flag(client, flag_name, flag_msg)
   -- "temporary" messages when repeating expeditions even after made permanent.
   -- Just a quirk in their priority flag checks (they probably use a separate flag)
   client:Message(MT.NPCQuestSay, string.format("Gurru tells you, 'I see that you have helped your friends accomplish things in %s.  I will tell the High Priest of your deeds.  You should seek an audience with him and see if there is anything else that you can help us with.'", flag_msg))
-  eq.set_data(string.format("%s-%s", client:CharacterID(), flag_name), "1")
+  client:SetAccountBucket(flag_name, "2")
   client:Message(MT.Yellow, "Your temporary character flag has been converted into a permanent flag!")
-  eq.debug(string.format("Converted character [%s] temporary flag [%s] to permanent", client:GetName(), flag_name))
-end
-
-local function update_sewers_flag(char_id, minimum_flag)
-  local sewer_flag_key = string.format("%s-god_sewers", char_id)
-  local sewers_flag = tonumber(eq.get_data(sewer_flag_key)) or 0
-
-  if sewers_flag < minimum_flag then
-    eq.set_data(sewer_flag_key, tostring(minimum_flag))
-  end
 end
 
 function event_say(e)
@@ -24,40 +14,33 @@ function event_say(e)
   elseif e.message:findi("issues") then
     -- converts temporary flags into permanent flags if at right point in progression
     -- temporary flags are from completing expeditions with others outside progression
-    local qglobals = eq.get_qglobals(e.other)
-    local has_vxed_access = (qglobals.god_vxed_access and qglobals.god_vxed_access == "1") -- sewers or rondo complete
-    local has_tipt_access = (qglobals.god_tipt_access and qglobals.god_tipt_access == "1") -- has_permanent_vxed
+    local tipt_flag = tonumber(e.other:GetAccountBucket('god.flags.tipt')) or 0
+    local vxed_flag = tonumber(e.other:GetAccountBucket('god.flags.vxed')) or 0
+    local has_vxed_access = (vxed_flag == 2)
+    local has_tipt_access = (tipt_flag == 2)
 
-    local char_id = e.other:CharacterID()
-
-    local snplant     = eq.get_data(("%s-god_snplant"):format(char_id))
-    local sncrematory = eq.get_data(("%s-god_sncrematory"):format(char_id))
-    local snlair      = eq.get_data(("%s-god_snlair"):format(char_id))
-    local snpool      = eq.get_data(("%s-god_snpool"):format(char_id))
-    local vxed        = eq.get_data(("%s-god_vxed"):format(char_id))
-    local tipt        = eq.get_data(("%s-god_tipt"):format(char_id))
+    local sewers_flag = tonumber(e.other:GetAccountBucket('god.flags.sewers')) or 0
+    local plant_flag = tonumber(e.other:GetAccountBucket('god.flags.plant')) or 0
+    local lair_flag = tonumber(e.other:GetAccountBucket('god.flags.lair')) or 0
+    local crem_flag = tonumber(e.other:GetAccountBucket('god.flags.crematory')) or 0
+    local kt_flag = tonumber(e.other:GetAccountBucket('god.flag.kt')) or 0
 
     -- permanent flag for previous sewer indicates character is on that step
-    -- update main sewers flag for accurate dialogue (high priest hails not required)
 
-    if snplant == "T" then
-      convert_temp_flag(e.other, "god_snplant", "the Purifying Plant")
-      update_sewers_flag(char_id, 1)
-    elseif sncrematory == "T" and snplant == "1" then
-      convert_temp_flag(e.other, "god_sncrematory", "the Crematory")
-      update_sewers_flag(char_id, 2)
-    elseif snlair == "T" and sncrematory == "1" then
-      convert_temp_flag(e.other, "god_snlair", "the Lair of Trapped Ones")
-      update_sewers_flag(char_id, 3)
-    elseif snpool == "T" and snlair == "1" then
-      convert_temp_flag(e.other, "god_snpool", "the Pool of Sludge")
-      update_sewers_flag(char_id, 4)
-    elseif vxed == "T" and (snpool == "1" or has_vxed_access) then -- finished sewers or has rondo skip
-      convert_temp_flag(e.other, "god_vxed", "Vxed")
-      eq.set_global("god_tipt_access", "1", 5, "F")
-    elseif tipt == "T" and has_tipt_access then -- must have completed permanent vxed
-      convert_temp_flag(e.other, "god_tipt", "Tipt")
-      eq.set_global("god_kodtaz_access", "1", 5, "F")
+    if sewers_flag == 1 and plant_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.plant", "the Purifying Plant")
+    elseif sewers_flag == 1 and plant_flag >= 2 and crem_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.crematory", "the Crematory")
+    elseif sewers_flag == 1 and plant_flag >= 2 and crem_flag >= 2 and lair_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.lair", "the Lair of Trapped Ones")
+    elseif sewers_flag == 1 and plant_flag >= 2 and crem_flag >= 2 and lair_flag >= 2 and pool_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.pool", "the Pool of Sludge")
+    elseif sewers_flag == 1 and plant_flag >= 2 and crem_flag >= 2 and lair_flag >= 2 and pool_flag >= 2 and vxed_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.vxed", "Vxed")
+    elseif has_vxed_flag and tipt_flag == 1 then
+      convert_temp_flag(e.other, "god.flags.tipt", "Tipt")
+    elseif has_tipt_flag and kt_flag == 1 then
+      e.other:SetAccountBucket("god.flags.kt", "1")
     else
       e.other:Message(MT.NPCQuestSay, "Gurru tells you, 'I see that you have completed some deeds for our people and we appreciate it.  Before I can tell the High Priest of your work though, you will need to talk to him and finish some other tasks.'")
     end

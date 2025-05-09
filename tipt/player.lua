@@ -17,9 +17,9 @@ function event_click_door(e)
   elseif door_id == 5 then -- obelisk zone out behind Master Stonespiritist Okkanu
     -- if a player hasn't hailed Master Spiritist to get either temp or
     -- permanent Tipt flag then the port out stone doesn't work for them
-    local qglobals = eq.get_qglobals(e.self) -- god_kodtaz_access currently represents permanent flag
-    local has_perm_flag = (qglobals.god_kodtaz_access and qglobals.god_kodtaz_access == "1")
-    local has_temp_flag = (eq.get_data(string.format("%s-god_tipt", e.self:CharacterID())) == "T")
+    local kt_flag = tonumber(e.self:GetDataBuckets('god.flags.kt')) or 0
+    local has_perm_flag = (kt_flag == 2)
+    local has_temp_flag = (kt_flag == 1)
 
     if not has_temp_flag and not has_perm_flag then
       e.self:Message(MT.Yellow, "Master Stonespiritist Okkanu glares at you as you touch the strangely runed obelisk.")

@@ -31,11 +31,11 @@ function event_click_door(e)
 		-- if player hasn't hailed Stonespiritist Ekikoa to get either temp or
 		-- permanent Vxed flag then the port out stone doesn't work for them.
 		-- Unknown what happens if at flagged cap (if live even has one anymore)
-		local qglobals = eq.get_qglobals(e.self) -- god_kodtaz_access currently represents permanent flag
-		local has_perm_flag = (qglobals.god_tipt_access and qglobals.god_tipt_access == "1")
-		local has_temp_flag = (eq.get_data(string.format("%s-god_vxed", e.self:CharacterID())) == "T")
+		local tipt_flag = tonumber(e.self:GetAccountBucket("god.flags.vxed")) or 0
+		local has_perm_flag = (tipt_flag == 2)
+		local has_temp_flag = (tipt_flag == 1)
 
-		if not has_temp_flag and not has_perm_flag then
+		if not has_perm_flag and not has_temp_flag then
 		  e.self:Message(MT.Yellow, "You become dizzy as you inspect the stone slab.")
 		  return 1 -- prevent zone out
 		end

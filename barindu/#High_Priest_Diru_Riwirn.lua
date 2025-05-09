@@ -105,7 +105,7 @@ function event_say(e)
 	local vxed_flag = tonumber(e.other:GetAccountBucket("god.flags.vxed")) or 0
 	if vxed_flag < 1 then
 	  e.other:Message(MT.LightBlue, "You have gained a character flag!")
-          e.other:SetAccountBucket("god.flags.vxed", "1")
+          e.other:SetAccountBucket("god.flags.vxed", "2")
 	end
       else
         e.other:Message(MT.NPCQuestSay, "High Priest Diru looks at you, puzzled.  'I'm sorry, I don't understand what you have and have not done for me lately.")
