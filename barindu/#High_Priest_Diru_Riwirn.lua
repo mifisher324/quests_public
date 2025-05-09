@@ -100,19 +100,16 @@ function event_say(e)
       elseif plant_flag == 3 and crem_flag == 3 and lair_flag == 3 and pool_flag == 0 then
         e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'Utandi, the map maker, should be in the sewers.  I must apologize for him in advance.  He is wonderful with his maps, but very timid.  Good luck and I hope that we can stand together, defiant against the invaders.'")
         create_sewer_expedition(e.other, sewers.snpool)
-      elseif plant_flag == 3 and crem_flag == 3 and lair_flag == 3 and pool_flag >= 2 then
+      elseif plant_flag == 3 and crem_flag == 3 and lair_flag == 3 and pool_flag == 2 then
         e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'You have done excellent work helping our tribe.  You and your kind are powerful and have done more for us than we expected, so I will reward you with the information you've been wanting.  In order to pass through the mountains, you must work with those who have the most sacred knowledge of our lands -- the master stonespiritists.  You will find an apprentice in Barindu, named Udranda.  She will grant you access to the mountain pass and then tell you what you must do.  Also, if you ever need to go back into the sewers for any reason, you can ask Gamesh to show you the way through.  Good luck to you, and to us all.'")
-	local vxed_flag = tonumber(e.other:GetAccountBucket("god.flags.vxed")) or 0
-	if vxed_flag < 1 then
-	  e.other:Message(MT.LightBlue, "You have gained a character flag!")
-          e.other:SetAccountBucket("god.flags.vxed", "2")
-	end
+	e.other:Message(MT.LightBlue, "You have gained a character flag!")
+        e.other:SetAccountBucket("god.flags.plant", "3")
       else
         e.other:Message(MT.NPCQuestSay, "High Priest Diru looks at you, puzzled.  'I'm sorry, I don't understand what you have and have not done for me lately.")
 	eq.debug('Flags are in an impossible state.')
-end
       end
-   end
+    end
+  end
 end
 
 function event_trade(e)

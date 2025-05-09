@@ -3,7 +3,7 @@ function event_click_door(e)
     kt_flag = tonumber(e.self:GetAccountBucket('god.flags.kt')) or 0
     vxed_flag = tonumber(e.self:GetAccountBucket('god.flags.vxed')) or 0
     tipt_flag = tonumber(e.self:GetAccountBucket('god.flags.tipt')) or 0
-    has_kt_access = (kt_flag >= 2)
+    has_kt_access = (kt_flag >= 1)
     has_vxed_access = (vxed_flag == 2)
     has_tipt_access = (tipt_flag == 2)
 

@@ -31,9 +31,9 @@ function event_click_door(e)
 		-- if player hasn't hailed Stonespiritist Ekikoa to get either temp or
 		-- permanent Vxed flag then the port out stone doesn't work for them.
 		-- Unknown what happens if at flagged cap (if live even has one anymore)
-		local tipt_flag = tonumber(e.self:GetAccountBucket("god.flags.vxed")) or 0
-		local has_perm_flag = (tipt_flag == 2)
-		local has_temp_flag = (tipt_flag == 1)
+		local vxed_flag = tonumber(e.self:GetAccountBucket("god.flags.vxed")) or 0
+		local has_perm_flag = (vxed_flag == 2)
+		local has_temp_flag = (vxed_flag == 1)
 
 		if not has_perm_flag and not has_temp_flag then
 		  e.self:Message(MT.Yellow, "You become dizzy as you inspect the stone slab.")

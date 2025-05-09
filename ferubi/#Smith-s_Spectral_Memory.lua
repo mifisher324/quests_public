@@ -10,7 +10,7 @@ local qglobals = eq.get_qglobals(e.other);
 			e.other:SummonItem(67526); -- Item: Rondo's Report
 			eq.set_global("bic_fer", "11", 5, "F");
 		end
-		e.other:SetAccountBucket("god.flags.vxed", "2");
+		e.other:SetAccountBucket("god.flags.ferubi", "1");
 		e.other:Message(MT.LightBlue, "You receive a character flag!");
 	end
 end

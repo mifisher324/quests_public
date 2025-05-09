@@ -39,8 +39,12 @@ function event_say(e)
       convert_temp_flag(e.other, "god.flags.vxed", "Vxed")
     elseif has_vxed_flag and tipt_flag == 1 then
       convert_temp_flag(e.other, "god.flags.tipt", "Tipt")
-    elseif has_tipt_flag and kt_flag == 1 then
+    elseif has_tipt_flag and has_vxed_flag and kt_flag == 0 then
+      e.other:Message(MT.NPCQuestSay, "Scribe Guru says, 'I see you have helped Apprentice Udranda with navigating the mountains.  I will tell the High Priest of your deeds.  Be careful in the mountains, there is a reason we exiled the Trusik there...'")
+      e.other:Message(MT.LightBlue, "You have gained a character flag!")
       e.other:SetAccountBucket("god.flags.kt", "1")
+    elseif kt_flag > 0 then
+      e.other:Message(MT.NPCQuestSay, "Scribe Guru says, 'You have been a great help to the inhabitants of Barindu.  You should venture into the mountains and seek the temples there.  Please drive out these invaders from our land!")
     else
       e.other:Message(MT.NPCQuestSay, "Gurru tells you, 'I see that you have completed some deeds for our people and we appreciate it.  Before I can tell the High Priest of your work though, you will need to talk to him and finish some other tasks.'")
     end

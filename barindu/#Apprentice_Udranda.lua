@@ -37,10 +37,10 @@ end
 
 function event_say(e)
   local vxed_flag = tonumber(e.other:GetAccountBucket('god.flags.vxed')) or 0
-  local tipt_flag = tonumber(e.other:GetAccountBucket('god.flags.tipt')) or 0
   local pool_flag = tonumber(e.other:GetAccountBucket('god.flags.pool')) or 0
-  local has_vxed_access = (vxed_flag == 2) -- sewers or rondo complete
-  local has_tipt_access = (tipt_flag == 2) -- has_permanent_vxed
+  local ferubi_flag = tonumber(e.other:GetAccountBucket('god.flags.ferubi')) or 0
+  local has_vxed_access = (pool_flag == 3 or ferubi_flag == 1) -- sewers or rondo complete
+  local has_tipt_access = (vxed_flag == 2) -- has_permanent_vxed
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
 
@@ -49,7 +49,7 @@ function event_say(e)
     if e.other:HasClass(Class.PALADIN) and e.other:HasItem(69933) then -- Item: Seal of Enic
       e.other:Message(MT.NPCQuestSay, string.format("I heard you released Reiya from his tourture, %s. I have seen muramites gathering in Vxed and I fear this may have to do with Reiya and the creatures responsible. Go there now and investigate, Noble Knight.", e.other:GetCleanName()))
       create_expedition(e.other, paladin_epic)
-    elseif pool_flag == 2  then -- sewers progression dialogue
+    elseif pool_flag == 3  then -- sewers progression dialogue
       -- note: live dialogue is always here if finished sewers, checking tipt access flag here avoids this live "bug"
       e.other:Message(MT.NPCQuestSay, "Udranda looks around sheepishly.  'Greetings.  A messenger told me you would come.  I believe we owe you our thanks -- though I'm not sure allowing you to face the terror in the mountains is a reward.  I will have my stone worker allow you to pass through, but you must [" .. eq.say_link("take heed") .. "] first and be as quiet as you can.'")
     else
