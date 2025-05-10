@@ -9,7 +9,6 @@ function event_click_door(e)
 
     if has_kt_access and has_vxed_access and has_tipt_access then
       if not e.self:HasZoneFlag(293) then
-	eq.debug('Updating zone flag')
         e.self:SetZoneFlag(293)
       end
     end
