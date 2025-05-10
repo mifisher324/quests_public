@@ -16,11 +16,10 @@ function event_say(e)
   local qglobals = eq.get_qglobals(e.other);
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local has_kevren_flag = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1))
-  local finished_first_trial = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2))
-  local finished_second_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 3)
-
-  local preflag_key = string.format("%s-ikkinz_group2_maroley", e.other:CharacterID())
+  local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
+  local has_kevren_flag = (is_gm or kt_flag >= 2)
+  local finished_first_trial = (is_gm or kt_flag >= 4)
+  local finished_second_trial = (kt_flag >= 7)
 
   if e.message:findi("hail") then
     if not has_kevren_flag then
@@ -63,14 +62,17 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Maroley Nazuey says, 'I'm afraid I can't allow you to attempt to recover any artifacts for me until you're finished the first trial. You need to find Gazak Klelkek first. Maybe after you've completed the first trial we can talk about artifacts.'")
     else
       e.other:Message(MT.NPCQuestSay, ("Maroley Nazuey says, 'This is your moment, %s. Now is the time to prove your worth to the brotherhood. I bid you good luck and hope that the strength you showed in the first trial will aid you again in your second one. When you are [" .. eq.say_link("ready to enter the temple") .. "] and have a group with you, return to me and I shall set you on your way.'"):format(e.other:GetCleanName()))
-      eq.set_data(preflag_key, "1")
+      if kt_flag == 5 then
+        e.other:SetAccountBucket("god.flags.kt", "6")
+	kt_flag = 6
+      end
     end
   elseif e.message:findi("ready(.*)enter(.*)temple") then
     if not has_kevren_flag then
       e.other:Message(MT.NPCQuestSay, "Maroley Nazuey says, 'No, I don't believe you are ready to enter this temple. You haven't even begun your preparations to start the first trial, let alone enter this temple. You must find Kevren Nalavat to the north and speak to him about the trials first.'")
     elseif not finished_first_trial then
       e.other:Message(MT.NPCQuestSay, "Maroley Nazuey says, 'I imagine you may think you're ready to enter this temple, but I can assure you that you are not. You must complete the first trial before you will be allowed entrance to this temple. Seek out Gazak Klelkek at the Temple of Singular Might for more information on the first trial.'")
-    elseif not is_gm and eq.get_data(preflag_key) == "" then
+    elseif not is_gm and kt_flag == 5 then
       e.other:Message(MT.NPCQuestSay, "Maroley Nazuey says, 'What's that you say? You're ready to enter this temple? I don't remember speaking to you about [" .. eq.say_link("what's in store") .. "] for you here.'")
     elseif not is_gm and e.other:DoesAnyPartyMemberHaveLockout(expedition_name, "Replay Timer", 6) then
       e.other:Message(MT.NPCQuestSay, "Maroley Nazuey says, 'I'm afraid I cannot allow you to begin, someone in your party has been on this expedition too recently and cannot yet go again.'")
@@ -87,9 +89,10 @@ end
 function event_trade(e)
   -- load the current qglobals
   local qglobals = eq.get_qglobals(e.other);
-  local has_kevren_flag = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1)
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
-  local finished_second_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 3)
+  local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
+  local has_kevren_flag = (is_gm or kt_flag >= 2)
+  local finished_first_trial = (is_gm or kt_flag >= 4)
+  local finished_second_trial = (kt_flag >= 7)
 
   local item_lib = require("items")
 
@@ -103,7 +106,7 @@ function event_trade(e)
     else
       e.other:Message(MT.NPCQuestSay, string.format("Maroley Nazuey says, 'You've done well, %s. I believed this temple was more than you could handle despite your success with the first temple. You faced two enemies at once and came back in one piece. You only have one trial left to complete before you can proceed onto more difficult tasks. Please return to Kevren for information on the final trial. Good luck!'", e.other:GetCleanName()))
       if not finished_second_trial then
-        eq.set_global("ikky", "3", 5, "F")
+	e.other:SetAccountBucket("god.flags.kt", "7")
         e.other:AddEXP(1)
       end
     end

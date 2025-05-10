@@ -18,7 +18,7 @@ local function update_flags(client)
     flagged_count = flagged_count + 1
   else
     client:Message(MT.NPCQuestSay, "Ekikoa tells you, 'I'm afraid I can do nothing to aid you.  You have not proven yourself to be a faithful friend of my people.  You must complete High Priest Diru's tasks before I can be permitted to grant you access to our sacred magic.'")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
+    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest's Scribe to find out more information.")
     client:SetAccountBucket('god.flags.vxed', '1')
     flagged_count = flagged_count + 1
   end

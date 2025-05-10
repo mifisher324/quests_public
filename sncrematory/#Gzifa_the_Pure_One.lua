@@ -7,7 +7,7 @@ local function update_flag(client)
         client:Message(MT.Yellow, "You have gained a character flag!  Freedom for the souls that were trapped should earn the respect of High Priest Diru.")
     else
 	client:SetAccountBucket("god.flags.crematory", "1")
-	client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest to find out more information.")
+	client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest's scribe to find out more information.")
     end
 end
 

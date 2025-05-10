@@ -30,10 +30,9 @@ function event_say(e)
   local qglobals = eq.get_qglobals(e.other);
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local has_kevren_flag = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1))
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
-
-  local preflag_key = string.format("%s-ikkinz_group1_gazak", e.other:CharacterID())
+  local kt_flag = tostring(e.other:GetAccountBucket("god.flags.ket")) or 0
+  local has_kevren_flag = (kt_flag >= 2)
+  local finished_first_trial = (kt_flag >= 4)
 
   if(e.message:findi("hail")) then
     if not has_kevren_flag then
@@ -60,12 +59,15 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'You're not ready to eradicate any kind of beast. You still need to speak to Kevren Nalavat about the trials if you're interested in such a thing.'")
     else
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'Your task is to battle through the temple and enter an entrance to the inner chambers of the Temple of Singular Might. Once inside you must find the Diabolic Destroyer and kill it before it becomes more powerful. You must recover an artifact from the beast and return it to me. Once you have done this, you will be allowed to move onto the next trial. When you are [" .. eq.say_link("ready to proceed") .. "] and have a group with you, return to me and I shall set you on your way.'")
-      eq.set_data(preflag_key, "1")
+      if kt_flag == 2 then
+        e.other:SetAccountBucket("god.flags.kt", "3")
+	kt_flag = 3
+      end
     end
   elseif (e.message:findi("ready(.*)proceed")) then
     if not is_gm and not has_kevren_flag then
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'I really don't believe you're ready to proceed with anything here. You have to speak with Kevren Nalavat to the north about the trials. Return to me when you have spoken with him.'")
-    elseif not is_gm and eq.get_data(preflag_key) == "" then
+    elseif not is_gm and kt_flag == 2 then
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'Ready to proceed with what? I know I haven't spoken to you about the [" .. eq.say_link("Diabolic Destroyer") .. "], so that can't be it.'")
     elseif not is_gm and e.other:DoesAnyPartyMemberHaveLockout(expedition_name, "Replay Timer", 6) then
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'I'm afraid I cannot allow you to begin, someone in your party has been on this expedition too recently and cannot yet go again.'")
@@ -81,15 +83,16 @@ end
 
 function event_trade(e)
   -- load the current qglobals
-  local qglobals = eq.get_qglobals(e.other);
-  local has_kevren_flag = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1)
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
+  local kt_flag = tostring(e.other:GetAccountBucket("god.flags.ket")) or 0
+  local has_kevren_flag = (kt_flag >= 2)
+  local finished_first_trial = (kt_flag >= 4)
   local item_lib = require("items");
+
   if(item_lib.check_turn_in(e.trade, {item1 = 60152})) then
     if has_kevren_flag then
       e.other:Message(MT.NPCQuestSay, ("Gazak Klelkek says, 'Though you were pitted against a most heinous aggressor, you have proven that you are a capable adventurer thus far. Nicely done, %s. I urge you to continue honing your skills. Now that you are ready to move onto the next trial, you should return to Kevren for more information. Good luck!'"):format(e.other:GetCleanName()))
       if not finished_first_trial then
-        eq.set_global("ikky", "2", 5, "F")
+	e.other:SetAccountBucket("god.flags.kt", "4")
         e.other:AddEXP(1)
       end
     else

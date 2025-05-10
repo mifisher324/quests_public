@@ -16,7 +16,7 @@ function event_say(e)
         e.other:SetAccountBucket("god.flags.kt", "1")
         e.other:Message(MT.LightBlue, "You have gained a character flag!")
       else
-       e.other:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
+       e.other:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest's Scribe to find out more information.")
        e.other:SetAccountBucket("god.flags.tipt", "1")
       end
     end

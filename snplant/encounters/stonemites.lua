@@ -19,7 +19,7 @@ local function update_flag(client)
 
   if sewers_flag == 0 then -- never received preflag by hailing high priest
     client:SetAccountBucket("god.flags.plant", "1")
-    client:message(MT.Yellow, "You have gained a temporary character flag!  Andaru is happy that you have helped your friends slay the Ancient Kayserops.  Perhaps you should find the High Priest in Barindu for more information.")
+    client:message(MT.Yellow, "You have gained a temporary character flag!  Andaru is happy that you have helped your friends slay the Ancient Kayserops.  Perhaps you should talk to the High Priest in Barindu for more information.")
   else
     client:SetAccountBucket("god.flags.plant", "2")
     client:Message(MT.Yellow, "You have gained a character flag!  The destruction of the Ancient Kayserops should earn the trust of High Priest Diru.")

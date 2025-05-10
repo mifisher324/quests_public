@@ -12,7 +12,7 @@ local function update_flag(client)
     client:Message(MT.Yellow, "You have gained a character flag!  All of High Priest Diru's tasks have been completed.  He will now tell you who to talk to for passage through the mountains.")
   else
     client:SetAccountBucket("god.flags.lair", "1")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest to find out more information.")
+    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek out the High Priest's scribe to find out more information.")
   end
 end
 
