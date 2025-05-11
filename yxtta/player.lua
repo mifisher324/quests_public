@@ -66,14 +66,15 @@ function enterzone(e)
 	eq.get_entity_list():FindDoor(16):SetLockPick(0);
 end
 
-function event_zone(e)
-  if e.zone_id == Zone.kodtaz or e.zone_id == Zone.yxtta then
-    local kt_flag = tonumber(e.self:GetAccountBucket("god.flags.kt")) or 0
-    if kt_flag >= 33 and e.self:HasItem(60176) and e.self:HasItem(60252) and not e.self:HasZoneFlag(Zone.qvic) then
-      e.self:SetZoneFlag(Zone.qvic)
-      e.self:SetAccountBucket("god.flags.kt", "34")
-      e.self:Message(MT.LightBlue, "The magical barrier protecting Qvic appears to have weakened, allowing access.")
-    end
+function event_enter_zone(e)
+  local kt_flag = tonumber(e.self:GetAccountBucket("god.flags.kt")) or 0
+  if kt_flag == 33 and e.self:HasItem(60176) and e.self:HasItem(60252) and not e.self:HasZoneFlag(Zone.qvic) then
+    e.self:SetZoneFlag(Zone.qvic)
+    e.self:SetAccountBucket("god.flags.kt", "34")
+    e.self:Message(MT.LightBlue, "The magical barrier protecting Qvic appears to have weakened, allowing access.")
+  elseif kt_flag == 34 and not e.self:HasZoneFlag(Zone.qvic) then
+    e.self:SetZoneFlag(Zone.qvic)
+    e.self:Message(MT.LightBlue, "The magical barrier protecting Qvic appears to have weakened, allowing access.")
   end
 end
 
