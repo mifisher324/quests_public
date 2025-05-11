@@ -1,21 +1,21 @@
 function event_say(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
 
-  --Flag 0: I don't know how but you're in Kod'taz?  Kevran should send you to the right place.
+  --Flag 0: I don't know how but you're in Kod'taz?  Kevren should send you to the right place.
   if kt_flag == 0 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Hello, are you assisting the Wayfarers Brotherhood?  If so, I have heard there are troubles still in the city below us.  You should return there and seek out High Priest Riwirn in the section of the city called Barindu and speak with him.'")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Hello, are you assisting the Wayfarers Brotherhood?  If so, I have heard there are troubles still in the city below us.  You should return there and seek out High Priest Riwirn in the section of the city called Barindu and speak with him.'")
     end
   end
 
-  -- If you don't have Flag 19 or higher, Kevran has nothing for you if you ask about BiC.
+  -- If you don't have Flag 19 or higher, Kevren has nothing for you if you ask about BiC.
   if kt_flag < 19 then
     if e.message:findi("have done all you asked") then
-      e.other:Message(MT.NPCQuestSay, "Kevrean Nalavat shakes his head, 'I believe we still have more work to do before I can trust you with the information I have for L`diava.'")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat shakes his head, 'I believe we still have more work to do before I can trust you with the information I have for L`diava.'")
     end
   end
 
-  -- Flag 19: You're done with Kevran
+  -- Flag 19: You're done with Kevren
   if kt_flag >= 19 then
     if e.message:findi("hail") then
        e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..".  You have done all I have asked, but you should see if Tublik needs you for anything else.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
@@ -122,7 +122,7 @@ function event_say(e)
   --Flag 8 and 9: You should be doing the trial
   if kt_flag == 8 or kt_flag == 9 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Good luck with the third trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Kenra Kalekkio.")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the third trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Kenra Kalekkio.")
     end
   end
 
@@ -143,7 +143,7 @@ function event_say(e)
   --Flag 5 and 6: You should be doing the trial
   if kt_flag == 5 or kt_flag == 6 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Good luck with the second trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Maroley Nazuey.")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the second trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Maroley Nazuey.")
     end
   end
 
@@ -167,7 +167,7 @@ function event_say(e)
   --Flag 2 and 3: You should be doing the trial
   if kt_flag == 2 or kt_flag == 3 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Good luck with the first trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Gazak Klelkek.")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the first trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Gazak Klelkek.")
     end
   end
 
@@ -212,22 +212,22 @@ function event_say(e)
         e.other:Message(MT.Yellow, "Finished! - You can now retry any of the trials at any time!")
       end
       if kt_flag == 2 or kt_flag == 3 then
-        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Singular Might.")
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevren Nalavat to undertake the Trial of Singular Might.")
       elseif kt_flag >= 4 then
         e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Singular Might!")
       end
       if kt_flag == 5 or kt_flag == 6 then
-        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Twin Struggles.")
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevren Nalavat to undertake the Trial of Twin Struggles.")
       elseif kt_flag >= 7 then
         e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Twin Struggles!")
       end
       if kt_flag == 8 or kt_flag == 9 then
-        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Tri-Fates")
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevren Nalavat to undertake the Trial of Tri-Fates")
       elseif kt_flag >= 10 then
         e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Tri-Fates!")
       end
       if kt_flag == 11 then
-        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to investigate the Martyrs Passage.")
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevren Nalavat to investigate the Martyrs Passage.")
       end
       if kt_flag >= 12 then
         e.other:Message(MT.Yellow, "Finished! - You returned four relics from the Martyrs Passage!")
