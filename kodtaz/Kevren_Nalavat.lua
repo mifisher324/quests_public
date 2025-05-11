@@ -205,11 +205,11 @@ function event_say(e)
   --Flags 2 and up: Progress Report
   if kt_flag >= 2 then
     if e.message:findi("hail") then
-      e.other:Message(MT.Yellow, "Kevren Nalavat says 'If you want to see what you've completed at any time, just ask me for a [" .. eq.say_link("progress update") .. "]!'") 
+      e.other:Message(MT.Yellow, "Tublik Narwethar says 'If you want to see what you've completed at any time, just ask me for a [" .. eq.say_link("progress update") .. "]!'")
     end
     if e.message:findi("progress update") then
       if kt_flag >= 10 then
-	e.other:Message(MT.Yellow, "Finished! - You can now retry any of the trials at any time!")
+        e.other:Message(MT.Yellow, "Finished! - You can now retry any of the trials at any time!")
       end
       if kt_flag == 2 or kt_flag == 3 then
         e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Singular Might.")
@@ -217,80 +217,92 @@ function event_say(e)
         e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Singular Might!")
       end
       if kt_flag == 5 or kt_flag == 6 then
-	e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Twin Struggles.")
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Twin Struggles.")
       elseif kt_flag >= 7 then
         e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Twin Struggles!")
       end
       if kt_flag == 8 or kt_flag == 9 then
         e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Tri-Fates")
       elseif kt_flag >= 10 then
-	e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Tri-Fates!")
+        e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Tri-Fates!")
       end
       if kt_flag == 11 then
         e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to investigate the Martyrs Passage.")
       end
       if kt_flag >= 12 then
-	e.other:Message(MT.Yellow, "Finished! - You returned four relics from the Martyrs Passage!")
+        e.other:Message(MT.Yellow, "Finished! - You returned four relics from the Martyrs Passage!")
       end
       if kt_flag == 12 then
-	e.other:Message(MT.Yellow, "Pending - You haven't yet returned any information as to why the Muramites are in Martyrs Passage.")
+        e.other:Message(MT.Yellow, "Pending - You haven't yet returned any information as to why the Muramites are in Martyrs Passage.")
       end
       if kt_flag >= 13 then
-	e.other:Message(MT.Yellow, "Finished! - You returned valuable information as to why the Muramites are in the Martyrs Passage!")
+        e.other:Message(MT.Yellow, "Finished! - You returned valuable information as to why the Muramites are in the Martyrs Passage!")
       end
       if kt_flag >= 14 then
-	e.other:Message(MT.Yellow, "Finished! - You've been comissioned to investigate the Temple of the Damned.")
+        e.other:Message(MT.Yellow, "Finished! - You've been comissioned to investigate the Temple of the Damned.")
       end
       if kt_flag >= 15 then
-	e.other:Message(MT.Yellow, "Finished! - You've recovered important glyphs from the Temple of the Damned!")
+        e.other:Message(MT.Yellow, "Finished! - You've recovered important glyphs from the Temple of the Damned!")
       end
       if kt_flag == 15 or kt_flag == 16 then
         e.other:Message(MT.Yellow, "Pending - You haven't translated the glyphs gathered from the Temple of the Damned.")
       end
       if kt_flag >= 17 then
-	e.other:Message(MT.Yellow, "Finished! - You've successfully translated the glyphs you found in the Temple of the Damned!")
+        e.other:Message(MT.Yellow, "Finished! - You've successfully translated the glyphs you found in the Temple of the Damned!")
       end
       if kt_flag >= 18 then
-	e.other:Message(MT.Yellow, "Finished! - You've been charged with stopping the ceremony at the Summoning Circle!")
+        e.other:Message(MT.Yellow, "Finished! - You've been charged with stopping the ceremony at the Summoning Circle!")
       end
       if kt_flag >= 19 then
-	e.other:Message(MT.Yellow, "Finished! - You were able to recover a rare artifact from the Grand Summoner's goons in the Summoning Circle!")
+        e.other:Message(MT.Yellow, "Finished! - You were able to recover a rare artifact from the Grand Summoner's goons in the Summoning Circle!")
       end
-      if kt_flag >= 20 then
-	e.other:Message(MT.Yellow, "Finished! - You've been sent to gather any clues you can find from the Crumbled Sanctuary of Divine Destruction!")
+      if kt_flag == 20 then
+        e.other:Message(MT.Yellow, "Pending - You've been tasked by Tublik Narwether to investigate the Pit of the Lost and recover relics.")
       end
       if kt_flag >= 21 then
-	e.other:Message(MT.Yellow, "Finished! - You have collected the four Frayed Flesh Scraps from the Crumbled Sanctuary of Divine Destruction!")
+        e.other:Message(MT.Yellow, "Finished! - You've collected the Minor Relics of Power from the Pit of the Lost!")
       end
-      if kt_flag >= 22 then
-	e.other:Message(MT.Yellow, "Finished! - You've sewn the flesh scraps together to make the Sewn Flesh Parchment!")
+      if kt_flag == 22 then
+        e.other:Message(MT.Yellow, "Pending - You;ve been tasked by Tublik Narwether to investigate a disturbance at the Pit of the Lost.")
       end
       if kt_flag >= 23 then
-	e.other:Message(MT.Yellow, "Finished! - You've found the three clues from the three trial temples!")
+        e.other:Message(MT.Yellow, "Finished! - You've rescued the artifact from the Ageless Relic Protector in the Pit of the Lost!")
       end
       if kt_flag >= 24 then
-	e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Righteousness!")
+        e.other:Message(MT.Yellow, "Finished! - You've been sent to gather any clues you can find from the Crumbled Sanctuary of Divine Destruction!")
       end
       if kt_flag >= 25 then
-	e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Glorification!")
+        e.other:Message(MT.Yellow, "Finished! - You have collected the four Frayed Flesh Scraps from the Crumbled Sanctuary of Divine Destruction!")
       end
       if kt_flag >= 26 then
-	e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Transcendence!")
+        e.other:Message(MT.Yellow, "Finished! - You've sewn the flesh scraps together to make the Sewn Flesh Parchment!")
       end
       if kt_flag >= 27 then
-	e.other:Message(MT.Yellow, "Finished! - You've been instructed on what needs to be done to make the Icon of the Altar!")
+        e.other:Message(MT.Yellow, "Finished! - You've found the three clues from the three trial temples!")
       end
       if kt_flag >= 28 then
-	e.other:Message(MT.Yellow, "Finished! - You've constructed your Icon of the Altar!")
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Righteousness!")
       end
       if kt_flag >= 29 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Glorification!")
+      end
+      if kt_flag >= 30 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Transcendence!")
+      end
+      if kt_flag >= 31 then
+        e.other:Message(MT.Yellow, "Finished! - You've been instructed on what needs to be done to make the Icon of the Altar!")
+      end
+      if kt_flag >= 32 then
+        e.other:Message(MT.Yellow, "Finished! - You've constructed your Icon of the Altar!")
+      end
+      if kt_flag >= 33 then
         e.other:Message(MT.Yellow, "You have obtained a Sliver of the High Temple!  Congratulations!")
       end
-      if kt_flag == 30 then
-	e.other:Message(MT.Yellow, "The barrier to Qvic has been breeched by your possession of the Sliver of the High Temple and the Fragment of the High Temple!")
+      if kt_flag == 34 then
+        e.other:Message(MT.Yellow, "The barrier to Qvic has been breeched by your possession of the Sliver of the High Temple and the Fragment of the High Temple!")
       end
-      if kt_flag < 30 then
-	e.other:Message(MT.Yellow, "Kod'taz still has secrets to discover...")
+      if kt_flag < 33 then
+        e.other:Message(MT.Yellow, "Kod'taz still has secrets to discover...")
       end
     end
   end

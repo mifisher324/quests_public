@@ -11,7 +11,7 @@ function event_say(e)
 			gm_bypass = true;
 		end
 		-- load the current qglobals
-		local kt_flag == tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
+		local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
 		if gm_bypass or e.other:HasZoneFlag(Zone.qvic) or kt_flag == 34 then
 		  	if not e.other:HasZoneFlag(Zone.qvic) then
 		        	e.other:SetZoneFlag(Zone.qvic)

@@ -22,8 +22,10 @@ function event_say(e)
     zonein = { x=1573, y=1737, z=-396, h=256 },
   }
 
+
+
   -- Flags below 19, he just grumbles at you
-  if kt_flag < 20 then
+  if kt_flag < 19 then
     if e.message:findi("hail") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'Can I help you with something? Has someone sent you? Speak up!'")
     end
@@ -31,7 +33,7 @@ function event_say(e)
 
   if kt_flag >= 33 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Hello again, " .. e.other:GetCleanName() .. "!  You've done great things here in Kod'taz to combat both the Trusik and the Muramites, but I suspect your journey is not yet complete.  If you wish to enter the [" .. eq.say_link("Sanctuary of the Righteous") .. "], the [" .. eq.say_link("Sanctuary of the Glorified") .. "], or the [" .. eq.say_link("Sanctuary of the Transcendent") .. "] again, just say so!")
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'Hello again, " .. e.other:GetCleanName() .. "!  You've done great things here in Kod'taz to combat both the Trusik and the Muramites, but I suspect your journey is not yet complete.  If you wish to enter the [" .. eq.say_link("Sanctuary of the Righteous") .. "], the [" .. eq.say_link("Sanctuary of the Glorified") .. "], or the [" .. eq.say_link("Sanctuary of the Transcendent") .. "] again, just say so!'")
     end
   end
 
@@ -42,6 +44,12 @@ function event_say(e)
     end
     if e.message:findi("sentinel") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Like the keeper, I don't know what you should expect with the sentinel, so be prepared for anything. I must send you on your way now and wish you whatever luck a poor dwarf can muster. Fortune has treated you well so far... let's hope it continues.'")
+    end
+  end
+
+  if kt_flag == 31 then
+    if e.message:findi("hail") then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Welcome back, " .. e.other:GetCleanName() .. ". Any luck with creating the Icon of the Altar?'")
     end
   end
 
@@ -65,10 +73,13 @@ function event_say(e)
     end
   end
 
-  if kt_flag >= 29 then
+  if kt_flag == 29 then
     if e.message:findi("hail") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwether say 'Hello again, " .. e.other:GetCleanName() .. "!  Are you ready to head into the [" .. eq.say_link("sanctuary of the transcendent") .. "]?'")
     end
+  end
+
+  if kt_flag >= 29 then
     if e.message:findi("sanctuary of the transcendent") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'The glyphs you recovered show an Artifact of Transcendence that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Transcendent to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Transcendent and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.'")
       local dz = e.other:CreateExpedition(transcend_info)
@@ -78,27 +89,16 @@ function event_say(e)
     end
   end
 
-  if kt_flag >= 28 then
+  if kt_flag == 28 then
     if e.message:findi("hail") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwether say 'Hello again, " .. e.other:GetCleanName() .. "!  Are you ready to head into the [" .. eq.say_link("sanctuary of the glorified") .. "]?'")
     end
+  end
+
+  if kt_flag >= 28 then
     if e.message:findi("sanctuary of the glorified") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'The glyphs you recovered show an Artifact of Glorification that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Glorification to the west of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Glorified and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.'")
       local dz = e.other:CreateExpedition(glorious_info)
-      if dz.valid then
-        dz:AddReplayLockout(eq.seconds("14h"))
-      end
-    end
-  end
-
-  -- Raid 1: Flag 27 and higher
-  if kt_flag >= 27 then
-    if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwether say 'Hello again, " .. e.other:GetCleanName() .. "!  Are you ready to head into the [" .. eq.say_link("sanctuary of the righteous") .. "]?'")
-    end
-    if e.message:findi("sanctuary of the righteous") then
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'The glyphs you recovered show an Artifact of Righteousness that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Righteous to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Righteous and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.'")
-      local dz = e.other:CreateExpedition(righteous_info)
       if dz.valid then
         dz:AddReplayLockout(eq.seconds("14h"))
       end
@@ -114,14 +114,24 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'As you've already uncovered, the Sanctuary of Divine Destruction was used to uncover the purpose for the other three. I believe the Muramites destroyed that temple because it holds the key to the remaining three temples and the artifacts that they hold. Now that we know what's ahead, we can continue forth and unravel this [" .. eq.say_link("mystery") .. "].'")
     end
     if e.message:findi("mystery") then
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'It's clear to me that you must proceed into each of the three remaining temples and recover the three artifacts that are in them. You should start with the [" .. eq.say_link("sanctuary of the righteous") .. "'") 
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'It's clear to me that you must proceed into each of the three remaining temples and recover the three artifacts that are in them. You should start with the [" .. eq.say_link("sanctuary of the righteous") .. "]'") 
+    end
+  end
+
+  if kt_flag >= 27 then
+    if e.message:findi("sanctuary of the righteous") then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwether says 'The glyphs you recovered show an Artifact of Righteousness that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Righteous to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Righteous and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.'")
+      local dz = e.other:CreateExpedition(righteous_info)
+      if dz.valid then
+        dz:AddReplayLockout(eq.seconds("14h"))
+      end
     end
   end
 
   -- Flag 26: Additional Clues
   if kt_flag == 26 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Welcome back, " .. e.other:GetCleanName() .. ".  Have you been able to find [" .. eq.say_link("more clues") .. "?'")
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Welcome back, " .. e.other:GetCleanName() .. ".  Have you been able to find [" .. eq.say_link("more clues") .. "]?'")
     end
     if e.message:findi("ritual") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've been assuming that only the Muramites were so cruel that they would rip flesh from another living being in this manner, but it appears that the trusik priests were the ones that did it. They etched glyphs into the skin and then removed it to be used later. The glyphs represent the four temples and their direct connection to the Altar of Destruction. It looks as though there may be [" .. eq.say_link("more clues") .. "] about the Altar of Destruction and its surrounding temples in the trial temples.'")
@@ -144,6 +154,12 @@ function event_say(e)
     end
     if e.message:findi("strands of hair") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You'll need to gather four strands of hair from the local hynids. They're not friendly, so be careful when you encounter one. Once you've gotten the strands and made your needle, you're going to need to sew the strands together using the needle. It seems strange I know, but remember that the best solutions are usually the simplest ones. Take the hynid thread and the needle and your four pieces of flesh and sew them together. That should get you what you need. Once you've sewn the clue back together, give it to me, and I may finally be able to understand it.'  He pauses for a moment.  'By the way, if you happen to not know your way around a needle, these materials will be very difficult to use.  I'd suggest heading back to the ship and asking Adsame Leing for some tailoring assistance.")
+    end
+  end
+
+  if kt_flag == 24 then
+    if e.message:findi("hail") then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Welcome back, " .. e.other:GetCleanName() .. ". Have you recovered anything from the Crumbled Sanctuary?'")
     end
   end
 
@@ -183,6 +199,12 @@ function event_say(e)
     end
   end
 
+  if kt_flag == 20 then
+    if e.message:findi("hail") then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Welcome back, " .. e.other:GetCleanName() .. ". Have you recovered anything from the Pit of the Lost?'")
+    end
+  end
+
   -- Flag 20: Asking about the Pit of the Lost
   if kt_flag == 19 then
     if e.message:findi("hail") then
@@ -197,12 +219,12 @@ function event_say(e)
     if e.message:findi("collect the artifacts") then
       e.other:Message(MT.NPCQuestSay, "Tublik hands you a bag and says, 'Place four artifacts you find from the pit in this bag and seal it off. Return the sealed bag to me when you're done so I can further examine what you find. Make haste to the Pit of the Lost and be careful -- there's no telling what kind of evils are waiting for you there. If you have someone else with you that [" .. eq.say_link("needs a bag") .. "], have them tell me so.'")
       e.other:SummonItem(60155)
-      e.other:SetAccountBucket("eq.flags.god", "20")
+      e.other:SetAccountBucket("god.flags.kt", "20")
     end
     if e.message:findi("needs a bag") then
       e.other:Message(MT.NPCQuestSay, "Tublik nods gruffly and hands you one of his bags.")
       e.other:SummonItem(60155)
-      e.other:SetAccountBucket("eq.flags.god", "20")
+      e.other:SetAccountBucket("god.flags.kt", "20")
     end
   end
 
@@ -213,6 +235,111 @@ function event_say(e)
     end
     if e.message:findi("glyph of the damned") then
       e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Ahh, you're looking to translate some glyphs, eh? You're in luck then, " .. e.other:GetCleanName() .. ". I just happen to have a stone tablet available for you to use. I need to make sure you actually need it before I hand one out to you. Wouldn't want these getting into the wrong hands, you know. Show me one of the glyphs you need to translate and if I am satisfied with what I see, I'll let you have one.'")
+    end
+  end
+
+  --Flags 2 and up: Progress Report
+  if kt_flag >= 2 then
+    if e.message:findi("hail") then
+      e.other:Message(MT.Yellow, "Tublik Narwethar says 'If you want to see what you've completed at any time, just ask me for a [" .. eq.say_link("progress update") .. "]!'")
+    end
+    if e.message:findi("progress update") then
+      if kt_flag >= 10 then
+        e.other:Message(MT.Yellow, "Finished! - You can now retry any of the trials at any time!")
+      end
+      if kt_flag == 2 or kt_flag == 3 then
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Singular Might.")
+      elseif kt_flag >= 4 then
+        e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Singular Might!")
+      end
+      if kt_flag == 5 or kt_flag == 6 then
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Twin Struggles.")
+      elseif kt_flag >= 7 then
+        e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Twin Struggles!")
+      end
+      if kt_flag == 8 or kt_flag == 9 then
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to undertake the Trial of Tri-Fates")
+      elseif kt_flag >= 10 then
+        e.other:Message(MT.Yellow, "Finished! - You have completed the trial at the Temple of Tri-Fates!")
+      end
+      if kt_flag == 11 then
+        e.other:Message(MT.Yellow, "Pending - You have been commissioned by Kevran Nalavat to investigate the Martyrs Passage.")
+      end
+      if kt_flag >= 12 then
+        e.other:Message(MT.Yellow, "Finished! - You returned four relics from the Martyrs Passage!")
+      end
+      if kt_flag == 12 then
+        e.other:Message(MT.Yellow, "Pending - You haven't yet returned any information as to why the Muramites are in Martyrs Passage.")
+      end
+      if kt_flag >= 13 then
+        e.other:Message(MT.Yellow, "Finished! - You returned valuable information as to why the Muramites are in the Martyrs Passage!")
+      end
+      if kt_flag >= 14 then
+        e.other:Message(MT.Yellow, "Finished! - You've been comissioned to investigate the Temple of the Damned.")
+      end
+      if kt_flag >= 15 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered important glyphs from the Temple of the Damned!")
+      end
+      if kt_flag == 15 or kt_flag == 16 then
+        e.other:Message(MT.Yellow, "Pending - You haven't translated the glyphs gathered from the Temple of the Damned.")
+      end
+      if kt_flag >= 17 then
+        e.other:Message(MT.Yellow, "Finished! - You've successfully translated the glyphs you found in the Temple of the Damned!")
+      end
+      if kt_flag >= 18 then
+        e.other:Message(MT.Yellow, "Finished! - You've been charged with stopping the ceremony at the Summoning Circle!")
+      end
+      if kt_flag >= 19 then
+        e.other:Message(MT.Yellow, "Finished! - You were able to recover a rare artifact from the Grand Summoner's goons in the Summoning Circle!")
+      end
+      if kt_flag == 20 then
+	e.other:Message(MT.Yellow, "Pending - You've been tasked by Tublik Narwether to investigate the Pit of the Lost and recover relics.")
+      end
+      if kt_flag >= 21 then
+	e.other:Message(MT.Yellow, "Finished! - You've collected the Minor Relics of Power from the Pit of the Lost!")
+      end
+      if kt_flag == 22 then
+	e.other:Message(MT.Yellow, "Pending - You;ve been tasked by Tublik Narwether to investigate a disturbance at the Pit of the Lost.")
+      end
+      if kt_flag >= 23 then
+	e.other:Message(MT.Yellow, "Finished! - You've rescued the artifact from the Ageless Relic Protector in the Pit of the Lost!")
+      end
+      if kt_flag >= 24 then
+        e.other:Message(MT.Yellow, "Finished! - You've been sent to gather any clues you can find from the Crumbled Sanctuary of Divine Destruction!")
+      end
+      if kt_flag >= 25 then
+        e.other:Message(MT.Yellow, "Finished! - You have collected the four Frayed Flesh Scraps from the Crumbled Sanctuary of Divine Destruction!")
+      end
+      if kt_flag >= 26 then
+        e.other:Message(MT.Yellow, "Finished! - You've sewn the flesh scraps together to make the Sewn Flesh Parchment!")
+      end
+      if kt_flag >= 27 then
+        e.other:Message(MT.Yellow, "Finished! - You've found the three clues from the three trial temples!")
+      end
+      if kt_flag >= 28 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Righteousness!")
+      end
+      if kt_flag >= 29 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Glorification!")
+      end
+      if kt_flag >= 30 then
+        e.other:Message(MT.Yellow, "Finished! - You've recovered the Artifact of Transcendence!")
+      end
+      if kt_flag >= 31 then
+        e.other:Message(MT.Yellow, "Finished! - You've been instructed on what needs to be done to make the Icon of the Altar!")
+      end
+      if kt_flag >= 32 then
+        e.other:Message(MT.Yellow, "Finished! - You've constructed your Icon of the Altar!")
+      end
+      if kt_flag >= 33 then
+        e.other:Message(MT.Yellow, "You have obtained a Sliver of the High Temple!  Congratulations!")
+      end
+      if kt_flag == 34 then
+        e.other:Message(MT.Yellow, "The barrier to Qvic has been breeched by your possession of the Sliver of the High Temple and the Fragment of the High Temple!")
+      end
+      if kt_flag < 33 then
+        e.other:Message(MT.Yellow, "Kod'taz still has secrets to discover...")
+      end
     end
   end
 end
@@ -227,7 +354,7 @@ function event_trade(e)
     if kt_flag == 15 then
       give_tablet(e, kt_flag)
     else
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+      item_lib.return_items(e.self, e.other, e.trade)
     end
   end
 
@@ -236,7 +363,7 @@ function event_trade(e)
     if kt_flag == 15 then
       give_tablet(e, kt_flag)
     else
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+      item_lib.return_items(e.self, e.other, e.trade)
     end
   end
   if item_lib.check_turn_in(e.trade, {item1 = 60148}) then
@@ -244,7 +371,7 @@ function event_trade(e)
     if kt_flag == 15 then
       give_tablet(e, kt_flag)
     else
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+      item_lib.return_items(e.self, e.other, e.trade)
     end
   end
   if item_lib.check_turn_in(e.trade, {item1 = 60149}) then
@@ -252,70 +379,110 @@ function event_trade(e)
     if kt_flag == 15 then
       give_tablet(e, kt_flag)
     else
-      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+      item_lib.return_items(e.self, e.other, e.trade)
     end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60156, item2 = 60157, item3 = 60158, item4 = 60159}) and kt_flag == 20 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You're done already? I wasn't expecting such a prompt response, but nicely done " .. e.other:GetCleanName() .. "! Give me a while to examine these artifacts. I should have some additional information for you once you return.'")
-    e.other:SetAccountBucket("god.flags.kt", "21")
+  if item_lib.check_turn_in(e.trade, {item1 = 60160}) then
+    if kt_flag == 20 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You're done already? I wasn't expecting such a prompt response, but nicely done " .. e.other:GetCleanName() .. "! Give me a while to examine these artifacts. I should have some additional information for you once you return.'")
+      e.other:SetAccountBucket("god.flags.kt", "21")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60161}) and kt_flag == 22 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Excellent! We don't have to worry about that abomination any longer. This artifact you found on the creature is also quite unique. It will be a while before I have a chance to look it over, but it's nice to have it in our possession nonetheless. Well done once again, " .. e.other:GetCleanName() .. ". I look forward to working with you again soon!'")
-    e.other:SetAccountBucket("god.flags.kt", "23")
+  if item_lib.check_turn_in(e.trade, {item1 = 60161}) then
+    if kt_flag == 22 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Excellent! We don't have to worry about that abomination any longer. This artifact you found on the creature is also quite unique. It will be a while before I have a chance to look it over, but it's nice to have it in our possession nonetheless. Well done once again, " .. e.other:GetCleanName() .. ". I look forward to working with you again soon!'")
+      e.other:SetAccountBucket("god.flags.kt", "23")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60162, item2 = 60163, item3 = 60164, item4 = 60165}) and kt_flag == 24 then
-    e.other:Message(MT.NPCQuestSay, "Tublik grunts unhappily at the four pieces. 'I had hoped more work wouldn't be needed to uncover the clues, but it looks like there's a bit more you're going to need to do for me. Take a look at these edges. Do you see how they look really sinewy? That's because they're [" .. eq.say_link("made of flesh") .. "], probably that of the trusik. No doubt the Muramites have been quite cruel to them now that they are mostly used for slavery.'")
-    e.other:SummonItem(60162)
-    e.other:SummonItem(60163)
-    e.other:SummonItem(60164)
-    e.other:SummonItem(60165)
-    e.other:SetAccountBucket("god.flags.kt", "25")
+  if item_lib.check_turn_in(e.trade, {item1 = 60162, item2 = 60163, item3 = 60164, item4 = 60165}) then
+    if kt_flag == 24 then
+      e.other:Message(MT.NPCQuestSay, "Tublik grunts unhappily at the four pieces. 'I had hoped more work wouldn't be needed to uncover the clues, but it looks like there's a bit more you're going to need to do for me. Take a look at these edges. Do you see how they look really sinewy? That's because they're [" .. eq.say_link("made of flesh") .. "], probably that of the trusik. No doubt the Muramites have been quite cruel to them now that they are mostly used for slavery.'")
+      e.other:SummonItem(60162)
+      e.other:SummonItem(60163)
+      e.other:SummonItem(60164)
+      e.other:SummonItem(60165)
+      e.other:SetAccountBucket("god.flags.kt", "25")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60166}) and kt_flag == 25 then 
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Nicely sewn, " .. e.other:GetCleanName() .. ". I would have tried doing it myself, but I have the most unsteady fingers when it comes to things like that. In any case, let me have a look at what this says.' Tublik looks over the clue for a time before continuing. 'Unbelievable. Simply astounding. These notes weren't made by the Muramites at all. In fact, they were created by trusik priests from their own flesh in some kind of [" .. eq.say_link("ritual") .. "].'")
-    e.other:SetAccountBucket("god.flags.kt", "26")
+  if item_lib.check_turn_in(e.trade, {item1 = 60166}) then
+    if kt_flag == 25 then 
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'Nicely sewn, " .. e.other:GetCleanName() .. ". I would have tried doing it myself, but I have the most unsteady fingers when it comes to things like that. In any case, let me have a look at what this says.' Tublik looks over the clue for a time before continuing. 'Unbelievable. Simply astounding. These notes weren't made by the Muramites at all. In fact, they were created by trusik priests from their own flesh in some kind of [" .. eq.say_link("ritual") .. "].'")
+      e.other:SetAccountBucket("god.flags.kt", "26")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60167, item2 = 60168, item3 = 60169}) and kt_flag == 26 then
-    e.other:Message(MT.NPCQuestSay, "Tublik stares at the three clues for a moment before speaking. 'I can't be sure, but I believe we are getting close to something big, " .. e.other:GetCleanName() .. ". I need more time to examine these clues, but I should have something for you when you return. You've done well and I know that we wouldn't have been able to get this far without your help. Good job!'")
-    e.other:SetAccountBucket("god.flags.kt", "27")
+  if item_lib.check_turn_in(e.trade, {item1 = 60167, item2 = 60168, item3 = 60169}) then
+    if kt_flag == 26 then
+      e.other:Message(MT.NPCQuestSay, "Tublik stares at the three clues for a moment before speaking. 'I can't be sure, but I believe we are getting close to something big, " .. e.other:GetCleanName() .. ". I need more time to examine these clues, but I should have something for you when you return. You've done well and I know that we wouldn't have been able to get this far without your help. Good job!'")
+      e.other:SetAccountBucket("god.flags.kt", "27")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60170}) and kt_flag == 27 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered the first of the three artifacts! You must keep this with you, as you'll need it once you've recovered all three artifacts. The next temple is the[" .. eq.say_link("Sanctuary of the Glorified") .. "], are you ready".. e.other:GetCleanName() .. "?")
-    e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Righteousness!")
-    e.other:SummonItem(60170)
-    e.other:SetAccountBucket("god.flags.kt", "28")
+  if item_lib.check_turn_in(e.trade, {item1 = 60170}) then
+    if kt_flag == 27 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered the first of the three artifacts! You must keep this with you, as you'll need it once you've recovered all three artifacts. The next temple is the[" .. eq.say_link("Sanctuary of the Glorified") .. "], are you ready ".. e.other:GetCleanName() .. "?")
+      e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Righteousness!")
+      e.other:SummonItem(60170)
+      e.other:SetAccountBucket("god.flags.kt", "28")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60171}) and kt_flag == 28 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered the second of the three artifacts! You must keep this with you, because you'll need it once you've recovered all three artifacts. You only need one more from the [" .. eq.say_link("Sanctuary of the Transcendent") .. "]. Are you ready to progress forward with the final artifact?'")
-    e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Glorification!")
-    e.other:SummonItem(60171)
-    e.other:SetAccountBucket("god.flags.kt", "29")
+  if item_lib.check_turn_in(e.trade, {item1 = 60171}) then 
+    if kt_flag == 28 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered the second of the three artifacts! You must keep this with you, because you'll need it once you've recovered all three artifacts. You only need one more from the [" .. eq.say_link("Sanctuary of the Transcendent") .. "]. Are you ready to progress forward with the final artifact?'")
+      e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Glorification!")
+      e.other:SummonItem(60171)
+      e.other:SetAccountBucket("god.flags.kt", "29")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60172}) and kt_flag == 29 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered all three of the artifacts! You must keep this with you, because you'll need it now. Somewhere deep down I knew you would be able to get them all. I've been studying the markings from the artifacts and I've come to the conclusion that they must be combined to form a key to enter the [" .. eq.say_link("Altar of Destruction") .. "].'")
-    e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Transcendence!")
-    e.other:SummonItem(60172)
-    e.other:SetAccountBucket("god.flags.kt", "30")
+  if item_lib.check_turn_in(e.trade, {item1 = 60172}) then
+    if kt_flag == 29 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've done it! You've recovered all three of the artifacts! You must keep this with you, because you'll need it now. Somewhere deep down I knew you would be able to get them all. I've been studying the markings from the artifacts and I've come to the conclusion that they must be combined to form a key to enter the [" .. eq.say_link("Altar of Destruction") .. "].'")
+      e.other:Message(MT.LightBlue, "Finished! - You've recovered the Artifact of Transcendence!")
+      e.other:SummonItem(60172)
+      e.other:SetAccountBucket("god.flags.kt", "30")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60173}) and kt_flag == 31 then
-    e.other:Message(MT.NPCQuestSay, "Tublik scans the icon before returning it to you. 'You've done well, " .. e.other:GetCleanName() .. ". Up until now I hadn't noticed the final glyph that is created when the three pieces are combined. I must inspect this further, but return to me shortly and I should have an answer as to the glyph's meaning.'")
-    e.other:SummonItem(60172)
-    e.other:SetAccountBucket("god.flags.kt", "32")
+  if item_lib.check_turn_in(e.trade, {item1 = 60173}) then
+    if kt_flag == 31 then
+      e.other:Message(MT.NPCQuestSay, "Tublik scans the icon before returning it to you. 'You've done well, " .. e.other:GetCleanName() .. ". Up until now I hadn't noticed the final glyph that is created when the three pieces are combined. I must inspect this further, but return to me shortly and I should have an answer as to the glyph's meaning.'")
+      e.other:SummonItem(60173)
+      e.other:SetAccountBucket("god.flags.kt", "32")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60174}) and kt_flag == 32 then
-    e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've exceed all my expectations. This key is only the first of what looks to be three needed... needed for what I wonder? I imagine you'll find out more as you continue your adventures. Seek out Brevik in the Abysmal Sea should you discover anything else. He is one of the Wayfarers Brotherhood's resident geomancer adepts. He's not yet fully skilled, but he has much in the way of knowledge of the craft already and learning more each day. He will no doubt have more information for you. For now, I bid you good luck and farewell, " .. e.other:GetCleanName() .. "!'")
-    e.other:SummonItem(60176)
-    e.other:SetAccountBucket("god.flags.kt", "33")
+  if item_lib.check_turn_in(e.trade, {item1 = 60174}) then
+    if kt_flag == 32 then
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'You've exceed all my expectations. This key is only the first of what looks to be three needed... needed for what I wonder? I imagine you'll find out more as you continue your adventures. Seek out Brevik in the Abysmal Sea should you discover anything else. He is one of the Wayfarers Brotherhood's resident geomancer adepts. He's not yet fully skilled, but he has much in the way of knowledge of the craft already and learning more each day. He will no doubt have more information for you. For now, I bid you good luck and farewell, " .. e.other:GetCleanName() .. "!'")
+      e.other:SummonItem(60176)
+      e.other:SetAccountBucket("god.flags.kt", "33")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
   item_lib.return_items(e.self, e.other, e.trade)
 end

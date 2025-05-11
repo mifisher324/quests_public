@@ -1,8 +1,8 @@
 function event_say(e)
-  local kt_flag = tonumber(e.other:GetAccountbucket("god.flags.kt")) or 0
+  local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   if e.message:findi('hail') then
     if kt_flag <= 32 then
-      e.message(MT.NPCQuestSay, "The Sentinel of the Altar ignores your every attempt to interact with it.")
+      e.other:Message(MT.NPCQuestSay, "The Sentinel of the Altar ignores your every attempt to interact with it.")
     else
       get_expedition(e)
     end
@@ -12,8 +12,13 @@ end
 function event_trade(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   local item_lib = require("items")
-  if item_lib.check_turn_in(e.trade, {item1 = 60173}) and kt_flag == 32 then
-    get_expedition(e)
+  if item_lib.check_turn_in(e.trade, {item1 = 60173}) then
+    if kt_flag == 32 then
+      get_expedition(e)
+      e.other:SummonItem(60173)
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
   
   item_lib.return_items(e.self, e.other, e.trade)
@@ -29,7 +34,7 @@ function get_expedition(e)
   }
   local dz = e.other:CreateExpedition(dz_info)
   if dz.valid then
-    dz.AddReplayLockout(eq.seconds("14h"))
+    dz:AddReplayLockout(eq.seconds("14h"))
     e.other:Message(MT.NPCQuestSay, "The Sentinel of the Altar motions for you to enter the altar through the entrance behind him.")
   end
 end
