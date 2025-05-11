@@ -30,7 +30,7 @@ function event_say(e)
   local qglobals = eq.get_qglobals(e.other);
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local kt_flag = tostring(e.other:GetAccountBucket("god.flags.ket")) or 0
+  local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   local has_kevren_flag = (kt_flag >= 2)
   local finished_first_trial = (kt_flag >= 4)
 
@@ -83,7 +83,7 @@ end
 
 function event_trade(e)
   -- load the current qglobals
-  local kt_flag = tostring(e.other:GetAccountBucket("god.flags.ket")) or 0
+  local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   local has_kevren_flag = (kt_flag >= 2)
   local finished_first_trial = (kt_flag >= 4)
   local item_lib = require("items");

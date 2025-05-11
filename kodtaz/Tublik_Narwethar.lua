@@ -222,21 +222,38 @@ function event_trade(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   local item_lib = require("items")
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60146}) and kt_flag == 15 then
+  if item_lib.check_turn_in(e.trade, {item1 = 60146}) then
     e.other:SummonItem(60146)
-    give_tablet(e, kt_flag)
+    if kt_flag == 15 then
+      give_tablet(e, kt_flag)
+    else
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+    end
   end
-  if item_lib.check_turn_in(e.trade, {item1 = 60147}) and kt_flag == 15 then
+
+  if item_lib.check_turn_in(e.trade, {item1 = 60147}) then
     e.other:SummonItem(60147)
-    give_tablet(e, kt_flag)
+    if kt_flag == 15 then
+      give_tablet(e, kt_flag)
+    else
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+    end
   end
-  if item_lib.check_turn_in(e.trade, {item1 = 60148}) and kt_flag == 15 then
+  if item_lib.check_turn_in(e.trade, {item1 = 60148}) then
     e.other:SummonItem(60148)
-    give_tablet(e, kt_flag)
+    if kt_flag == 15 then
+      give_tablet(e, kt_flag)
+    else
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+    end
   end
-  if item_lib.check_turn_in(e.trade, {item1 = 60148}) and kt_flag == 15 then
-    e.other:SummonItem(60148)
-    give_tablet(e, kt_flag)
+  if item_lib.check_turn_in(e.trade, {item1 = 60149}) then
+    e.other:SummonItem(60149)
+    if kt_flag == 15 then
+      give_tablet(e, kt_flag)
+    else
+      e.other:Message(MT.NPCQuestSay, "Tublik Narwethar says 'I've already seen this glyph, you should use the stone tablet to translate it.'")
+    end
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 60156, item2 = 60157, item3 = 60158, item4 = 60159}) and kt_flag == 20 then
@@ -300,6 +317,7 @@ function event_trade(e)
     e.other:SummonItem(60176)
     e.other:SetAccountBucket("god.flags.kt", "33")
   end
+  item_lib.return_items(e.self, e.other, e.trade)
 end
 
 function give_tablet(e, kt_flag)

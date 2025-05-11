@@ -33,7 +33,7 @@ function event_say(e)
   -- Flag 17: Summoner's Ring
   if kt_flag == 17 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() .. ". I've studied the glyph as much as I can for now. In addition to what we uncovered with the translated glyph, we've received word that the [" .. eq.say_link("rumors") .. "] of a dark summoning are indeed true. The truth of these rumors is no surprise to me at all with all that we've uncovered thus far. The Legion of Mata Muram is evil indeed I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() .. ". I've studied the glyph as much as I can for now. In addition to what we uncovered with the translated glyph, we've received word that the [" .. eq.say_link("rumors") .. "] of a dark summoning are indeed true. The truth of these rumors is no surprise to me at all with all that we've uncovered thus far. The Legion of Mata Muram is evil indeed I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
     end
     if e.message:findi("rumors") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'It looks as though the invaders are planning on bringing beasts into this world by means of a collective summoning. We're unsure if they're even able to do this, but we do know that they cannot be allowed the chance to succeed. You are charged with finding the Muramites attempting this summoning and putting a stop to them at once! Is this something you [" .. eq.say_link("think you can do") .. "]?'")
@@ -42,7 +42,7 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I hoped as much. What I ask of you now won't be easy. You must gather a raiding force several times the size of your normal party. We fear that only sufficient force will be enough to stop this threat. Once you have your party in tow, make your way to the summoning circle, and vanquish the threat of the evil legion priests before they bring their minions into this realm. I have one [" .. eq.say_link("final warning") .. "] for you before you go.'")
     end
     if e.message:findi("final warning") then
-      e.other:Message(MT.NPCQuestSya, "Kevren Nalavat says 'I am unsure of the Muramites' timing. It is possible that I have heard incorrectly and that the summoning force may not be there at this time. Do not take this to mean that I was wrong! The force will be there, but it may take them a few more hours to assemble. Be patient. They will arrive. Lastly, the rumors have stated that these legion priests will be using some special artifacts they have collected. We do not know what these artifacts are, but you must return one of these artifacts to me when you have finished so that we can examine it. Good luck, " .. e.other:GetCleanName() .. ", I fear you may need it.'")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I am unsure of the Muramites' timing. It is possible that I have heard incorrectly and that the summoning force may not be there at this time. Do not take this to mean that I was wrong! The force will be there, but it may take them a few more hours to assemble. Be patient. They will arrive. Lastly, the rumors have stated that these legion priests will be using some special artifacts they have collected. We do not know what these artifacts are, but you must return one of these artifacts to me when you have finished so that we can examine it. Good luck, " .. e.other:GetCleanName() .. ", I fear you may need it.'")
       e.other:SetAccountBucket("god.flags.kt", "18")
     end
   end
@@ -71,7 +71,7 @@ function event_say(e)
   --Flag 13: Temple of the Damned
   if kt_flag == 13 then
     if e.message:findi("hail") then
-       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Hello again, " .. e.other:GetCleanName() .. ". I've been studying the information you retrieved from the Martyrs Passage and I do believe we have a [" .. eq.say_link("problem") .. "] on our hands. I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
+       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Hello again, " .. e.other:GetCleanName() .. ". I've been studying the information you retrieved from the Martyrs Passage and I do believe we have a [" .. eq.say_link("problem") .. "] on our hands. I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
     end
     if e.message:findi("problem") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'The problem is that this information reveals a most disturbing plot by the Muramites to summon a creature into this realm. They appear to be experts in teleportation. The parchment you returned to me described the use of the Temple of the Damned to gather instruments of power that will allow the beast to coalesce in our world. It doesn't go into what those instruments are or when the summoning will take place, so you must [" .. eq.say_link("discover their plans") .. "].'")
@@ -102,10 +102,10 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". I must congratulate you on your recent completion of all three trials. I must admit that I was unsure of your ability to do as well as you did. Now that you have finished, you have the choice of taking on some [" .. eq.say_link("other tasks") .. "]. If you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
     end
     if e.message:findi("other tasks") then
-      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'As I suspected, you're ready for some challenging work! I must warn you though, what lies ahead is not for the faint of heart.  The task I need now is someone to investigate the[" .. eq.say_link("Martyrs Passage") .. "].")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'As I suspected, you're ready for some challenging work! I must warn you though, what lies ahead is not for the faint of heart.  The task I need now is someone to investigate the [" .. eq.say_link("Martyrs Passage") .. "].")
     end
     if e.message:findi("martyrs passage") then
-      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Good, we're in need of a sturdy adventurer to help us with a dire situation along the Martyrs Passage. First, this area was named so because it houses the spirits of martyred heroes lost long ago. The trusik lined the passageway with [" .. eq.say_link("ancient relics") "] to sooth the spirits while in the afterlife. Unfortunately, the Muramites are disturbing the remains and are looking to collect the spiritual remnants for some sinister use.'")
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Good, we're in need of a sturdy adventurer to help us with a dire situation along the Martyrs Passage. First, this area was named so because it houses the spirits of martyred heroes lost long ago. The trusik lined the passageway with [" .. eq.say_link("ancient relics") .. "] to sooth the spirits while in the afterlife. Unfortunately, the Muramites are disturbing the remains and are looking to collect the spiritual remnants for some sinister use.'")
     end
     if e.message:findi("ancient relics") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'We're unsure what the invaders are gathering these particular relics for. From what I can surmise, none of them have any kind of magical properties. In any case, it's up to you and a group of adventurers to venture to the Martyrs Passage and [" .. eq.say_link("investigate") .. "] the situation. I've heard reports of ghosts in that area, so the invaders may have stirred up something unexpected.'")
@@ -122,7 +122,7 @@ function event_say(e)
   --Flag 8 and 9: You should be doing the trial
   if kt_flag == 8 or kt_flag == 9 then
     if e.message:findi("hail") then
-      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Good luck with the third trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Maroley Nazuey.")
+      e.other:Message(MT.NPCQuestSay, "Kevran Nalavat says, 'Good luck with the third trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Kenra Kalekkio.")
     end
   end
 
@@ -134,7 +134,7 @@ function event_say(e)
     if e.message:findi("singular might") or e.message:findi("twin struggles") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat shakes his head, 'You have already completed that trial, the brotherhood needs you to move on to the next challenges before you can return to a trial.")
     end
-    if e.message:findi("tri-fates") then
+    if e.message:findi("tri(.*)fates") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Beyond the dark fog to the south lies the Temple of the Tri-Fates. It is the northern-most temple of the three. In front of the temple you will encounter three smaller temples and it is there you will find another of the brotherhood waiting for you. Seek out and speak with Kenra Kalekkio about the troubles within the temple.'")
       e.other:SetAccountBucket("god.flags.kt", "8")
     end
@@ -159,7 +159,7 @@ function event_say(e)
     if e.message:findi("singular might") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat shakes his head, 'You have already completed that trial, the brotherhood needs you to move on to the next challenges before you can return to a trial.")
     end
-    if e.message:findi("tri-fates") then
+    if e.message:findi("tri(.*)fates") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the third trial. You must first find Maroley Nazuey near the Temple of [" .. eq.say_link("Twin Struggles") .. "] and finish the second trial before you may proceed. Return to me when you have accomplished that feat.'")
     end
   end
@@ -183,13 +183,13 @@ function event_say(e)
     if e.message:findi("twin struggles") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the second trial. You must first find Gazak Klelkek near the Temple of [" .. eq.say_link("Singular Might") .. "] and finish the first trial before you may proceed. Return to me when you have accomplished that feat.'")
     end
-    if e.message:findi("tri-fates") then
+    if e.message:findi("tri(.*)fates") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the third trial. You must first find Gazak Klelkek near the Temple of [" .. eq.say_link("Singular Might") .. "] and finish the first trial before you may proceed. Return to me when you have accomplished that feat.'")
     end
   end
 
   --Flags 10 and up: Redo trials
-  if kt_flag >= 11 then
+  if kt_flag >= 10 then
     if e.message:findi("ready to test") then
       e.other:Message(MT.NPCQuestSay, "Kevren nods his approval, 'Good to hear! If you're interested or have forgotten I can give you some [" .. eq.say_link("background information") .. "] about the mountaintop. If you're ready to proceed, I can explain the [" .. eq.say_link("trials") .. "] to you once more.'")
     end
@@ -208,7 +208,7 @@ function event_say(e)
       e.other:Message(MT.Yellow, "Kevren Nalavat says 'If you want to see what you've completed at any time, just ask me for a [" .. eq.say_link("progress update") .. "]!'") 
     end
     if e.message:findi("progress update") then
-      if kt_flag >= 11 then
+      if kt_flag >= 10 then
 	e.other:Message(MT.Yellow, "Finished! - You can now retry any of the trials at any time!")
       end
       if kt_flag == 2 or kt_flag == 3 then
@@ -349,38 +349,59 @@ function event_trade(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
   local item_lib = require("items")
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60141, item2 = 60142, item3 = 60143, item4 = 60144}) and kt_flag == 11 then
-    e.other:Message(MT.NPCQuestSay, "Kevren examines the relics for a moment. 'The only thing I can find on these relics are glyphs. They're very old and hard to make out, but it appears that they depict four powers. I would say they refer to the temples around the Altar of Destruction, but I can't be sure. It will take some time to go over these some more. In the meantime, do you have anything else for me that might explain the Muramites' interest in the passage? If not, please do go look again. I'm sure there will be something there we can use!'")
-    e.other:Message(MT.LightBlue, "Finished! - You've returned four relics from the Martyrs Passage!")
-    e.other:SetAccountBucket("god.flags.kt", "12")
+  if item_lib.check_turn_in(e.trade, {item1 = 60141, item2 = 60142, item3 = 60143, item4 = 60144}) then
+    if kt_flag == 11 then
+      e.other:Message(MT.NPCQuestSay, "Kevren examines the relics for a moment. 'The only thing I can find on these relics are glyphs. They're very old and hard to make out, but it appears that they depict four powers. I would say they refer to the temples around the Altar of Destruction, but I can't be sure. It will take some time to go over these some more. In the meantime, do you have anything else for me that might explain the Muramites' interest in the passage? If not, please do go look again. I'm sure there will be something there we can use!'")
+      e.other:Message(MT.LightBlue, "Finished! - You've returned four relics from the Martyrs Passage!")
+      e.other:SetAccountBucket("god.flags.kt", "12")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60145}) and kt_flag == 12 then
-    e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Aha! I suspected there would be some kind of indication of what they were doing in that passage. I applaud your efforts. I only briefly skimmed the information and from what I can gather, it appears that there are nefarious deeds afoot. I'll need more time to examine this, but I should know what it says in a few moments. Well done, once again, " .. e.other:GetCleanName() .. "!'")
-    e.other:Message(MT.LightBlue, "Finished! - You've returned valuable information as to why the Muramites are in the Martyrs Passage!");
-    e.other:SetAccountBucket("god.flags.kt", "13")
+  if item_lib.check_turn_in(e.trade, {item1 = 60145}) then
+    if kt_flag == 12 then
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Aha! I suspected there would be some kind of indication of what they were doing in that passage. I applaud your efforts. I only briefly skimmed the information and from what I can gather, it appears that there are nefarious deeds afoot. I'll need more time to examine this, but I should know what it says in a few moments. Well done, once again, " .. e.other:GetCleanName() .. "!'")
+      e.other:Message(MT.LightBlue, "Finished! - You've returned valuable information as to why the Muramites are in the Martyrs Passage!");
+      e.other:SetAccountBucket("god.flags.kt", "13")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60146, item2 = 60147, item3 = 60148, item4 = 60149}) and kt_flag == 14 then
-    e.other:Message(MT.NPCQuestSay, "Kevren examines the strange glyphs. 'These glyphs are faded. I won't be able to decipher them until they've been cleaned up. You'll need to go back to the Martyrs Passage and recover some dust from the grounds nearby. Once you've gotten a pile of dust, you'll need to speak with Tublik Narwethar who is south of the Martyrs Passage. He has a stone tablet that can add some clarity to the glyphs with the help of that dust. Hurry along, " .. e.other:GetCleanName() .. ", this information is important!'")
-    e.other:SummonItem(60146)
-    e.other:SummonItem(60147)
-    e.other:SummonItem(60148)
-    e.other:SummonItem(60149)
-    e.other:Message(MT.LightBlue, "Finished! - You've recovered important glyphs from the Temple of the Damned!")
-    e.other:SetAccountBucket("god.flags.kt", "15")
+  if item_lib.check_turn_in(e.trade, {item1 = 60146, item2 = 60147, item3 = 60148, item4 = 60149}) then 
+    if kt_flag == 14 then
+      e.other:Message(MT.NPCQuestSay, "Kevren examines the strange glyphs. 'These glyphs are faded. I won't be able to decipher them until they've been cleaned up. You'll need to go back to the Martyrs Passage and recover some dust from the grounds nearby. Once you've gotten a pile of dust, you'll need to speak with Tublik Narwethar who is south of the Martyrs Passage. He has a stone tablet that can add some clarity to the glyphs with the help of that dust. Hurry along, " .. e.other:GetCleanName() .. ", this information is important!'")
+      e.other:SummonItem(60146)
+      e.other:SummonItem(60147)
+      e.other:SummonItem(60148)
+      e.other:SummonItem(60149)
+      e.other:Message(MT.LightBlue, "Finished! - You've recovered important glyphs from the Temple of the Damned!")
+      e.other:SetAccountBucket("god.flags.kt", "15")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 60150}) and kt_flag == 17 then
-    e.other:Message(MT.NPCQuestSay, "Kevren copies down the intricate patterns from the glyph. 'Very interesting, but very dangerous. I've gone over the glyphs and they suggest there is great danger in the summoning of some kind of ferocious beast. I need to study the markings further, but since I've transcribed them already, you can keep the glyph for your own use. Nicely done, " .. e.other:GetCleanName() .. ".'")
-    e.other:SummonItem(60150)
-    e.other:Message(MT.LightBlue, "Finished! - You've successfully translated the glyphs you found in the Temple of the Damned.")
-    e.other:SetAccountBucket("god.flags.kt", "18")
+  if item_lib.check_turn_in(e.trade, {item1 = 60150}) then
+    if kt_flag == 16 then
+      e.other:Message(MT.NPCQuestSay, "Kevren copies down the intricate patterns from the glyph. 'Very interesting, but very dangerous. I've gone over the glyphs and they suggest there is great danger in the summoning of some kind of ferocious beast. I need to study the markings further, but since I've transcribed them already, you can keep the glyph for your own use. Nicely done, " .. e.other:GetCleanName() .. ".'")
+      e.other:SummonItem(60150)
+      e.other:Message(MT.LightBlue, "Finished! - You've successfully translated the glyphs you found in the Temple of the Damned.")
+      e.other:SetAccountBucket("god.flags.kt", "17")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 60151}) and kt_flag == 18 then
-    e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'You've done well to stop the summoning, " .. e.other:GetCleanName() .. ". I know it wasn't easy, but you are quickly becoming known as someone who can do what needs to get done. I fear I have run out of things for you to do for now, so you must find Tublik Narwethar and speak with him for further tasks to complete. You can find him to the south of the Martyrs Passage. Farewell for now, " .. e.other:GetCleanName() .. ".'")
-    e.other:Message(MT.LightBlue, "Finished! - You were able to recover a rare artifact from the Grand Summoner's goons in the Summoning Circle!")
+  if item_lib.check_turn_in(e.trade, {item1 = 60151}) then
+    if kt_flag == 18 then
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'You've done well to stop the summoning, " .. e.other:GetCleanName() .. ". I know it wasn't easy, but you are quickly becoming known as someone who can do what needs to get done. I fear I have run out of things for you to do for now, so you must find Tublik Narwethar and speak with him for further tasks to complete. You can find him to the south of the Martyrs Passage. Farewell for now, " .. e.other:GetCleanName() .. ".'")
+      e.other:Message(MT.LightBlue, "Finished! - You were able to recover a rare artifact from the Grand Summoner's goons in the Summoning Circle!")
+      e.other:SetAccountBucket("god.flags.kt", "19")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
   end
 
   --TODO: Add the bic turnin

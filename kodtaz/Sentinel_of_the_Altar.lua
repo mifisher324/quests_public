@@ -7,6 +7,7 @@ function event_say(e)
       get_expedition(e)
     end
   end
+end
 
 function event_trade(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
