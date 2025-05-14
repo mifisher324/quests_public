@@ -31,6 +31,12 @@ function event_say(e)
     end
   end
 
+  -- Riwwi
+  if e.message:findi('riwwi') then
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Riwwi has to be the most interesting of all of the city areas. You see, this is where the coliseum is located. Now, we are not completely aware of how it was used before this invading army took up residence in the area, but now it is used for the merciless slaughter of the nihil. Early reports from our scout, Reyna, indicate that the slaves in the area would not interact with her until she proved herself. How she was able to do this I am not sure, but I would suggest trying to find something of Reyna's while I go over my Riwwi information. Come back to me when you find something.'")
+    e.other:SetBucket("god.bic.riwwi", "1")
+  end
+
   if aby_bic == 0 then
     if e.message:findi('hail') then
       e.other:Message(MT.NPCQuestSay, "I don't mean to be rude, but I am really busy at the moment. Unless you have something important to tell me, I must ask that you leave me be.")
@@ -46,13 +52,34 @@ function event_trade(e)
   local fer_bic = tonumber(e.other:GetBucket("god.bic.ferubi")) or 0
   local item_lib = require("items")
 
+  -- Riwwi Turn Ins
+  if item_lib.check_turn_in(e.trade, {item1 = 67510}) then
+    if riw_bic == 1 then
+      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'This does not bode well for Reyna's fate. If I had to guess, I would say they took her to the coliseum. Knowing what we know about these strange beings, they would have taken her to the coliseum just so they could entertain themselves by torturing her. You must find a way into the coliseum and save Reyna. I think your best plan of action would be to locate and speak to Turlini and Namosa. They are two slaves Reyna mentioned in her reports. They may not talk to you if you have not proven yourself, but once you do that they should be pretty helpful. They may even know an easy way into the coliseum. Find these two and ask them about Reyna. Return to me when you find out more information about her.'")
+      e.other:SetBucket("god.bic.riwwi", "2")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
+  end
+
+  if item_lib.check_turn_in(e.trade, {item = 67417}) then
+    if riw_bic == 5 then
+      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Reyna was a skilled scout who had spent many years honing her abilities. Learning that she died so horribly upsets the stomach, but she died trying to help others. Yes . . . that's what we should focus on. This report you have returned will be a great help to us and this reward should help you as well. It was wrapped in the report and appears to be a gem fragment that may fit into the stone Fezbin gave you. Now to the rest of the city. Hopefully we can prevent our other scouts from suffering the same fate as Reyna.'")
+      e.other:SetBucket("god.bic.riwwi", "6")
+      e.other:SummonItem(67518)
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
+  end
+
   -- Barindu Turn Ins
   if item_lib.check_turn_in(e.trade, {item1 = 67516}) then
     if bar_bic == 10 then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu looks at the final report before bowing his head for a second. 'While I had accepted Talwin's passing as reality, I still hoped you would save him in time. Either way, I thank you for your effort and for delivering this vital piece of information contained in this report. Please take this. I found it wrapped up in the report. Talwin would have wanted you to have it as it appears to be a gem fragment that could fit into the stone Fezbin gave you. Now that you have finished all that was needed for Barindu, there is still more of the city left to explore and I won't be able to complete my report until it is done.'")
       e.other:SummonItem(67517)
       e.other:SetBucket("god.bic.barindu", "11")
-    end
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
   end
 
   -- Qinimi Turn Ins
