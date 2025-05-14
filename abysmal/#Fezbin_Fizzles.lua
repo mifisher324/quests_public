@@ -1,3 +1,12 @@
+function rescout(client, zone_name, bucket, finished, giver)
+  if client:GetBucket(bucket) == finished then 
+    client:Message(MT.NPCQuestSay, "Fezbin looks at you, puzzled.  'You have already completed the scouting of " .. zone_name .. "according to my records.'")
+  else:
+    client:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Done.  I will inform " .. giver .. "that you are starting from the beginning in scouting " .. zone_name .. ".")
+    client:SetBucket(bucket, "0")
+  end
+end
+
 function event_say(e)
 	local aby_bic = tonumber(e.other:GetBucket("god.bic.abysmal")) or 0
 	local qin_bic = tonumber(e.other:GetBucket("god.bic.qinimi")) or 0
@@ -44,7 +53,7 @@ function event_say(e)
 
   if aby_bic >= 1 then
     if e.message:findi('hail') then
-      e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello again, " .. e.other:GetCleanName() .. ", do you need another [" .. eq.say_link("crystal") .. "] or [" .. eq.say_link("resealer") .. "]?'")
+      e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello again, " .. e.other:GetCleanName() .. ", do you need another [" .. eq.say_link("crystal") .. "] or [" .. eq.say_link("resealer") .. "]?  Or has something gone awry with your scouting and you need to [" .. eq.say_link("rescout") .. " an area?'")
     end
     if e.message:findi('crystal') then
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles scrounges around the room for a moment before returning with a familiar white crystal.  'Here you are, try not to lose this one.'")
@@ -57,7 +66,41 @@ function event_say(e)
     if e.message:findi('powerful') then
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'The stone I have given you is very special indeed. It is a rare stone with a power that has not yet been revealed. After studying it we have come to the conclusion that its power is based off of resonance. You will see that there are fourteen sockets in the stone. Each socket requires a gem fragment of a certain resonance. As the fragments are set in the stone it will gradually increase in power. These fragments must be placed in the stone in a certain order using a set of clockwork gemcutter's tools, the stone, and the correct shard in the device I handed to you along with the stone. As you help find our scouts, you may come across the gem fragments that will fit into the stone. If you do, please try combining them in the special sealer. If at any time you lose the sealer or misplace the stone return to me and I will what I can do about a replacement.'")
     end
-	end
+    if e.message:findi('rescout') then
+      e.other:Message(MT.NPCQuestSay, "Certainly, " .. e.other:GetCleanName() .. ".  If you just tell me the section of Taelosia that you need to rescout, I will inform the scout masters that you need to start over in that section.  Be warned, they will discard any progress you might have made in scouting that section and you will need to start again from the beginning.")
+    end
+    if e.message:findi('qinimi') then
+      rescout_zone(e.other, 'Qinimi', 'god.bic.qinimi', 8, 'Taminoa Bialu')
+    end
+	  if e.message:findi('barindu') then
+      rescout_zone(e.other, 'Barindu', 'god.bic.barindu', 11, 'Taminoa Bialu')
+    end
+    if e.message:findi('riwwi') then
+      rescout_zone(e.other, 'Riwwi', 'god.bic.riwwi', 6, 'Taminoa Bialu')
+    end
+    if e.message:findi('ferubi') then
+      rescout_zone(e.other, 'Ferubi', 'god.bic.ferubi', 5, 'Taminoa Bialu')
+    end
+    if e.message:findi('sewers') then
+      rescout_zone(e.other, 'Sewers', 'god.bic.sewers', 2, 'Vaifan Cogswin')
+    end
+    if e.message:findi('vxed') then
+      rescout_zone(e.other, 'Vxed', 'god.bic.vxed', 2, 'Vaifan Cogswin')
+    end
+    if e.message:findi('tipt') then
+      rescout_zone(e.other, 'Tipt', 'god.bic.tipt', 2, 'Vaifan Cogswin')
+    end
+    if e.message:findi('mountains') then
+      rescout_zone(e.other, 'Mountains', 'god.bic.mountains', 2, 'Vaifan Cogswin')
+    end
+    if e.message:findi("kod'taz") or e.message:findi("kodtaz") then
+      rescout_zone(e.other, "Kod'taz", 'god.bic.kodtaz', 4, 'L`diava Rexxen')
+    end
+    if e.message:findi('yxtta') then
+      rescout_zone(e.other, 'Yxtta', 'god.bic.yxtta', 3, 'L`diava Rexxen')A
+    end
+  end
+ end
 
   if e.message:findi('completed') then
 		if aby_bic == 0 then
