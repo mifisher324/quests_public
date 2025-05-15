@@ -10,8 +10,8 @@ function event_say(e)
 			e.other:SummonItem(67526); -- Item: Rondo's Report
       e.other:SetBucket("god.bic.ferubi", "4")
 		end
-		eq.set_global("god_vxed_access", "1", 5, "F");
-		e.other:Message(MT.LightBlue, "You receive a character flag!");
+    e.other:SetAccountBucket("god.flags.ferubi", "1");
+    e.other:Message(MT.LightBlue, "You receive a character flag!");
 	end
 end
 
