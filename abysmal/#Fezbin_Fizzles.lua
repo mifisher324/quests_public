@@ -1,7 +1,7 @@
 function rescout(client, zone_name, bucket, finished, giver)
   if client:GetBucket(bucket) == finished then 
     client:Message(MT.NPCQuestSay, "Fezbin looks at you, puzzled.  'You have already completed the scouting of " .. zone_name .. "according to my records.'")
-  else:
+  else
     client:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Done.  I will inform " .. giver .. "that you are starting from the beginning in scouting " .. zone_name .. ".")
     client:SetBucket(bucket, "0")
   end
@@ -97,10 +97,9 @@ function event_say(e)
       rescout_zone(e.other, "Kod'taz", 'god.bic.kodtaz', 4, 'L`diava Rexxen')
     end
     if e.message:findi('yxtta') then
-      rescout_zone(e.other, 'Yxtta', 'god.bic.yxtta', 3, 'L`diava Rexxen')A
+      rescout_zone(e.other, 'Yxtta', 'god.bic.yxtta', 3, 'L`diava Rexxen')
     end
   end
- end
 
   if e.message:findi('completed') then
 		if aby_bic == 0 then

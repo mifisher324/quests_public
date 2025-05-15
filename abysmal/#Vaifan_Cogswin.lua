@@ -73,7 +73,7 @@ function event_trade(e)
         e.other:SummonItem(67538)
         e.other:SummonItem(67577)
         e.other:SetBucket("god.bic.mountains", "1")
-      else:
+      else
         e.other:SummonItem(67553)
         e.other:SetBucket("god.bic.tipt_stone", "1")
       end
@@ -95,7 +95,7 @@ function event_trade(e)
         e.other:SummonItem(67538)
         e.other:SummonItem(67577)
         e.other:SetBucket("god.bic.mountains", "1")
-      else:
+      else
         e.other:SummonItem(67568)
         e.other:SetBucket("god.bic.vxed_stone", "1")
       end
@@ -115,7 +115,7 @@ function event_trade(e)
         e.other:SummonItem(67538)
         e.other:SummonItem(67577)
         e.other:SetBucket("god.bic.mountains", "1")
-      else:
+      else
         e.other:SummonItem(67535)
         e.other:SetBucket("god.bic.sewer_stone", "1")
       end

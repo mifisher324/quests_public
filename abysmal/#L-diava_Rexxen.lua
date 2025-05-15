@@ -44,7 +44,7 @@ function event_trade(e)
       e.other:SetBucket("god.bic.kodtaz", "2")
       e.other:SummonItem(67702)
     end
-  else:
+  else
     item_lib.return_items(e.self, e.other, e.trade)
   end
 

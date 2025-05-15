@@ -14,7 +14,7 @@ end
 function event_trade(e)
   local riw_bic = tonumber(e.other:GetBucket("god.bic.riwwi")) or 0
   local rep = e.other:GetFaction(e.self)
-  local item-lib = require("items")
+  local item_lib = require("items")
 
   if rep > 2 then
     e.other:Message(MT.NPCQuestSay, "Pandula Bubundu shies away from the items you are trying to hand her.  Perhaps she would be more receptive if you were to gain the trust of her people somehow?")

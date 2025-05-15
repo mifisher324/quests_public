@@ -204,12 +204,18 @@ function Kreshin_Signal(e)
 end
 
 function Kreshin_Trade(e)
+  local qin_bic = tonumber(e.other:GetBucket("god.bic.qinimi")) or 0
 	local item_lib = require("items");
 	if event_success  == 1 then
 		if item_lib.check_turn_in(e.trade, {item1 = 67415}) then -- Item: Stone of Entry
-			e.self:Say("You have done well to get this far. Please, take this to Taminoa and tell him it is vital that he decipher it. I must stay here to investigate more. Let him know I am safe and thank you again.");
-      		e.other:SummonItem(67415); -- Item: Stone of Entry
-      		e.other:SummonItem(67401); -- Item: Writ of the Magi
+      if qin_bic == 4 then
+			  e.self:Say("You have done well to get this far. Please, take this to Taminoa and tell him it is vital that he decipher it. I must stay here to investigate more. Let him know I am safe and thank you again.");
+      	e.other:SummonItem(67415); -- Item: Stone of Entry
+      	e.other:SummonItem(67401); -- Item: Writ of the Magi
+        e.other:SetBucket("god.bic.qinimi", "5")
+      else
+        item_lib.return_items(e.self, e.other, e.trade)
+      end
 		end
 	else
 		e.self:Emote("looks at you with pleading eyes. 'You've come just in time. Help me!"); --cannot turn in item until event won

@@ -8,6 +8,7 @@ local raid_id_by_thunder_dome	= {};
 local zone_id					= eq.get_zone_id();
 
 function event_say(e)
+  local qglobals = eq.get_qglobals(e.self, e.other)
 	local instance_id = eq.get_zone_instance_id();
 	local raid = e.other:GetRaid();
 	local raid_id = raid:GetID();
@@ -16,7 +17,7 @@ function event_say(e)
 	local event_up_3 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[3]);
 	local x = e.self:GetX();
 	local y = e.self:GetY();
-  local qin_bic = tonumber(e.other:GetBucket("god.bic.qin")) or 0
+  local qin_bic = tonumber(e.other:GetBucket("god.bic.qinimi")) or 0
 
 	if x == -1831.30 and y == 1639.81 then
 		if e.message:findi("depart") then
@@ -29,7 +30,7 @@ function event_say(e)
 				e.other:MovePCInstance(zone_id, instance_id, unpack(hut_locs));
 			end
 		elseif e.message:findi("hail") then
-			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Amazing!  I did not believe that anyone could stand up to the commanders of these muramite forces and live to tell the tale!  I hope you found something useful in your search of her body.  If you are ready to [" eq.say_link("depart") .. "] this place, please just say so.'");
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Amazing!  I did not believe that anyone could stand up to the commanders of these muramite forces and live to tell the tale!  I hope you found something useful in your search of her body.  If you are ready to [" .. eq.say_link("depart") .. "] this place, please just say so.'");
 		end
 	elseif qin_bic == 7 then
 		if e.message:findi("ritual") then
@@ -92,13 +93,13 @@ function event_signal(e)
 end
 
 function event_trade(e)
-  local qin_bic = tonumber(e.other:GetBucket("god.bic.qin")) or 0
+  local qin_bic = tonumber(e.other:GetBucket("god.bic.qinimi")) or 0
 	local item_lib = require("items");
 
 	if item_lib.check_turn_in(e.trade, {item1 = 67700}) then -- Item: Kreshin's Journal Page
     if qin_bic == 2 then
 		  e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Yes, I have seen this and others like it before. While we do not understand where it comes from, we have come to the conclusion that these strange glyphs express somthing important to your people. These particular glyphs were made by the small one they hold captive in the courtroom. If you wish to help him, you will have to retrieve the [" .. eq.say_link("stone of entry") .. "]. Only with this stone can you enter the courtroom and help the one who calls himself Kreshin.");
-      e.other:SetBucket("god.bic.qin", "3")
+      e.other:SetBucket("god.bic.qinimi", "3")
     else
       item_lib.return_items(e.self, e.other, e.trade)
     end
@@ -108,7 +109,7 @@ function event_trade(e)
     if qin_bic == 3 then
 		  e.other:Message(MT.NPCQuestSay, "Sislono covers the three pieces in his hands, closes his eyes, and begins to chant. A glow begins to emanate from his hands and he begins to chant louder. Then, just as quickly as it began, the glow in his hands dims and the chanting stops. 'There you are -- the key which grants you and your party access to the courtroom. Just stand on the pedestal in the center of the large building in this part of the city with the key in your hand and say you wish to enter. There is one more [" .. eq.say_link("thing") .. "] I must tell you before you go.'");
       e.other:SummonItem(67415)
-      e.other:SetBucket("god.bic.qin", "4")
+      e.other:SetBucket("god.bic.qinimi", "4")
     else
       item_lib.return_items(e.self, e.other, e.trade)
     end
@@ -117,7 +118,7 @@ function event_trade(e)
   if item_lib.check_turn_in(e.trade, {item1 = 67403}) then -- Item: Writ of the Magi
     if qin_bic == 6 then
 		  e.other:Message(MT.NPCQuestSay, "These glyphs look quite familiar. They are definitely in my language, but it seems as if the one who etched them did so against his will. Where did you get this? Wait, don't tell me. I know. Kreshin must have been successful in finding out what was going on in the Chamber of Souls. These glyphs detail how to animate stone using our geomancy abilities. There are some strange symbols toward the bottom, but for the most part, this is our language. Could he be trying to conduct the [" .. eq.say_link("ritual") .. "] of my people?'");
-      e.other:SetBucket("god.bic.qin", "7")
+      e.other:SetBucket("god.bic.qinimi", "7")
 		end
 	end
 	item_lib.return_items(e.self, e.other, e.trade)
