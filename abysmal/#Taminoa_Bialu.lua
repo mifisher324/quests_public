@@ -95,7 +95,7 @@ function event_trade(e)
     end
   end
 
-  if item_lib.check_turn_in(e.trade, {item = 67417}) then
+  if item_lib.check_turn_in(e.trade, {item1 = 67417}) then
     if riw_bic == 5 then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Reyna was a skilled scout who had spent many years honing her abilities. Learning that she died so horribly upsets the stomach, but she died trying to help others. Yes . . . that's what we should focus on. This report you have returned will be a great help to us and this reward should help you as well. It was wrapped in the report and appears to be a gem fragment that may fit into the stone Fezbin gave you. Now to the rest of the city. Hopefully we can prevent our other scouts from suffering the same fate as Reyna.'")
       e.other:SetBucket("god.bic.riwwi", "6")

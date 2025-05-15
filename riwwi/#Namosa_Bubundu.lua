@@ -27,7 +27,7 @@ function event_trade(e)
   if rep > 2 then
     e.other:Message(MT.NPCQuestSay, "Namosa Bubundu shies away from the items you are trying to hand her.  Perhaps she would be more receptive if you were to gain the trust of her people somehow?")
   else
-    if item_lib.check_turn_in(e.trade, {item1 = 52718}) then
+    if item_lib.check_turn_in(e.trade, {item1 = 52178}) then
       if riw_bic >= 2 then
         e.other:Message(MT.NPCQuestSay, "Namosa Bubundu gasps, 'What?! Oh no, this isn't good at all. She isn't supposed to die. I am! Quick, go and see Councilman Tentric in Qinimi and let him know what's happening. He has always helped our family when we were in need. If you bring this token he will know I sent you!'")
         e.other:SummonItem(52176)

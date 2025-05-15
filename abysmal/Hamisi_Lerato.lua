@@ -20,5 +20,5 @@ function event_trade(e)
 end
 
 function event_signal(e)
-  e.other:Message(MT.NPCQuestSay, "Hamisi Lerato looks indecisive for a moment, then says, 'I'll try the malt beer, thanks.'")
+  e.self:Emote("Hamisi Lerato looks indecisive for a moment, then says, 'I'll try the malt beer, thanks.'")
 end

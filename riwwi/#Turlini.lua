@@ -83,11 +83,11 @@ function event_trade(e)
         e.other:Message(MT.Yellow, "You have received a character flag!")
         e.other:Message(MT.NPCQuestSay, "Turlini says 'I can't wait to be reunited with my family! Let's get out of this place.'")
         e.other:Message(MT.NPCQuestSay, "Turlini kicks the shackles from their legs. 'Quick, to the exits!'")
-        e.other:Depope(282098)
-        e.other:DepopWithtimer(282049)
-        e.other:DepopWithtimer(282056)
-        e.other:DepopWithtimer(282048)
-        e.other:DepopWithtimer()
+        eq.depop(282098)
+        eq.depop_with_timer(282049)
+        eq.depop_with_timer(282056)
+        eq.depop_with_timer(282048)
+        eq.depop_with_timer()
       end
     end
   end
