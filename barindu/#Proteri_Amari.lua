@@ -2,16 +2,16 @@ function event_say(e)
   local bar_bic = tonumber(e.other:GetBucket("god.bic.barindu")) or 0
   local rep = e.other:GetFaction(e.self)
   
-  if e.message:findi('hail') then
-    e.other:Message(MT.NPCQuestSay, "Proteri Amari glances around nervously. 'Leave me be. I can't be seen talking to outsiders.'")
-  end
 
   if rep > 2 then
     e.other:Message(MT.NPCQuestSay, "Proteri Amari looks at you with fear visible in his eyes, and he shakes his head.  Perhaps he will speak to you further if you were to gain the trust of the Nihil somehow...")
   else
+    if e.message:findi('hail') then
+      e.other:Message(MT.NPCQuestSay, "Proteri Amari glances around nervously. 'Leave me be. I can't be seen talking to outsiders.'")
+    end
     if bar_bic == 2 then
       if e.message:findi('talwin') then
-        e.other:Message(MT.NPCQuestSay, "'Yes ... Talwin. He and I were becoming fast friends until Ixvet took him. I am not sure what has happend to him, but if you would be [" .. eq.say_link("interested") .. "] in helping me I may be able to assist you in return.'")
+        e.other:Message(MT.NPCQuestSay, "Proteri Amari says 'Yes ... Talwin. He and I were becoming fast friends until Ixvet took him. I am not sure what has happend to him, but if you would be [" .. eq.say_link("interested") .. "] in helping me I may be able to assist you in return.'")
       end
       if e.message:findi('interested') then
         e.other:Message(MT.NPCQuestSay, "Proteri Amari says 'Good, good. As you may have noticed, the majority of these creatures are brutish types best suited for destruction. They are kept under control solely by strong [" .. eq.say_link("leadership") .. "].'")

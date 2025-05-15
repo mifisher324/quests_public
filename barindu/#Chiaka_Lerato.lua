@@ -14,6 +14,7 @@ function event_trade(e)
     if bar_bic == 8 then
       e.self:Say("How did you. . . Never mind. I'd know this shawl anywhere and it can only mean one thing. Mother needs me. I haven't heard from my brother or mother since they escaped and I thought they might be dead. I should have left with them when I had the chance. Fortunately, Hamisi told me of his plans. I should be able to use the same route he did to escape. Here, take this. I won't need it any more.");
       e.other:SummonItem(64009)
+      e.other:SetBucket("god.bic.barindu", "9")
       eq.start(56);
     end
   end

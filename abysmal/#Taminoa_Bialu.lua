@@ -14,33 +14,39 @@ function event_say(e)
     end
 
     -- Qinimi
-    if e.message:findi('qinimi') then
-      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'It appears the Muramites have made this some sort of stronghold. Destroying many of the native symbols, the invaders have converted the building that once served as the court into fortified headquarters. It is here you will find a structure called the Chamber of Souls, various pens to hold ukun, and a moat of sickly black sludge. The structures that the nihil once called home are all but destroyed now. Very sad indeed. That's where the legion keeps the bulk of the [" .. eq.say_link("slaves") .. "]. I believe that the scout for this area was caught sneaking around the housing district, but I have no proof. If you were to search this area, maybe you would find some sort of sign or marker he may have left. That would be helpful.'")
-    end
-    if e.message:findi('slaves') then
-      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'I see Fezbin saved some of the more dismal news for me. The legion has enslaved the natives of the continent. In the city area, these slaves are used mainly for menial tasks. Due to their fragile bodies, they cannot do any heavy lifting, but their knowledge of shaping stone makes them perfect for building new structures for the legion to use as well as altering current ones. They command the stone workers. I am not sure how the slaves are used in the temple areas. That information is held by L`diava.'")
-      if qin_bic == 0 then
+    if qin_bic == 0 then
+      if e.message:findi('qinimi') then
+        e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'It appears the Muramites have made this some sort of stronghold. Destroying many of the native symbols, the invaders have converted the building that once served as the court into fortified headquarters. It is here you will find a structure called the Chamber of Souls, various pens to hold ukun, and a moat of sickly black sludge. The structures that the nihil once called home are all but destroyed now. Very sad indeed. That's where the legion keeps the bulk of the [" .. eq.say_link("slaves") .. "]. I believe that the scout for this area was caught sneaking around the housing district, but I have no proof. If you were to search this area, maybe you would find some sort of sign or marker he may have left. That would be helpful.'")
+      end
+      if e.message:findi('slaves') then
+        e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'I see Fezbin saved some of the more dismal news for me. The legion has enslaved the natives of the continent. In the city area, these slaves are used mainly for menial tasks. Due to their fragile bodies, they cannot do any heavy lifting, but their knowledge of shaping stone makes them perfect for building new structures for the legion to use as well as altering current ones. They command the stone workers. I am not sure how the slaves are used in the temple areas. That information is held by L`diava.'")
         e.other:SetBucket("god.bic.qinimi", "1")
       end
     end
 
     -- Barindu
-    if e.message:findi('barindu') then
-      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'This area holds the remains of what was once a place to build stone workers. We can only guess what purpose this part of the city served and all we know now is that it is home to some of the cruelest acts of violence against the nihil. I assigned this area to Talwin, a young wood elf new to the brotherhood. He was a proven scout eager to assist. Initially things were going well, but the information he was sending was not helping much. I think this worried him and resulted in him pushing his luck a little far. Ever since I told him his reports were lacking the vital evidence we needed I have not heard from him. Before Falcin passed on, I asked him if he had found anything out about Talwin and he shook his head. I know Talwin is still alive . . . he has to be . . . and I know that there must be some clues in the area of Barindu somewhere. He was diligent about recording what he found so I would assume that if he has been captured that his writings must be lying around the area somewhere. See if you can find two of his journal entries and bring them back to me. When you return please give what you find to my assistant Opury Foop. She is trying to help me organize my reports a little better.'")
-      e.other:SetBucket("god.bic.barindu", "1")
+    if bar_bic == 0 then
+      if e.message:findi('barindu') then
+        e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'This area holds the remains of what was once a place to build stone workers. We can only guess what purpose this part of the city served and all we know now is that it is home to some of the cruelest acts of violence against the nihil. I assigned this area to Talwin, a young wood elf new to the brotherhood. He was a proven scout eager to assist. Initially things were going well, but the information he was sending was not helping much. I think this worried him and resulted in him pushing his luck a little far. Ever since I told him his reports were lacking the vital evidence we needed I have not heard from him. Before Falcin passed on, I asked him if he had found anything out about Talwin and he shook his head. I know Talwin is still alive . . . he has to be . . . and I know that there must be some clues in the area of Barindu somewhere. He was diligent about recording what he found so I would assume that if he has been captured that his writings must be lying around the area somewhere. See if you can find two of his journal entries and bring them back to me. When you return please give what you find to my assistant Opury Foop. She is trying to help me organize my reports a little better.'")
+        e.other:SetBucket("god.bic.barindu", "1")
+      end
     end
   
     -- Riwwi
-    if e.message:findi('riwwi') then
-      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Riwwi has to be the most interesting of all of the city areas. You see, this is where the coliseum is located. Now, we are not completely aware of how it was used before this invading army took up residence in the area, but now it is used for the merciless slaughter of the nihil. Early reports from our scout, Reyna, indicate that the slaves in the area would not interact with her until she proved herself. How she was able to do this I am not sure, but I would suggest trying to find something of Reyna's while I go over my Riwwi information. Come back to me when you find something.'")
-      e.other:SetBucket("god.bic.riwwi", "1")
+    if riw_bic == 0 then
+      if e.message:findi('riwwi') then
+        e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Riwwi has to be the most interesting of all of the city areas. You see, this is where the coliseum is located. Now, we are not completely aware of how it was used before this invading army took up residence in the area, but now it is used for the merciless slaughter of the nihil. Early reports from our scout, Reyna, indicate that the slaves in the area would not interact with her until she proved herself. How she was able to do this I am not sure, but I would suggest trying to find something of Reyna's while I go over my Riwwi information. Come back to me when you find something.'")
+        e.other:SetBucket("god.bic.riwwi", "1")
+      end
     end
 
     -- Ferubi
-    if e.message:findi('ferubi') then
+    if fer_bic == 0 then
+      if e.message:findi('ferubi') then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'The area called Ferubi was once a Taelosian temple. Now it is a place that reeks of pain and suffering. The invading army has desecrated the temple and the slaves within endure unimaginable torture. Based on the information our scout Smith Rondo sent to me before his disappearance, the invaders use this area to craft weaponry and conduct strange experiments. Smith's ability to sneak in and out of places quickly made him the ideal choice for this job, but like most of our other scouts he eventually got caught trying to reveal a vital piece of information. We have confirmed that he is still alive and I need you to go find him and give him this. It is a special farstone attuned to his aura so only he can use it. Please make haste in your mission, but be careful. You are entering the lion's den and if you are caught, I cringe to think what will happen.'")
-      e.other:SummonItem(67519)
-      e.other:SetBucket('god.bic.ferubi', '1')
+        e.other:SummonItem(67519)
+        e.other:SetBucket('god.bic.ferubi', '1')
+      end
     end
   end
 

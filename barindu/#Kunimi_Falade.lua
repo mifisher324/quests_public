@@ -37,7 +37,7 @@ function event_trade(e)
         item_lib.return_items(e.self, e.other, e.trade)
       end
     end
-    if item_lib.check_turn_in(e.trade {item1 = 64002, item2 = 64003, item3 = 64004, item4 = 64005}) then
+    if item_lib.check_turn_in(e.trade, {item1 = 64002, item2 = 64003, item3 = 64004, item4 = 64005}) then
       if bar_bic == 4 then
         e.other:Message(MT.NPCQuestSay, "Kunimi Falade takes the ingredients and gets to work. Within a few minutes, she produces a viscous green liquid. Plucking a bunch of fruit from the nearby plant, she coats the fruit in the poison.")
         e.other:Message(MT.NPCQuestSay, "Kunimi Falade says 'That should do it. I can't be positive that this will do more than give Ixvet an upset stomach, but we can hope. Please take this to Proteri Amari.'")

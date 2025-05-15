@@ -5,6 +5,7 @@ function event_trade(e)
     if bar_bic == 6 then
 			e.self:Say("Proteri sent word that you would be coming. I have bad news. It seems Ixvet has gotten wind of a plot on his life and has grown paranoid. He has started changing his personal servants on a regular basis and I was replaced by Chiaka Lerato yesterday. I'm afraid that I'm not going to be able to help you anymore. Please, keep the fruit for now.");
 			e.other:SummonItem(64010); --poisoned fruit
+      e.other:SetBucket("god.bic.barindu", "7")
     else
     	item_lib.return_items(e.self, e.other, e.trade)
     end
@@ -27,6 +28,7 @@ function event_waypoint_arrive(e)
   if (e.wp == 9) then
     e.self:Say("Ikaav Ixvet Pox, I humbly present you with your meal.");
     eq.signal(283050,1,6000); --signal iip
+    e.self:SetPseudoRoot(true)
   end
  end
       

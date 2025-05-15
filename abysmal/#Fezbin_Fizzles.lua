@@ -53,7 +53,7 @@ function event_say(e)
 
   if aby_bic >= 1 then
     if e.message:findi('hail') then
-      e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello again, " .. e.other:GetCleanName() .. ", do you need another [" .. eq.say_link("crystal") .. "] or [" .. eq.say_link("resealer") .. "]?  Or has something gone awry with your scouting and you need to [" .. eq.say_link("rescout") .. " an area?'")
+      e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello again, " .. e.other:GetCleanName() .. ", do you need another [" .. eq.say_link("crystal") .. "] or [" .. eq.say_link("resealer") .. "]?  Or has something gone awry with your scouting and you need to [" .. eq.say_link("rescout") .. "] an area?'")
     end
     if e.message:findi('crystal') then
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles scrounges around the room for a moment before returning with a familiar white crystal.  'Here you are, try not to lose this one.'")
