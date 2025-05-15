@@ -3,12 +3,12 @@ function event_spawn(e)
 end
 
 function event_say(e)
-local qglobals = eq.get_qglobals(e.other);
-	if(e.message:findi("hail")) then
-		if qglobals["bic_fer"] ~= nil and qglobals["bic_fer"] == "10" then
-			e.other:Message(MT.LightBlue, "You feel a chill surround your body as a voice enters your mind. 'Thank you for releasing me from an eternity of suffering. Now you must help the others on this continent whose fate I fear is much worse than mine. You must seek out Apprentice Udranda in Barindu. She can help you gain access to the temples beyond the mountain passes.");
+  local fer_bic = tonumber(e.other:GetBucket("god.bic.ferubi")) or 0
+	if e.message:findi("hail") then
+		e.other:Message(MT.LightBlue, "You feel a chill surround your body as a voice enters your mind. 'Thank you for releasing me from an eternity of suffering. Now you must help the others on this continent whose fate I fear is much worse than mine. You must seek out Apprentice Udranda in Barindu. She can help you gain access to the temples beyond the mountain passes.");
+    if fer_bic == 3 then
 			e.other:SummonItem(67526); -- Item: Rondo's Report
-			eq.set_global("bic_fer", "11", 5, "F");
+      e.other:SetBucket("god.bic.ferubi", "4")
 		end
 		eq.set_global("god_vxed_access", "1", 5, "F");
 		e.other:Message(MT.LightBlue, "You receive a character flag!");
