@@ -144,7 +144,7 @@ function event_say(e)
   end
 
 	if aby_bic == 2 then
-		if e.message.findi('interesting information') then
+		if e.message:findi('interesting information') then
 			e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Where are my manners? I should have known someone as adventurous as you would be interested in this. One of our researching experts by the name of Beanalle has recently discovered some very intriguing information about the temples beyond Yxtta and Kod'Taz.'")
 		end
 	end

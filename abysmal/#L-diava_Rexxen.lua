@@ -27,6 +27,7 @@ function event_trade(e)
   local yxt_bic = tonumber(e.other:GetBucket("god.bic.yxtta")) or 0
   local kod_bic = tonumber(e.other:GetBucket("god.bic.kodtaz")) or 0
   local item_lib = require("items")
+  eq.debug("yxtta flag " .. tostring(yxt_bic))
 
   if item_lib.check_turn_in(e.trade, {item1 = 67562}) then
     if kod_bic == 3 then
@@ -43,12 +44,13 @@ function event_trade(e)
       e.other:Message(MT.NPCQuestSay, "L`diava Rexxen says 'Oh, thank you brave adventurer. We are now one step closer to finding out what happened to Kitren. Now, give me one second to look through the cloak here and . . . here it is, Kitren's notebook. There must be some information here that can help us more. While I read through this, I need you to return to Kevren Nalavat. He believes he may have found more clues to Kitren's whereabouts and since you did such a good job with the trials he believes you may be able to help him. Even though you have proven yourself by defeating the trials, he will not give you what I need unless you help him. When you return to him, show him this letter and it will confirm my trust in you. Hurry now. There no time to waste!'")
       e.other:SetBucket("god.bic.kodtaz", "2")
       e.other:SummonItem(67702)
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
     end
-  else
-    item_lib.return_items(e.self, e.other, e.trade)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 67555}) then
+    eq.debug('IN THE TURN IN')
     if yxt_bic == 1 then
       e.other:Message(MT.NPCQuestSay, "L`diava Rexxen says 'Thank you for returning this to me. I wish the circumstances could have been different, but in honor of her memory, we will use this information to prevent the needless death of any other scouts. Now let me see what is written here. Hm. Seems she stumbled onto a secret ritual of some sort in an underground temple, called Uqua. Looks like the Muramites may be trying to reproduce another tear in space. This does not bode well for anyone. We must find out more about this. I must ask that you return to Yxtta and see if you can find any more of Xounii's entries. I cannot tell you where to start looking, but it seems that the best place to look would be in the caves where you found her. Xounii was very diligent about her reports so she would have written much about this. Try to find four more pieces of her journal entries and return them to me.'")
       e.other:SetBucket("god.bic.yxtta", "2")
@@ -66,4 +68,5 @@ function event_trade(e)
       item_lib.return_items(e.self, e.other, e.trade)
     end
   end
+  item_lib.return_items(e.self, e.other, e.trade)
 end

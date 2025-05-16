@@ -88,7 +88,7 @@ function event_trade(e)
     if vxe_bic == 1 then
       e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'I can't believe you did it. Not a bad job if I do say so myself. You may have a future in tinkering my young friend. Now, if you will give me one second to change a few things and rip this part out, adjust this here, add a couple of these, and there you go, a nice new clockwork frame. Now we just need to collect the rest of the pieces to rebuild him. Oh, and before I forget, here is a reward for helping me out. Let me know if you wish to explore any of the other areas by asking me about them.'")
       e.other:SetBucket("god.bic.vxed", "2")
-      e.other:SummonItem(67554)
+      e.other:SummonItem(67539)
       vxe_bic = 2
       if sew_bic == 2 and vxe_bic == 2 and tip_bic == 2 then
         e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Now that we have all the functioning pieces, we can reassemble the scout. Take these instructions and this power pack adapter and return to either mountain area to assemble the scout. I would have you do it here, but I fear he may be unstable and . . . well, let's just say I don't want to put the ship in danger. Please return to me with the report once you have it. I am going to prepare my final report so when you return I can take it straight to Fezbin. Good luck to you.'")

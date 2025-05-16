@@ -365,6 +365,7 @@ end
 
 function event_trade(e)
   local kt_flag = tonumber(e.other:GetAccountBucket("god.flags.kt")) or 0
+  local bic_kod = tonumber(e.other:GetBucket("god.bic.kodtaz")) or 0
   local item_lib = require("items")
 
   if item_lib.check_turn_in(e.trade, {item1 = 60141, item2 = 60142, item3 = 60143, item4 = 60144}) then
@@ -422,7 +423,14 @@ function event_trade(e)
     end
   end
 
-  --TODO: Add the bic turnin
+  if item_lib.check_turn_in(e.trade, {item1 = 67702}) then
+    if bic_kod == 2 then
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Seems you have made quite an impression if you are trusted by L`diava. But don't think that this means you do not have to gain my trust. While you survived the three trials I am still in need of assistance, I some [" .. eq.say_link('other tasks') .. "] completed, when you have finished them please return to me and tell me you have done all I asked and I will give you what you came here for. If you do not wish to start these tasks right now we do have some time to talk a little [" .. eq.say_link("more") .. "].'")
+      e.other:SetBucket("god.bic.kodtaz", "3")
+    else
+      item_lib.return_items(e.self, e.other, e.trade)
+    end
+  end
 
   item_lib.return_items(e.self, e.other, e.trade)
 end
