@@ -87,6 +87,7 @@ end
 
 function event_enter(e)
 	eq.debug("Entered Gas Chamber 1");
+  e.other:Message(MT.Yellow, "You suddenly hear the voice of Jerimo Jiao in your mind, 'Select one key and only one key at a time.  Attempting to hold on to multiple will lead to disaster...'")
 	if completed then
 		eq.get_entity_list():FindDoor(9):SetLockPick(0);
 		eq.get_entity_list():FindDoor(9):ForceOpen(e.self);
