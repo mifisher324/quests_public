@@ -30,6 +30,11 @@ function event_say(e)
     if e.message:findi('slaves') then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'I see Fezbin saved some of the more dismal news for me. The legion has enslaved the natives of the continent. In the city area, these slaves are used mainly for menial tasks. Due to their fragile bodies, they cannot do any heavy lifting, but their knowledge of shaping stone makes them perfect for building new structures for the legion to use as well as altering current ones. They command the stone workers. I am not sure how the slaves are used in the temple areas. That information is held by L`diava.'")
     end
+    if e.message:findi('ferubi') then
+      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'The area called Ferubi was once a Taelosian temple. Now it is a place that reeks of pain and suffering. The invading army has desecrated the temple and the slaves within endure unimaginable torture. Based on the information our scout Smith Rondo sent to me before his disappearance, the invaders use this area to craft weaponry and conduct strange experiments. Smith's ability to sneak in and out of places quickly made him the ideal choice for this job, but like most of our other scouts he eventually got caught trying to reveal a vital piece of information. We have confirmed that he is still alive and I need you to go find him and give him this. It is a special farstone attuned to his aura so only he can use it. Please make haste in your mission, but be careful. You are entering the lion's den and if you are caught, I cringe to think what will happen.'")
+      e.other:SummonItem(67519)
+      e.other:AssignTask(bic_ferubi)
+    end
   end
 end
 
@@ -52,6 +57,17 @@ function event_trade(e)
     e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'You have returned bruised, but not broken I see. I am disappointed to hear that he got away, but you are not at fault. We could not foresee how crafty these beings would be. The information you have given us will be invaluable. Fezbin will be pleased. Kreshin told me to give this to you. He believes it may be one of the fragments that will fit into the stone Fezbin gave you. Who knows, if you help me find the rest of our scouts we may yet find more fragments.'")
     e.other:UpdateTaskActivity(bic_qinimi, 13, 1)
     e.other:UpdateTaskActivity(bic_abysmal, 0, 1)
+  end
+
+  if item_lib.check_turn_in(e.trade, {item1 = 67520}) then --Sealed Report
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Ah. Glad to see you return and report that you found Smith. Let me see, what does it say here . . . oh my, I can't believe this. These beings are truly insane. This is a detailed account of the experiments the Muramites have been conducting on the natives and on Smith. If what is listed here is true, we must find out more about this. It says that this is one of two reports he wrote, so we must assume he still has the other one on him. It also says here that the weapon master has access to the mountain area that leads to a secret way into the temples where they conduct these experiments. Oh, poor Smith. As soon as he figured out what was going on he documented it, hoping that he could somehow get it back to us without them finding out. Hm . . . here at the bottom he gives details about the weapon master. Seems he only enters the Ferubi area to fix the weapons that his four elite guards use. Knowing this, I am sure we can trick him into appearing. You must return to Ferubi and find his elite guards and collect a different weapon from each of them, but remember the weapon has to be damaged. Sounds like this is pretty durable stuff they use, so it may take some time to accomplish this. Either way, once it is done I would suggest giving the pieces to Smith and asking him to help.'")
+    e.other:UpdateTaskActivity(bic_ferubi, 1, 1)
+  end
+
+  if item_lib.check_turn_in(e.trade, {item1 = 67526}) then --Rondo's Report
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'You have now finished the scouting of the city.  Take this as a reward.'")
+    e.other:UpdateTaskActivity(bic_ferubi, 5, 1)
+    e.other:UpdateTaskActivity(bic_abysmal, 3, 1)
   end
 
   item_lib.return_items(e.self, e.other, e.trade)
