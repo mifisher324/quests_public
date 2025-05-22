@@ -23,17 +23,21 @@ function event_say(e)
     if e.message:findi('city') then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Well, it appears the native inhabitants of Taelosia lived in a grand city once. This city is made up of four different areas named in their language. They are [" .. eq.say_link('Qinimi') .. "], [" .. eq.say_link('Riwwi') .. "], [" .. eq.say_link('Barindu') .. "], and [" .. eq.say_link('Ferubi') .. "]. Based off of early information, we believe each area had a specific purpose. I am still trying to decipher the native language to figure out what the names mean, but going off of visual information I can assume that Qinimi served as their court, Riwwi is where they held games, Barindu was a lush garden, and Ferubi was a central place of worship once. That is about the extent of my information as far as the intended purpose of each area. What they are now used for I can explain in further detail. Which area would you like to hear more about?'")
     end
-    if e.message:findi('qinimi') and not e.other:IsTaskActive(bic_qinimi) then
+    if e.message:findi('qinimi') and not e.other:IsTaskActive(bic_qinimi) and not e.other:IsTaskCompleted(bic_qinimi) then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'It appears the Muramites have made this some sort of stronghold. Destroying many of the native symbols, the invaders have converted the building that once served as the court into fortified headquarters. It is here you will find a structure called the Chamber of Souls, various pens to hold ukun, and a moat of sickly black sludge. The structures that the nihil once called home are all but destroyed now. Very sad indeed. That's where the legion keeps the bulk of the [" .. eq.say_link('slaves') .. "]. I believe that the scout for this area was caught sneaking around the housing district, but I have no proof. If you were to search this area, maybe you would find some sort of sign or marker he may have left. That would be helpful.'")
       e.other:AssignTask(bic_qinimi)
     end
     if e.message:findi('slaves') then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'I see Fezbin saved some of the more dismal news for me. The legion has enslaved the natives of the continent. In the city area, these slaves are used mainly for menial tasks. Due to their fragile bodies, they cannot do any heavy lifting, but their knowledge of shaping stone makes them perfect for building new structures for the legion to use as well as altering current ones. They command the stone workers. I am not sure how the slaves are used in the temple areas. That information is held by L`diava.'")
     end
-    if e.message:findi('ferubi') then
+    if e.message:findi('ferubi') and not e.other:IsTaskActive(bic_ferubi) and not e.other:IsTaskCompleted(bic_ferubi) then
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'The area called Ferubi was once a Taelosian temple. Now it is a place that reeks of pain and suffering. The invading army has desecrated the temple and the slaves within endure unimaginable torture. Based on the information our scout Smith Rondo sent to me before his disappearance, the invaders use this area to craft weaponry and conduct strange experiments. Smith's ability to sneak in and out of places quickly made him the ideal choice for this job, but like most of our other scouts he eventually got caught trying to reveal a vital piece of information. We have confirmed that he is still alive and I need you to go find him and give him this. It is a special farstone attuned to his aura so only he can use it. Please make haste in your mission, but be careful. You are entering the lion's den and if you are caught, I cringe to think what will happen.'")
       e.other:SummonItem(67519)
       e.other:AssignTask(bic_ferubi)
+    end
+    if e.message:findi('riwwi') and not e.other:IsTaskActive(bic_riwwi) and not e.other:IsTaskCompleted(bic_riwwi) then
+      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Riwwi has to be the most interesting of all of the city areas. You see, this is where the coliseum is located. Now, we are not completely aware of how it was used before this invading army took up residence in the area, but now it is used for the merciless slaughter of the nihil. Early reports from our scout, Reyna, indicate that the slaves in the area would not interact with her until she proved herself. How she was able to do this I am not sure, but I would suggest trying to find something of Reyna's while I go over my Riwwi information. Come back to me when you find something.'")
+      e.other:AssignTask(bic_riwwi)
     end
   end
 end
@@ -68,6 +72,17 @@ function event_trade(e)
     e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'You have now finished the scouting of the city.  Take this as a reward.'")
     e.other:UpdateTaskActivity(bic_ferubi, 5, 1)
     e.other:UpdateTaskActivity(bic_abysmal, 3, 1)
+  end
+
+  if item_lib.check_turn_in(e.trade, {item1 = 67510}) then --Reyna's Bloody Earring
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'This does not bode well for Reyna's fate. If I had to guess, I would say they took her to the coliseum. Knowing what we know about these strange beings, they would have taken her to the coliseum just so they could entertain themselves by torturing her. You must find a way into the coliseum and save Reyna. I think your best plan of action would be to locate and speak to Turlini and Namosa. They are two slaves Reyna mentioned in her reports. They may not talk to you if you have not proven yourself, but once you do that they should be pretty helpful. They may even know an easy way into the coliseum. Find these two and ask them about Reyna. Return to me when you find out more information about her.'")
+    e.other:UpdateTaskActivity(bic_riwwi, 0, 1)
+  end
+
+  if item_lib.check_turn_in(e.trade, {item1 = 67417}) then --Reyna's Scout Report
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Reyna was a skilled scout who had spent many years honing her abilities. Learning that she died so horribly upsets the stomach, but she died trying to help others. Yes . . . that's what we should focus on. This report you have returned will be a great help to us and this reward should help you as well. It was wrapped in the report and appears to be a gem fragment that may fit into the stone Fezbin gave you. Now to the rest of the city. Hopefully we can prevent our other scouts from suffering the same fate as Reyna.'")
+    e.other:UpdateTaskActivity(bic_riwwi, 12, 1)
+    e.other:UpdateTaskActivity(bic_abysmal, 2, 1)
   end
 
   item_lib.return_items(e.self, e.other, e.trade)
