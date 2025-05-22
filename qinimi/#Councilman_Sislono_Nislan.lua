@@ -31,7 +31,7 @@ function event_say(e)
 	local x = e.self:GetX();
 	local y = e.self:GetY();
 
-	if e.other:IsTaskActivityActive(bic_qinimi, 10) and x ~= -640 and y ~= 257 then
+	if x ~= -640 and y ~= 257 then
 		if e.message:findi("depart") then
 			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan nods his head and focuses on the small piece of rock.  In a flash, you are transported back to his hut.")
 			local instance_id = eq.get_zone_instance_id();
@@ -44,7 +44,7 @@ function event_say(e)
 		elseif e.message:findi("hail") then
 			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Amazing!  I did not believe that anyone could stand up to the commanders of these muramite forces and live to tell the tale!  I hope you found something useful in your search of her body.  If you are ready to [" .. eq.say_link("depart") .. "] this place, please just say so.'");
 		end
-  elseif e.other:IsTaskActivityActive(bic_qinimi, 11) or e.other:IsTaskActivityActive(bic_qinimi, 12) then
+  elseif e.other:IsTaskActivityActive(bic_qinimi, 11) or e.other:IsTaskActivityActive(bic_qinimi, 12) or e.other:GetGM() then
 		if e.message:findi("ritual") then
 			e.other:Message(MT.NPCQuestSay, "While animating stone comes easy for us, sometimes we need an extremely powerful stone worker to help with the city. These stone servants were made through a ritual which combined the power of eight geomancers into a ninth. This geomancer would then imbue a stone worker with this power, resulting in a more powerful construct. We stopped doing the ritual when we discovered that it could take away our ability over time. If [" .. eq.say_link('she') .. "] has somehow figured out a way to absorb this power, then my people could be in more danger than I thought possible.'");
 		elseif e.message:findi("she") then
@@ -67,6 +67,10 @@ function event_say(e)
 			else
 				thunder_dome_id = -1;					-- no thunder_dome_ids available
 			end
+
+      -- Force players into Thunder Dome 2
+      thunder_dome_id = 2
+      raid_id_by_thunder_dome[2] = raid_id;
 
 			if thunder_dome_id > 0 and thunder_dome_id < 4 and raid_id_by_thunder_dome[thunder_dome_id] == raid:GetID() then
 				local instance_id = eq.get_zone_instance_id();
