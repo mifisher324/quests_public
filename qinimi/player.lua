@@ -11,3 +11,9 @@ function event_loot(e)
 		end		
 	end
 end
+
+function event_player_pickup(e)
+  if e.item:GetID() == 67397 then
+    e.self:UpdateTaskActivity(8, 0, 1) --Update task 8, activity 0
+  end
+end
