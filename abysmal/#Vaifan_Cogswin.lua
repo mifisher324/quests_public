@@ -50,6 +50,7 @@ function event_trade(e)
   if item_lib.check_turn_in(e.trade, {item1 = 67536}) then --Outer Regions Scouting Report
     e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Excellent. It is always wonderful when something you invent works out. This was all I needed to finish up my report to Fezbin. Thank you once again. You have been very helpful. Once again I must reward you with this. When you brought the clockwork frame to me this fell out of it. I think it will go with your stone quite well. Try combining the two together and see what happens. I must say goodbye now.'")
     e.other:UpdateTaskActivity(bic_outer, 3, 1)
+    e.other:UpdateTaskActivity(bic_abysmal, 7, 1)
       if sewer_stone == 0 then
         e.other:SummonItem(67535)
       elseif vxed_stone == 0 then
