@@ -39,6 +39,10 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Riwwi has to be the most interesting of all of the city areas. You see, this is where the coliseum is located. Now, we are not completely aware of how it was used before this invading army took up residence in the area, but now it is used for the merciless slaughter of the nihil. Early reports from our scout, Reyna, indicate that the slaves in the area would not interact with her until she proved herself. How she was able to do this I am not sure, but I would suggest trying to find something of Reyna's while I go over my Riwwi information. Come back to me when you find something.'")
       e.other:AssignTask(bic_riwwi)
     end
+    if e.message:findi('barindu') and not e.other:IsTaskActive(bic_barindu) and not e.other:IsTaskComplete(bic_barindu) then
+      e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'This area holds the remains of what was once a place to build stone workers. We can only guess what purpose this part of the city served and all we know now is that it is home to some of the cruelest acts of violence against the nihil. I assigned this area to Talwin, a young wood elf new to the brotherhood. He was a proven scout eager to assist. Initially things were going well, but the information he was sending was not helping much. I think this worried him and resulted in him pushing his luck a little far. Ever since I told him his reports were lacking the vital evidence we needed I have not heard from him. Before Falcin passed on, I asked him if he had found anything out about Talwin and he shook his head. I know Talwin is still alive . . . he has to be . . . and I know that there must be some clues in the area of Barindu somewhere. He was diligent about recording what he found so I would assume that if he has been captured that his writings must be lying around the area somewhere. See if you can find two of his journal entries and bring them back to me. When you return please give what you find to my assistant Opury Foop. She is trying to help me organize my reports a little better.'")
+      e.other:AssignTask(bic_barindu)
+    end
   end
 end
 
@@ -83,6 +87,12 @@ function event_trade(e)
     e.other:Message(MT.NPCQuestSay, "Taminoa Bialu says 'Reyna was a skilled scout who had spent many years honing her abilities. Learning that she died so horribly upsets the stomach, but she died trying to help others. Yes . . . that's what we should focus on. This report you have returned will be a great help to us and this reward should help you as well. It was wrapped in the report and appears to be a gem fragment that may fit into the stone Fezbin gave you. Now to the rest of the city. Hopefully we can prevent our other scouts from suffering the same fate as Reyna.'")
     e.other:UpdateTaskActivity(bic_riwwi, 12, 1)
     e.other:UpdateTaskActivity(bic_abysmal, 2, 1)
+  end
+
+  if item_lib.check_turn_in(e.trade, {item1 = 67516}) then --Talwin's Final Journal
+    e.other:Message(MT.NPCQuestSay, "Taminoa Bialu looks at the final report before bowing his head for a second. 'While I had accepted Talwin's passing as reality, I still hoped you would save him in time. Either way, I thank you for your effort and for delivering this vital piece of information contained in this report. Please take this. I found it wrapped up in the report. Talwin would have wanted you to have it as it appears to be a gem fragment that could fit into the stone Fezbin gave you. Now that you have finished all that was needed for Barindu, there is still more of the city left to explore and I won't be able to complete my report until it is done.'")
+    e.other:UpdateTaskActivity(bic_barindu, 16, 1)
+    e.other:UpdateTaskActivity(bic_abysmal, 1, 1)
   end
 
   item_lib.return_items(e.self, e.other, e.trade)
