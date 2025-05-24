@@ -1,17 +1,10 @@
+local sewers_task = 26
+local plant_task = 27
+local crem_task = 28
+local lair_task = 29
+local pool_task = 30
+
 -- items: 55608, 55609, 55610, 55611
-local function update_flag(client)
-  local sewers_flag = tonumber(eq.get_data(client:CharacterID() .. "-god_sewers")) or 0
-  local sncrematory_key = string.format("%s-god_sncrematory", client:CharacterID())
-
-  if sewers_flag < 2 then
-    eq.set_data(sncrematory_key, "T")
-    client:Message(MT.Yellow, "You have gained a temporary character flag!  Seek the High Priest's Scribe to find out more information.")
-  else
-    eq.set_data(sncrematory_key, "1")
-    client:Message(MT.Yellow, "You have gained a character flag!  Freedom for the souls that were trapped should earn the respect of High Priest Diru.")
-  end
-end
-
 function event_spawn(e)
   e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1)
   e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1)
@@ -43,17 +36,34 @@ function event_trade(e)
   local item_lib = require("items")
 
   -- Items: Ngozi's Remains, Mabiki's Remains, Talakoi's Remains, Yogundi's Remains
-  if item_lib.check_turn_in(e.trade, {item1 = 55608, item2 = 55609, item3 = 55610, item4 = 55611}) then
+  if item_lib.check_turn_in(e.trade, {item1 = 55608}) then --Ngozi's remains
+    e.other:UpdateTaskActivity(crem_task, 11, 1)
+    check_turnin(e)
+  elseif item_lib.check_turn_in(e.trade, {item1 = 55609}) then
+    e.other:UpdateTaskActivity(crem_task, 12, 1)
+    check_turnin(e)
+  elseif item_lib.check_turn_in(e.trade, {item1 = 55610}) then
+    e.other:UpdateTaskActivity(crem_task, 13, 1)
+    check_turnin(e)
+  elseif item_lib.check_turn_in(e.trade, {item1 = 55611}) then
+    e.other:UpdateTaskActivity(crem_task, 14, 1)
+    check_turnin(e)
+  end
+end
+
+function check_turnin(e)
+  if e.other:IsTaskCompleted(crem_task) then
     eq.stop_timer("depop")
     eq.get_entity_list():MessageClose(e.self, true, 100, MT.SayEcho, "Gzifa the Pure One begins to chant in an unknown tongue.  The essences of the ghosts you destroyed merge with the crystal in the center of the room.  As they do so, a flash of magic erupts, briefly illuminating the crystal.  'It is complete.  Our time here is done.  We thank you for your good deed.  We bid you farewell.'")
-
     local client_list = eq.get_entity_list():GetClientList()
     for client in client_list.entries do
       if client.valid then
-        update_flag(client)
+        client:UpdateTaskActivity(sewers_task, 1, 1)
+        if client:IsTaskCompleted(sewers_task) then
+          e.other:SetAccountBucket("god.flags.sewers", "1")
+        end
       end
     end
-
     eq.signal(288064, 1) -- Invisible NPC: "_" (for spell effect on blue crystal)
     eq.depop_all(288086) -- a_ghostly_essence
     eq.depop()
