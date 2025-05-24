@@ -18,16 +18,20 @@ local expedition_info = {
   zonein     = { x=-157.0, y=23.0, z=-2.0, h=256.0 }
 }
 
+local trials_task = 19
+local kevren_task = 20
+local tublik_task = 21
+local trusik_task = 22
+
 function event_say(e)
   local qglobals = eq.get_qglobals(e.other)
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local has_kevren_flag = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1))
-  local finished_first_trial = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2))
-  local finished_second_trial = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 3))
-  local finished_third_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 4)
+  local has_kevren_flag = is_gm or e.other:IsTaskAssigned(trials_task) or e.other:IsTaskCompleted(trials_task)
+  local finished_first_trial = is_gm or e.other:IsTaskCompleted(trials_task)
+  local finished_second_trial = is_gm or e.other:IsTaskCompleted(trials_task)
+  local finished_third_trial = e.other:IsTaskCompleted(trials_task)
 
-  local preflag_key = string.format("%s-ikkinz_group3_kenra", e.other:CharacterID())
 
   if e.message:findi("hail") then
     if not has_kevren_flag then
@@ -80,7 +84,6 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'You can't recover any relics from this temple yet. You have to complete the second trial first! Go find Maroley Nazuey at the Temple of Twin Struggles for more information on the second trial.'")
     else
       e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'This is your final trial and will prove, once and for all, if you are capable of taking on the more serious issues concerning the Muramites. You must fight through the temple and enter an entrance to the inner chambers of the Temple of the Tri-Fates. Once inside, kill the Tri-Fates and return the relics. When you are [" .. eq.say_link("ready to begin") .. "] and have a group with you, return to me, and I shall send you on your way.'")
-      eq.set_data(preflag_key, "1")
     end
   elseif e.message:findi("ready(.*)begin") then
     if not has_kevren_flag then
@@ -89,8 +92,6 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'I don't think you're ready to begin anything except for the first trial. That's all you can do for the time being, but you need to find Gazak Klelkek at the Temple of Singular Might so he can guide you through it.'")
     elseif not finished_second_trial then
       e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'What is it that you believe you're ready to begin? I hope you don't believe it has anything to do with me yet. You still need to finish the second trial and, to do so, you need to find Maroley Nazuey at the Temple of Twin Struggles and have her give you that information.'")
-    elseif not is_gm and eq.get_data(preflag_key) == "" then
-      e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'You say you think you're ready to begin something? Does that have anything to do with your [" .. eq.say_link("final test") .. "]?'")
     elseif not is_gm and e.other:DoesAnyPartyMemberHaveLockout(expedition_name, "Replay Timer", 6) then
       e.other:Message(MT.NPCQuestSay, "Kenra Kalekkio says, 'I'm afraid I cannot allow you to begin, someone in your party has been on this expedition too recently and cannot yet go again.'")
     else
@@ -104,12 +105,10 @@ function event_say(e)
 end
 
 function event_trade(e)
-  local qglobals = eq.get_qglobals(e.other)
-
-  local has_kevren_flag = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1)
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
-  local finished_second_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 3)
-  local finished_third_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 4)
+  local has_kevren_flag = is_gm or e.other:IsTaskAssigned(trials_task) or e.other:IsTaskCompleted(trials_task)
+  local finished_first_trial = is_gm or e.other:IsTaskCompleted(trials_task)
+  local finished_second_trial = is_gm or e.other:IsTaskCompleted(trials_task)
+  local finished_third_trial = e.other:IsTaskCompleted(trials_task)
 
   local item_lib = require("items")
 
@@ -126,8 +125,7 @@ function event_trade(e)
     else
       e.other:Message(MT.NPCQuestSay, ("Kenra Kalekkio says, 'I am astounded that you have completed the trial so easily! You have gone above and beyond our expectations and are ready to continue beyond mere trials! Congratulations, %s! At this time, you should return to Kevren so he can guide you on your way from here on out.'"):format(e.other:GetCleanName()))
       if not finished_third_trial then
-        eq.set_global("ikky", "4", 5, "F");
-        e.other:AddEXP(1)
+        e.other:UpdateTaskActivity(trials_task, 16, 1)
       end
     end
   end

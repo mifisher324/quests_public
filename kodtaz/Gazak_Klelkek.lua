@@ -26,14 +26,15 @@ local expedition_info = {
   zonein     = { x=-157.0, y=23.0, z=-2.0, h=256.0 }
 }
 
+local trials_task = 19
+local kevren_task = 20
+local tublik_task = 21
+local trusik_task = 22
+
 function event_say(e)
-  local qglobals = eq.get_qglobals(e.other);
-
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local has_kevren_flag = (is_gm or (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1))
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
-
-  local preflag_key = string.format("%s-ikkinz_group1_gazak", e.other:CharacterID())
+  local has_kevren_flag = is_gm or e.other:IsTaskAssigned(trials_task)
+  local finished_first_trial = e.other:IsTaskCompleted(trials_task)
 
   if(e.message:findi("hail")) then
     if not has_kevren_flag then
@@ -81,16 +82,14 @@ end
 
 function event_trade(e)
   -- load the current qglobals
-  local qglobals = eq.get_qglobals(e.other);
-  local has_kevren_flag = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 1)
-  local finished_first_trial = (tonumber(qglobals.ikky) and tonumber(qglobals.ikky) >= 2)
+  local has_kevren_flag = e.other:IsTaskAssigned(trials_task) or e.other:IsTaskCompleted(trials_task)
+  local finished_first_trial = e.other:IsTaskCompleted(trials_task)
   local item_lib = require("items");
   if(item_lib.check_turn_in(e.trade, {item1 = 60152})) then
     if has_kevren_flag then
       e.other:Message(MT.NPCQuestSay, ("Gazak Klelkek says, 'Though you were pitted against a most heinous aggressor, you have proven that you are a capable adventurer thus far. Nicely done, %s. I urge you to continue honing your skills. Now that you are ready to move onto the next trial, you should return to Kevren for more information. Good luck!'"):format(e.other:GetCleanName()))
       if not finished_first_trial then
-        eq.set_global("ikky", "2", 5, "F")
-        e.other:AddEXP(1)
+        e.other:UpdateTaskActivity(trials_task, 4, 1)
       end
     else
       e.other:Message(MT.NPCQuestSay, "Gazak Klelkek says, 'I appreciate that you must have fought hard for this, but I cannot accept it yet. Please speak with Kevren Nalavat about the trials and once I have received word that you are actually ready to do the trials, you can present it to me again.'")
