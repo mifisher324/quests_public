@@ -1,10 +1,4 @@
--- Task ID definitions
-local sewers_task = 26
-local plant_task = 27
-local crem_task = 28
-local lair_task = 29
-local pool_task = 30
-
+task_ids = require('task_ids')
 local state = { None = 0, Spawned = 1, Killed = 2 }
 local event = state.None
 local stonemites_killed = 0
@@ -43,9 +37,9 @@ function ancient_death(e)
   local client_list = eq.get_entity_list():GetClientList()
   for client in client_list.entries do
     if client.valid then
-      client:UpdateTaskActivity(sewers_task, 0, 1)
-      client:UpdateTaskActivity(plant_task, 3, 1)
-      if client:IsTaskCompleted(sewers_task) then
+      client:UpdateTaskActivity(task_ids.sewers_task, 0, 1)
+      client:UpdateTaskActivity(task_ids.plant_task, 3, 1)
+      if client:IsTaskCompleted(task_ids.sewers_task) then
         client:SetAccountBucket("god.flags.sewers", "1")
       end
     end
@@ -62,15 +56,15 @@ end
 
 function ansharu_say(e)
   if e.message:findi("hail") then
-    if not e.other:IsTaskActive(plant_task) and not e.other:IsTaskCompleted(plant_task) and not e.other:IsTaskCompleted(sewers_task) then
+    if not e.other:IsTaskActive(task_ids.plant_task) and not e.other:IsTaskCompleted(task_ids.plant_task) and not e.other:IsTaskCompleted(task_ids.sewers_task) then
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'Please, keep your voice down.  I am here against the wishes of the invaders.  I must study the entomology of the stonemites that infest this area of the sewers.  So now, you must leave from my sight before you draw attention to me.'")
-    elseif e.other:IsTaskActive(plant_task) then
+    elseif e.other:IsTaskActive(task_ids.plant_task) then
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'Diru sent you yes?  I am so happy you have come to help us.  I have determined that the source of the problem lies in the alpha leader of these stonemites.  It is a large and ancient stonemite that I have named the Kayserops.  I noticed that when together with it they are able to move about more effectively, as if it is able to communicate with them where to go.  Without this alpha leader, I think they would lose this ability and may have a harder time finding their way in to the city.  Find the aged stonemites. I have seen the Kayserops protecting these elders.  Defeating them may draw its attention.'")
       if event == state.None then
         spawn_stonemites()
         event = state.Spawned
       end
-    elseif e.other:IsTaskCompleted(plant_task) and not e.other:IsTaskCompleted(sewers_task) then -- haven't hailed high priest after completing
+    elseif e.other:IsTaskCompleted(task_ids.plant_task) and not e.other:IsTaskCompleted(task_ids.sewers_task) then -- haven't hailed high priest after completing
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'I heard the squeal of the massive Kayserops even here.  Excellent work!  I hope that another leader does not rise to take its place any time soon.  You must go back and tell Diru of what has happened here!'")
     else
       e.other:Message(MT.NPCQuestSay, "Ansharu tells you, 'I heard from Diru that you have begun to help us in with our problems.  I cannot thank you enough for this.  Long have we been plagued with these invaders, and anything that you do to help gives us hope that one day we can live free.  Thank you again and safe journey to you.'")

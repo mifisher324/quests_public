@@ -35,64 +35,74 @@ local function create_sewer_expedition(client, sewer)
   end
 end
 
-local sewers_task = 26
-local plant_task = 27
-local crem_task = 28
-local lair_task = 29
-local pool_task = 30
+task_ids = require('task_ids')
 
 function event_say(e)
   if e.message:findi("hail") then
     -- No sewers task: Assign sewers
-    if not e.other:IsTaskActive(sewers_task) then
+    if not e.other:IsTaskActive(task_ids.sewers_task) and not e.other:IsTaskCompleted(task_ids.sewers_task) then
       e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'These are sad times. Not only have the invaders taken away all that we own, but our own problems still occur. If only there was someone willing to help our cause. I beg of you, please, help us with all the problems going on in the sewers underneath this city. They have become the breeding grounds for stonemites. These nasty bugs get into everything. They eat our stored food and our crops. We need to terminate the source of the stonemites so that we will have enough food to survive. The invaders do not provide enough for us, and we need these crops to live. Please prepare and talk to me again when you are ready to help.'")
-      e.other:AssignTask(sewers_task)
+      e.other:AssignTask(task_ids.sewers_task)
     else
       -- Is plant done?
-      if not e.other:IsTaskCompleted(plant_task) then
+      if not e.other:IsTaskCompleted(task_ids.plant_task) then
         -- Does the player have the Plant task?
-        if not e.other:IsTaskAssigned(plant_task) then
+        if not e.other:IsTaskActive(task_ids.plant_task) then
           e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'Go find Ansharu. He has been researching their behavior patterns, and will be able to tell you what needs to be done. I hope that you will be able to help us out in these dire times. Please head to the sewer plant and find the source of the stonemite infestation. If you do this for us, I will share with you how to pass through the mountains and up to the temples created by the trusik, our exiled kin.'")
           create_sewer_expedition(e.other, sewers.snplant)
-          e.other:AssignTask(plant_task)
+          e.other:AssignTask(task_ids.plant_task)
         else
           create_sewer_expedition(e.other, sewers.snplant)
         end
       -- Is crematory done?
-      elseif e.other:IsTaskCompleted(plant_task) and not e.other:IsTaskCompleted(crem_task) then
+      elseif e.other:IsTaskCompleted(task_ids.plant_task) and not e.other:IsTaskCompleted(task_ids.crem_task) then
+        -- Update the plant task if it wasn't for some reason
+        e.other:UpdateTaskActivity(task_ids.sewers_task, 0, 1)
         -- Does the player have the Crematory task?
-        if not e.other:IsTaskAssigned(crem_task) then
+        if not e.other:IsTaskActive(task_ids.crem_task) then
           e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'I know that you can do this for us. I have seen your action in this city and have heard of them on the rest of the continent. Please set the spirits of the fallen at ease. Seek out a way to into the crematory, find the remains of Ngozi, Mabiki, Talokoi, and Yogundi. Take the remains into the furnace and their spirits will present themselves. All will become clear when the time has come.'")
           create_sewer_expedition(e.other, sewers.sncrematory)
-          e.other:AssignTask(crem_task)
+          e.other:AssignTask(task_ids.crem_task)
         else
           create_sewer_expedtion(e.other, sewers.sncrematory)
         end
       -- Is lair done?
-      elseif e.other:IsTaskCompleted(plant_task) and e.other:IsTaskCompleted(crem_task) and not e.other:IsTaskCompleted(lair_task) then
+      elseif e.other:IsTaskCompleted(task_ids.plant_task) and e.other:IsTaskCompleted(task_ids.crem_task) and not e.other:IsTaskCompleted(task_ids.lair_task) then
+        -- Update the plant task if it wasn't for some reason
+        e.other:UpdateTaskActivity(task_ids.sewers_task, 1, 1)
         --does the player have the lair task?
-        if not e.other:IsTaskAssigned(lair_task) then
+        if not e.other:IsTaskActive(task_ids.lair_task) then
           e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'Our sewer system was an integral part of the city before the great explosion. After the sewer system was deserted by most Taelosians, many of the processes that occurred below the city ceased to work. In the sewers, many insects, animals, and other slimy diseased creatures thrive. Take this seal. I know that Alej is very timid and may think you are there to harm him unless he sees something familiar from you. Please be careful while you're down there and be on the look out for cave-ins.'")
           e.other:SummonItem(68298)
           create_sewer_expedition(e.other, sewers.snlair)
-          e.other:AssignTask(lair_task)
+          e.other:AssignTask(task_ids.lair_task)
         else
           e.other:SummonItem(68298)
           create_sewer_expedition(e.other, sewers.snlair)
         end
       -- Is pool done?
-      elseif e.other:IsTaskCompleted(plant_task) and e.other:IsTaskCompleted(crem_task) and e.other:IsTaskCompleted(lair_task) and not e.other:IsTaskCompleted(pool_task) then
+      elseif e.other:IsTaskCompleted(task_ids.plant_task) and e.other:IsTaskCompleted(task_ids.crem_task) and e.other:IsTaskCompleted(task_ids.lair_task) and not e.other:IsTaskCompleted(task_ids.pool_task) then
+        -- Update the plant task if it wasn't for some reason
+        e.other:UpdateTaskActivity(task_ids.sewers_task, 2, 1)
         --Does the player have the pool task?
-        if not e.other:IsTaskAssigned(pool_task) then
+        if not e.other:IsTaskActive(task_ids.pool_task) then
           e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'Utandi, the map maker, should be in the sewers. I must apologize for him in advance. He is wonderful with his maps, but very timid. Good luck and I hope that we can stand together, defiant against the invaders.'")
           create_sewer_expedition(e.other, sewers.snpool)
-          e.other:AssignTask(pool_task)
+          e.other:AssignTask(task_ids.pool_task)
         else
           create_sewer_expedition(e.other, sewers.snpool)
         end
       -- Should be everything
       else
+        -- Update the plant task if it wasn't for some reason
+        e.other:UpdateTaskActivity(task_ids.sewers_task, 3, 1)
         e.other:Message(MT.NPCQuestSay, "High Priest Diru tells you, 'You have done excellent work helping our tribe. You and your kind are powerful and have done more for us than we expected, so I will reward you with the information you've been wanting. In order to pass through the mountains, you must work with those who have the most sacred knowledge of our lands -- the master stonespiritists. You will find an apprentice in Barindu, named Udranda. She will grant you access to the mountain pass and then tell you what you must do. Also, if you ever need to go back into the sewers for any reason, you can ask Gamesh to show you the way through. Good luck to you, and to us all.'")
+        if e.other:IsTaskCompleted(task_ids.sewers_task) then
+          local sewers_flag = tonumber(e.other:GetAccountBucket("god.sewers.flag")) or 0
+          if sewers_flag == 0 then
+            e.other:SetAccountBucket('god.flags.sewers', '1')
+          end
+        end
       end
     end
   end

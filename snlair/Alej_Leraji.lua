@@ -1,9 +1,4 @@
-local sewers_task = 26
-local plant_task = 27
-local crem_task = 28
-local lair_task = 29
-local pool_task = 30
-
+task_ids = require('task_ids')
 -- items: 68298
 local turned_in_seal = false
 local tool_count = 0
@@ -39,9 +34,9 @@ function event_say(e)
       local client_list = eq.get_entity_list():GetClientList()
       for client in client_list.entries do
         if client.valid then
-          client:UpdateTaskActivity(lair_task, 5, 1)
-          client:UpdateTaskActivity(sewers_task, 2, 1)
-          if client:IsTaskCompleted(sewers_task) then
+          client:UpdateTaskActivity(task_ids.lair_task, 5, 1)
+          client:UpdateTaskActivity(task_ids.sewers_task, 2, 1)
+          if client:IsTaskCompleted(task_ids.sewers_task) then
             e.other:SetAccountBucket("god.flags.sewers", "1")
           end
         end

@@ -1,20 +1,9 @@
+task_ids = require('task_ids')
 -- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
-
 function event_say(e)
-  if e.other:IsTaskCompleted(bic_abysmal) then
+  if e.other:IsTaskCompleted(task_ids.bic_abysmal) then
     e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello, " .. e.other:GetCleanName() .. "!  I heard from Beanalle that you were able to complete your stone!  The Wayfarers Brotherhood is forever in your debt for your assistance in scouting this new land.'")
-  elseif e.other:IsTaskActive(bic_abysmal) then
+  elseif e.other:IsTaskActive(task_ids.bic_abysmal) then
     if e.message:findi('hail') then
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Hello, " .. e.other:GetCleanName() .. "!  Do you require another [" .. eq.say_link('stone') .. "] or [" .. eq.say_link('sealer') .. "]?'")
     end
@@ -30,9 +19,9 @@ function event_say(e)
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'The stone I have given you is very special indeed. It is a rare stone with a power that has not yet been revealed. After studying it we have come to the conclusion that its power is based off of resonance. You will see that there are fourteen sockets in the stone. Each socket requires a gem fragment of a certain resonance. As the fragments are set in the stone it will gradually increase in power. These fragments must be placed in the stone in a certain order using a set of clockwork gemcutter's tools, the stone, and the correct shard in the device I handed to you along with the stone. As you help find our scouts, you may come across the gem fragments that will fit into the stone. If you do, please try combining them in the special sealer. If at any time you lose the sealer or misplace the stone return to me and I will what I can do about a replacement.'")
     end
     if e.message:findi('completed') then
-      if e.other:IsTaskCompleted(bic_qinimi) and e.other:IsTaskCompleted(bic_barindu) and e.other:IsTaskCompleted(bic_riwwi) and e.other:IsTaskCompleted(bic_ferubi) and e.other:IsTaskCompleted(bic_sewers) and e.other:IsTaskCompleted(bic_vxed) and e.other:IsTaskCompleted(bic_tipt) and e.other:IsTaskCompleted(bic_outer) and e.other:IsTaskCompleted(bic_yxtta) and e.other:IsTaskCompleted(bic_kodtaz) then
+      if e.other:IsTaskCompleted(task_ids.bic_qinimi) and e.other:IsTaskCompleted(task_ids.bic_barindu) and e.other:IsTaskCompleted(task_ids.bic_riwwi) and e.other:IsTaskCompleted(task_ids.bic_ferubi) and e.other:IsTaskCompleted(task_ids.bic_sewers) and e.other:IsTaskCompleted(task_ids.bic_vxed) and e.other:IsTaskCompleted(task_ids.bic_tipt) and e.other:IsTaskCompleted(task_ids.bic_outer) and e.other:IsTaskCompleted(task_ids.bic_yxtta) and e.other:IsTaskCompleted(task_ids.bic_kodtaz) then
         e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'So I have been told, " .. e.other:GetCleanName() .. ". Your help will long be remembered by the brotherhood. Since you first came to me, the stone should have grown in power and now I will give you the item that will unlock the stone's full potential. Please combine this with your stone after you have combined all of the other items given to you by the lead scouts and you will possess an item of immense power and a symbol of your fighting spirit. Once again, the brotherhood thanks you. I must bid you good day as I recently received some [" .. eq.say_link('interesting information') .. "].'")
-        e.other:UpdateTaskActivity(9, 9, 1)
+        e.other:UpdateTaskActivity(task_ids.bic_abysmal, 9, 1)
         e.other:SummonItem(67571)
       else
         e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles frowns and shakes his head.  'I haven't been informed of this.  You should check in with L`diava, Vaifan, and Taminoa to make sure they don't have anything else for you to do.'")
@@ -66,7 +55,7 @@ function event_say(e)
     end
     if e.message:findi('yes') then
       e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'Most excellent. Please take these as a token of our gratitude. It is not much to look at now, but by helping us you will find ways to make this stone more [" .. eq.say_link('powerful') .. "] when combining it with certain items in that sealer. Please take the time to find Taminoa Bialu, Vaifan Cogswin, and L`diava Rexxen. They are all located on this ship. Each of them is responsible for information from certain areas of the continent. Taminoa has all the information on the city area, Vaifan keeps the information on the mountain passes, and L`diava collects information on the temple areas. If you truly wish to help us, talk to some or all of them and they will help guide you to the right path. When you have finished helping them all, return to me and I shall give you the reward that has been approved by Morden.'")
-      e.other:AssignTask(bic_abysmal)
+      e.other:AssignTask(task_ids.bic_abysmal)
       e.other:SummonItem(67512)
       e.other:SummonItem(67659)
     end

@@ -1,8 +1,4 @@
-local sewers_task = 26
-local plant_task = 27
-local crem_task = 28
-local lair_task = 29
-local pool_task = 30
+task_ids = require('task_ids')
 
 -- items: 55608, 55609, 55610, 55611
 function event_spawn(e)
@@ -36,30 +32,20 @@ function event_trade(e)
   local item_lib = require("items")
 
   -- Items: Ngozi's Remains, Mabiki's Remains, Talakoi's Remains, Yogundi's Remains
-  if item_lib.check_turn_in(e.trade, {item1 = 55608}) then --Ngozi's remains
-    e.other:UpdateTaskActivity(crem_task, 11, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55609}) then
-    e.other:UpdateTaskActivity(crem_task, 12, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55610}) then
-    e.other:UpdateTaskActivity(crem_task, 13, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55611}) then
-    e.other:UpdateTaskActivity(crem_task, 14, 1)
+  if item_lib.check_turn_in(e.trade, {item1 = 55608, item2 = 55609, item3 = 55610, item4 = 55611}) then
     check_turnin(e)
   end
 end
 
 function check_turnin(e)
-  if e.other:IsTaskCompleted(crem_task) then
+  if e.other:IsTaskCompleted(task_ids.crem_task) then
     eq.stop_timer("depop")
     eq.get_entity_list():MessageClose(e.self, true, 100, MT.SayEcho, "Gzifa the Pure One begins to chant in an unknown tongue.  The essences of the ghosts you destroyed merge with the crystal in the center of the room.  As they do so, a flash of magic erupts, briefly illuminating the crystal.  'It is complete.  Our time here is done.  We thank you for your good deed.  We bid you farewell.'")
     local client_list = eq.get_entity_list():GetClientList()
     for client in client_list.entries do
       if client.valid then
-        client:UpdateTaskActivity(sewers_task, 1, 1)
-        if client:IsTaskCompleted(sewers_task) then
+        client:UpdateTaskActivity(task_ids.sewers_task, 1, 1)
+        if client:IsTaskCompleted(task_ids.sewers_task) then
           e.other:SetAccountBucket("god.flags.sewers", "1")
         end
       end

@@ -74,19 +74,19 @@ function event_say(e)
   elseif e.message:findi("tipt") and (is_gm or e.other:IsTaskCompleted(vxed_task)) then
     eq.get_entity_list():MessageClose(e.self, true, 100, MT.SayEcho, e.self:GetCleanName() .. " subtly commands her stone worker to open the passage for you before any invaders can take notice.")
     create_expedition(e.other, tipt)
-    if not e.other:IsTaskAssigned(tipt_task) and not e.other:IsTaskCompleted(tipt_task) then
+    if not e.other:IsTaskActive(tipt_task) and not e.other:IsTaskCompleted(tipt_task) then
       e.other:AssignTask(tipt_task)
     end
-    if not e.other:IsTaskAssigned(mountain_task) and not e.other:IsTaskCompleted(mountain_task) then
+    if not e.other:IsTaskActive(mountain_task) and not e.other:IsTaskCompleted(mountain_task) then
       e.other:AssignTask(mountain_task)
     end
   elseif e.message:findi("vxed") and (is_gm or sewers_flag == 1 or ferubi_flag == 1) then
     eq.get_entity_list():MessageClose(e.self, true, 100, MT.SayEcho, e.self:GetCleanName() .. " subtly commands her stone worker to open the passage for you before any invaders can take notice.")
     create_expedition(e.other, vxed)
-    if not e.other:IsTaskAssigned(vxed_task) and not e.other:IsTaskCompleted(vxed_task) then
+    if not e.other:IsTaskActive(vxed_task) and not e.other:IsTaskCompleted(vxed_task) then
       e.other:AssignTask(vxed_task)
     end
-    if not e.other:IsTaskAssigned(mountain_task) and not e.other:IsTaskCompleted(mountain_task) then
+    if not e.other:IsTaskActive(mountain_task) and not e.other:IsTaskCompleted(mountain_task) then
       e.other:AssignTask(mountain_task)
     end
   end

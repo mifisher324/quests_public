@@ -1,9 +1,4 @@
-local sewers_task = 26
-local plant_task = 27
-local crem_task = 28
-local lair_task = 29
-local pool_task = 30
-
+task_ids = require('task_ids')
 -- items: 55617, 55618, 55619, 55620
 local event_started = false
 
@@ -16,7 +11,7 @@ function event_spawn(e)
 end
 
 function event_say(e)
-  local on_progression = e.other:IsTaskActive(pool_task)
+  local on_progression = e.other:IsTaskActive(task_ids.pool_task)
 
   if on_progression and (e.message:findi("hail") or e.message:find("hello")) then
     e.other:Message(MT.NPCQuestSay, "Utandi tells you, 'Wh, who are you?'  Utandi's voice quivers with fear.  'I have nothing of value if you are planning to rob me.  What's that?  You will not harm me?  You seek treasures elsewhere?  You think like I do.  I myself am in search of treasures.  There is only one [" .. eq.say_link("problem") .. "] though.'")
@@ -37,29 +32,19 @@ function event_trade(e)
   local item_lib = require("items")
 
   -- Items: First Fragment of Utandi`s Map, Second Fragment of Utandi`s Map, Third Fragment of Utandi`s Map, Fourth Fragment of Utandi`s Map
-  if item_lib.check_turn_in(e.trade, {item1 = 55617}) then
-    e.other:UpdateTaskActivity(pool_task, 7, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55618}) then
-    e.other:UpdateTaskActivity(pool_task, 8, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55619}) then
-    e.other:UpdateTaskActivity(pool_task, 9, 1)
-    check_turnin(e)
-  elseif item_lib.check_turn_in(e.trade, {item1 = 55620}) then
-    e.other:UpdateTaskActivity(pool_task, 10, 1)
+  if item_lib.check_turn_in(e.trade, {item1 = 55617, 55618, 55619, 55620}) then
     check_turnin(e)
   end
   item_lib.return_items(e.self, e.other, e.trade)
 end
 
 function check_turnin(e)
-  if e.other:IsTaskCompleted(pool_task) then
+  if e.other:IsTaskCompleted(task_ids.pool_task) then
     local client_list = eq.get_entity_list():GetClientList()
     for client in client_list.entries do
       if client.valid then
-        client:UpdateTaskActivity(sewers_task, 3, 1)
-        if client:IsTaskCompleted(sewers_task) then
+        client:UpdateTaskActivity(task_ids.sewers_task, 3, 1)
+        if client:IsTaskCompleted(task_ids.sewers_task) then
           client:SetAccountBucket("god.flags.sewers", 1)
         end
       end
