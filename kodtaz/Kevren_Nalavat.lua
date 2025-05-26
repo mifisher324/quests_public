@@ -1,39 +1,37 @@
-local trials_task = 19
-local kevren_task = 20
-local tublik_task = 21
-local trusik_task = 22
-local bic_kodtaz = 18
-
+task_ids = require('task_ids')
 function event_say(e)
   -- If you don't have Kevren's task done, he has nothing to say to you about BiC
-  if not e.other:IsTaskCompleted(kevren_task) then
+  if not e.other:IsTaskCompleted(task_ids.kevren_task) then
     if e.message:findi("have done all you asked") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat shakes his head, 'I believe we still have more work to do before I can trust you with the information I have for L`diava.'")
     end
   end
 
   -- Flag 19: You're done with Kevren
-  if e.other:IsTaskCompleted(kevren_task) then
+  if e.other:IsTaskCompleted(task_ids.kevren_task) then
     if e.message:findi("hail") then
        e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..".  You have done all I have asked, but you should see if Tublik needs you for anything else.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
+      if not e.other:IsTaskActive(task_ids.tublik_task) and not e.other:IsTaskCompleted(task_ids.tublik_task) then
+        e.other:AssignTask(task_ids.tublik_task)
+      end
     end
-    if e.message:findi("have done all you asked") and e.other:IsTaskActvityActive(bic_kodtaz, 2) then
+    if e.message:findi("have done all you asked") and e.other:IsTaskActivityActive(task_ids.bic_kodtaz, 2) then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Indeed you have and your help is greatly appreciated. Take this back to L`diava I believe it has the answers she seeks.'")
       e.other:SummonItem(67562)
-      e.other:UpdateTaskActivity(bic_kodtaz, 2)
+      e.other:UpdateTaskActivity(task_ids.bic_kodtaz, 2, 1)
     end
   end
 
   -- Flag 18: You should turn in the Grand Summonter's Glyphs
-  if e.other:IsTaskCompleted(trials_task) then
-    if e.other:IsTaskActivityActive(kevren_task, 10) then
+  if e.other:IsTaskCompleted(task_ids.trials_task) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 10) then
       if e.message:findi("hail") then
          e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". Were you able to stop the muramite summoners?  If so, please hand the glyph you found to me.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
       end
     end
 
     -- Flag 17: Summoner's Ring
-    if e.other:IsTaskActivityActive(kevren_task, 7) or e.other:IsTaskActivityActive(kevren_task, 8) or e.other:IsTaskActivityActive(kevren_task, 9) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 7) or e.other:IsTaskActivityActive(task_ids.kevren_task, 8) or e.other:IsTaskActivityActive(task_ids.kevren_task, 9) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() .. ". I've studied the glyph as much as I can for now. In addition to what we uncovered with the translated glyph, we've received word that the [" .. eq.say_link("rumors") .. "] of a dark summoning are indeed true. The truth of these rumors is no surprise to me at all with all that we've uncovered thus far. The Legion of Mata Muram is evil indeed I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
       end
@@ -49,21 +47,21 @@ function event_say(e)
     end
 
     --Flag 16: You should turn in the Translated Glyph of the Damned
-    if e.other:IsTaskActivityActive(kevren_task, 6) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 6) then
       if e.message:findi("hail") then
          e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". Were you able to translate the glyphs?  If so, please hand the result to me.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
       end
     end
 
     --Flag 15: Stone Tablet
-    if e.other:IsTaskActivityActive(kevren_task, 3) or e.other:IsTaskActivityActive(kevren_task, 4) or e.other:IsTaskActivityActive(kevren_task, 5) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 3) or e.other:IsTaskActivityActive(task_ids.kevren_task, 4) or e.other:IsTaskActivityActive(task_ids.kevren_task, 5) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". You should find Tublik Narwether and ask him for a stone tablet.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
       end
     end
 
     --Flag 13: Temple of the Damned
-    if e.other:IsTaskActivityActive(kevren_task, 2) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 2) then
       if e.message:findi("hail") then
          e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Hello again, " .. e.other:GetCleanName() .. ". I've been studying the information you retrieved from the Martyrs Passage and I do believe we have a [" .. eq.say_link("problem") .. "] on our hands. I have a moment if you want to talk a bit [" .. eq.say_link("more") .. "] about me. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?")
       end
@@ -76,14 +74,14 @@ function event_say(e)
     end
 
     --Flag 12: You should turn in the skin
-    if e.other:IsTaskActivityActive(kevren_task, 1) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 1) then
       if e.message:findi("hail") then
          e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". Did you find something else from the muramites in Martyr's Passage?  If so, please hand it to me.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
       end
     end
 
     --Flag 11: You should turn in the relics
-    if e.other:IsTaskActivityActive(kevren_task, 0) then
+    if e.other:IsTaskActivityActive(task_ids.kevren_task, 0) then
       if e.message:findi("hail") then
          e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". Were you able to find the relics in Martyr's Passage?  If so, please hand them to me.  Otherwise, if you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
       end
@@ -91,7 +89,7 @@ function event_say(e)
   end
 
   --Flag 10: Trials complete, moving on
-  if e.other:IsTaskCompleted(trial_task) and not e.other:IsTaskCompleted(kevren_task) and not e.other:IsTaskAssigned(kevren_task) then
+  if e.other:IsTaskCompleted(task_ids.trials_task) and not e.other:IsTaskCompleted(task_ids.kevren_task) and not e.other:IsTaskActive(task_ids.kevren_task) then
     if e.message:findi("hail") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() ..". I must congratulate you on your recent completion of all three trials. I must admit that I was unsure of your ability to do as well as you did. Now that you have finished, you have the choice of taking on some [" .. eq.say_link("other tasks") .. "]. If you'd like, we have a chance now to talk [" .. eq.say_link("more") .. "]. You're also more than welcome to attempt the trials again. If so, just let me know you're [" .. eq.say_link("ready to test") .. "] again and we'll proceed down that path. What'll it be, " .. e.other:GetCleanName() .. "?'")
     end
@@ -109,22 +107,25 @@ function event_say(e)
     end
     if e.message:findi("understand") then
       e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Good, be on your way then. Return to me when you have completed your objective. I wish you luck and await your return.'")
-      e.other:AssignTask(kevren_Task)
+      e.other:AssignTask(task_ids.kevren_task)
     end
   end
 
   --Flag 8 and 9: You should be doing the trial
-  if not e.other:IsTaskCompleted(trial_task) and e.other:IsTaskAssigned(trial_task) then
-    if e.other:IsTaskActivityActive(trial_task, 13) or e.other:IsTaskActivityActive(trial_task, 14) or e.other:IsTaskActivityActive(trial_task, 15) or e.other:IsTaskActivityActive(trial_task, 16) then
+  if not e.other:IsTaskCompleted(task_ids.trials_task) and e.other:IsTaskActive(task_ids.trials_task) then
+    if e.other:IsTaskActivityActive(task_ids.trials_task, 13) or e.other:IsTaskActivityActive(task_ids.trials_task, 14) or e.other:IsTaskActivityActive(task_ids.trials_task, 15) or e.other:IsTaskActivityActive(task_ids.trials_task, 16) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the third trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Kenra Kalekkio.")
       end
     end
 
   --Flag 7: Trial of Tri-Fates
-    if e.other:IsTaskActivityActive(trial_task, 11) or e.other:IsTaskActivityActive(trial_task, 12) then
+    if e.other:IsTaskActivityActive(task_ids.trials_task, 11) or e.other:IsTaskActivityActive(task_ids.trials_task, 12) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() .. ". Reports of your actions in the Temple of Twin Struggles suggest that you may be well on your way to becoming an outstanding addition to the coalition that investigates these temples. I continue standing my post and, boring as it is, it is of no interest to you I'm sure. If you want, we can talk [" .. eq.say_link("more") .. "] when we have some idle time. For now, if you're [" .. eq.say_link("ready to continue testing") .. "], we can proceed! What'll it be, " .. e.other:GetCleanName() .. "?'")
+      end
+      if e.message:findi("ready to continue testing") then
+        e.other:Message(MT.NPCQuestSay, "Kevren nods his approval, 'Good to hear! If you're interested or have forgotten I can give you some [" .. eq.say_link("background information") .. "] about the mountaintop. If you're ready to proceed, I can explain the [" .. eq.say_link("trials") .. "] to you once more.'")
       end
       if e.message:findi("singular might") or e.message:findi("twin struggles") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat shakes his head, 'You have already completed that trial, the brotherhood needs you to move on to the next challenges before you can return to a trial.")
@@ -135,16 +136,19 @@ function event_say(e)
     end 
 
     --Flag 5 and 6: You should be doing the trial
-    if e.other:IsTaskActivityActive(trial_task, 7) or e.other:IsTaskActivityActive(trial_task, 8) or e.other:IsTaskActivityActive(trial_task, 9) or e.other:IsTaskActivityActive(trial_task, 10) then
+    if e.other:IsTaskActivityActive(task_ids.trials_task, 7) or e.other:IsTaskActivityActive(task_ids.trials_task, 8) or e.other:IsTaskActivityActive(task_ids.trials_task, 9) or e.other:IsTaskActivityActive(task_ids.trials_task, 10) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the second trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Maroley Nazuey.")
       end
     end
 
     --Flag 4: Trial of Twin Struggles
-    if e.other:IsTaskActivityActive(trial_task, 5) or e.other:IsTaskActivityActive(trial_task, 6) then
+    if e.other:IsTaskActivityActive(task_ids.trials_task, 5) or e.other:IsTaskActivityActive(task_ids.trials_task, 6) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Welcome back, " .. e.other:GetCleanName() .. ". Reports of your actions in the Temple of Singular Might suggest that you may be well on your way to becoming an outstanding addition to the coalition that investigates these temples. I continue standing my post and, boring as it is, it is of no interest to you I'm sure. If you want, we can talk [" .. eq.say_link("more") .. "] when we have some idle time. For now, if you're [" .. eq.say_link("ready to continue testing") .. "], we can proceed! What'll it be, " .. e.other:GetCleanName() .. "?'")
+      end
+      if e.message:findi("ready to continue testing") then
+        e.other:Message(MT.NPCQuestSay, "Kevren nods his approval, 'Good to hear! If you're interested or have forgotten I can give you some [" .. eq.say_link("background information") .. "] about the mountaintop. If you're ready to proceed, I can explain the [" .. eq.say_link("trials") .. "] to you once more.'")
       end
       if e.message:findi("twin struggles") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Beyond the dark fog to the south lies the Temple of Twin Struggles. It is the southern-most temple of the three. In front of the temple you will encounter two smaller temples and it is there you will find another of the brotherhood waiting for you. Seek out and speak with Maroley Nazuey about the troubles within the temple.'")
@@ -158,34 +162,34 @@ function event_say(e)
     end
 
     --Flag 2 and 3: You should be doing the trial
-    if e.other:IsTaskActivityActive(trial_task, 1) or e.other:IsTaskActivityActive(trial_task, 2) or e.other:IsTaskActivityActive(trial_task, 3) or e.other:IsTaskActivityActive(trial_task, 4) then
+    if e.other:IsTaskActivityActive(task_ids.trials_task, 0) or e.other:IsTaskActivityActive(task_ids.trials_task, 1) or e.other:IsTaskActivityActive(task_ids.trials_task, 2) or e.other:IsTaskActivityActive(task_ids.trials_task, 3) or e.other:IsTaskActivityActive(task_ids.trials_task, 4) then
       if e.message:findi("hail") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says, 'Good luck with the first trial, " .. e.other:GetCleanName() .. "!  Be sure to return the artifact you obtain from the trial to Gazak Klelkek.")
       end
     end
+  end
 
-    --Flag 1: Trial of Singular Might
-    if e.other:IsTaskActivityActive(trial_task, 0) then 
-      if e.message:findi("hail") then
-        e.other:Message(MT.NPCQuestSay, "Kevren looks relieved to see you. 'Finally the Wayfarers Brotherhood has sent adventurers this far out. I was beginning to wonder what was happening. I'm Kevren Nalavat, one of the brotherhood's traveling scholars. We can talk [" .. eq.say_link("more") .. "] later. The important thing is that you're here and now that you are you'll need to prove that you're up to the challenges facing us on this rugged terrain. I've been all through this area and it's no place to be caught unaware! So what do you say?  Are you [" .. eq.say_link("ready to be tested") .. "]?'")
+  --Flag 1: Trial of Singular Might
+  if not e.other:IsTaskActive(task_ids.trials_task) and not e.other:IsTaskCompleted(task_ids.trials_task) then
+    if e.message:findi("hail") then
+      e.other:Message(MT.NPCQuestSay, "Kevren looks relieved to see you. 'Finally the Wayfarers Brotherhood has sent adventurers this far out. I was beginning to wonder what was happening. I'm Kevren Nalavat, one of the brotherhood's traveling scholars. We can talk [" .. eq.say_link("more") .. "] later. The important thing is that you're here and now that you are you'll need to prove that you're up to the challenges facing us on this rugged terrain. I've been all through this area and it's no place to be caught unaware! So what do you say?  Are you [" .. eq.say_link("ready to be tested") .. "]?'")
+    end
+    if e.message:findi("singular might") then
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Beyond the dark fog to the south lies the Temple of Singular Might. You can find it between the two other temples. In front of the temple you will find a single, smaller temple where another of the brotherhood is waiting for you. Seek out Gazak Klelkek and speak to him about the troubles within the temple.'")
+      if not e.other:IsTaskActive(task_ids.trials_task) then
+        e.other:AssignTask(task_ids.trials_task)
       end
-      if e.message:findi("singular might") then
-        e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Beyond the dark fog to the south lies the Temple of Singular Might. You can find it between the two other temples. In front of the temple you will find a single, smaller temple where another of the brotherhood is waiting for you. Seek out Gazak Klelkek and speak to him about the troubles within the temple.'")
-        if not e.other:IsTaskAssigned(trial_task) then
-          e.other:AssignTask(trial_task)
-        end
-      end
-      if e.message:findi("twin struggles") then
-        e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the second trial. You must first find Gazak Klelkek near the Temple of [" .. eq.say_link("Singular Might") .. "] and finish the first trial before you may proceed. Return to me when you have accomplished that feat.'")
-      end
-      if e.message:findi("tri(.*)fates") then
+    end
+    if e.message:findi("twin struggles") then
+      e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the second trial. You must first find Gazak Klelkek near the Temple of [" .. eq.say_link("Singular Might") .. "] and finish the first trial before you may proceed. Return to me when you have accomplished that feat.'")
+    end
+    if e.message:findi("tri(.*)fates") then
         e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'I'm sorry " .. e.other:GetCleanName() .. ", but you're not ready to face the third trial. You must first find Gazak Klelkek near the Temple of [" .. eq.say_link("Singular Might") .. "] and finish the first trial before you may proceed. Return to me when you have accomplished that feat.'")
-      end
     end
   end
 
   --Flags 10 and up: Redo trials
-  if e.other:IsTaskCompleted(trials_task) then
+  if e.other:IsTaskCompleted(task_ids.trials_task) then
     if e.message:findi("ready to test") then
       e.other:Message(MT.NPCQuestSay, "Kevren nods his approval, 'Good to hear! If you're interested or have forgotten I can give you some [" .. eq.say_link("background information") .. "] about the mountaintop. If you're ready to proceed, I can explain the [" .. eq.say_link("trials") .. "] to you once more.'")
     end
@@ -244,12 +248,10 @@ function event_trade(e)
 
   if item_lib.check_turn_in(e.trade, {item1 = 60141, item2 = 60142, item3 = 60143, item4 = 60144}) then
     e.other:Message(MT.NPCQuestSay, "Kevren examines the relics for a moment. 'The only thing I can find on these relics are glyphs. They're very old and hard to make out, but it appears that they depict four powers. I would say they refer to the temples around the Altar of Destruction, but I can't be sure. It will take some time to go over these some more. In the meantime, do you have anything else for me that might explain the Muramites' interest in the passage? If not, please do go look again. I'm sure there will be something there we can use!'")
-    e.other:UpdateTaskActivity(kevren_task, 0, 4)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 60145}) then
     e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Aha! I suspected there would be some kind of indication of what they were doing in that passage. I applaud your efforts. I only briefly skimmed the information and from what I can gather, it appears that there are nefarious deeds afoot. I'll need more time to examine this, but I should know what it says in a few moments. Well done, once again, " .. e.other:GetCleanName() .. "!'")
-    e.other:UpdateTaskActivity(kevren_task, 1, 1)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 60146, item2 = 60147, item3 = 60148, item4 = 60149}) then 
@@ -258,23 +260,19 @@ function event_trade(e)
     e.other:SummonItem(60147)
     e.other:SummonItem(60148)
     e.other:SummonItem(60149)
-    e.other:UpdateTaskActivitY(kevren_task, 2, 4)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 60150}) then
     e.other:Message(MT.NPCQuestSay, "Kevren copies down the intricate patterns from the glyph. 'Very interesting, but very dangerous. I've gone over the glyphs and they suggest there is great danger in the summoning of some kind of ferocious beast. I need to study the markings further, but since I've transcribed them already, you can keep the glyph for your own use. Nicely done, " .. e.other:GetCleanName() .. ".'")
     e.other:SummonItem(60150)
-    e.other:UpdateTaskActivity(kevren_task, 6, 1)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 60151}) then
     e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'You've done well to stop the summoning, " .. e.other:GetCleanName() .. ". I know it wasn't easy, but you are quickly becoming known as someone who can do what needs to get done. I fear I have run out of things for you to do for now, so you must find Tublik Narwethar and speak with him for further tasks to complete. You can find him to the south of the Martyrs Passage. Farewell for now, " .. e.other:GetCleanName() .. ".'")
-    e.other:UpdateTaskActivity(kevren_task, 10, 1)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 67702}) then
     e.other:Message(MT.NPCQuestSay, "Kevren Nalavat says 'Seems you have made quite an impression if you are trusted by L`diava. But don't think that this means you do not have to gain my trust. While you survived the three trials I am still in need of assistance, I some [" .. eq.say_link('other tasks') .. "] completed, when you have finished them please return to me and tell me you have done all I asked and I will give you what you came here for. If you do not wish to start these tasks right now we do have some time to talk a little [" .. eq.say_link('more') .. "].'")
-    e.other:UpdateTaskActivity(bic_kodtaz, 1, 1)
   end
 
   item_lib.return_items(e.self, e.other, e.trade)

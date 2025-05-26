@@ -16,6 +16,9 @@ function event_click_door(e)
 			if not e.self:HasZoneFlag(297) then
 				e.self:SetZoneFlag(297);
 			end
+      if txevu_flag == 0 then
+        e.self:SetAccountBucket("god.flags.txevu", "1")
+      end
 		end
 		--allow a GM to pull in a raid to test
 		local raid = e.self:GetRaid();

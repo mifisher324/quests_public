@@ -1,10 +1,6 @@
-local trials_task = 19
-local kevren_task = 20
-local tublik_task = 21
-local trusik_task = 22
-
 --KT fern click for Berserker 1.5
 -- items: 16949
+task_ids = require('task_ids')
 function event_click_door(e)
   local door_id = e.door:GetDoorID();
 	if(door_id == 25 or door_id == 26 or door_id == 27) then
@@ -26,3 +22,16 @@ function event_enter_zone(e)
     end
   end
 end
+
+function event_player_pickup(e)
+  if e.item:GetID() == 60162 or e.item:GetID() == 60163 or e.item:GetID() == 60164 or e.item:GetID() == 60165 then
+    e.self:UpdateTaskActivity(task_ids.tublik_task, 7, 1)
+  end
+end
+
+function event_player_pickup(e)
+  if e.item:GetID() == 60167 or e.item:GetID() == 60168 or e.item:GetID() == 60169 then
+    e.self:UpdateTaskActivity(task_ids.tublik_task, 11, 1)
+  end
+end
+

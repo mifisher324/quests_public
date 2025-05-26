@@ -11,19 +11,15 @@ local expedition_info = {
   safereturn = { zone="kodtaz", x=-693.0, y=-1744.0, z=-427.0, h=0.0 },
   zonein     = { x=-157.0, y=23.0, z=-2.0, h=256.0 }
 }
-
-local trials_task = 19
-local kevren_task = 20
-local tublik_task = 21
-local trusik_task = 22
+task_ids = require("task_ids")
 
 function event_say(e)
   local qglobals = eq.get_qglobals(e.other);
 
   local is_gm = (e.other:Admin() > 80 and e.other:GetGM())
-  local has_kevren_flag = is_gm or e.other:IsTaskAssigned(trials_task) or e.other:IsTaskCompleted(trials_task)
-  local finished_first_trial = is_gm or e.other:IsTaskCompleted(trials_task)
-  local finished_second_trial = e.other:IsTaskCompleted(trials_task)
+  local has_kevren_flag = is_gm or e.other:IsTaskActive(task_ids.trials_task) or e.other:IsTaskCompleted(task_ids.trials_task)
+  local finished_first_trial = is_gm or is_first_trial_done(e)
+  local finished_second_trial = is_second_trial_done(e)
 
   if e.message:findi("hail") then
     if not has_kevren_flag then
@@ -86,9 +82,9 @@ end
 
 function event_trade(e)
   -- load the current qglobals
-  local has_kevren_flag = is_gm or e.other:IsTaskAssigned(trials_task) or e.other:IsTaskCompleted(trials_task)
-  local finished_first_trial = is_gm or e.other:IsTaskCompleted(trials_task)
-  local finished_second_trial = e.other:IsTaskCompleted(trials_task)
+  local has_kevren_flag = is_gm or e.other:IsTaskActive(task_ids.trials_task) or e.other:IsTaskCompleted(task_ids.trials_task)
+  local finished_first_trial = is_gm or is_first_trial_done(e)
+  local finished_second_trial = is_second_trial_done(e)
 
   local item_lib = require("items")
 
@@ -101,11 +97,26 @@ function event_trade(e)
       e.other:SummonItem(60153); -- Item: Stained Stone Chalice
     else
       e.other:Message(MT.NPCQuestSay, string.format("Maroley Nazuey says, 'You've done well, %s. I believed this temple was more than you could handle despite your success with the first temple. You faced two enemies at once and came back in one piece. You only have one trial left to complete before you can proceed onto more difficult tasks. Please return to Kevren for information on the final trial. Good luck!'", e.other:GetCleanName()))
-      if not finished_second_trial then
-        e.other:UpdateTaskActivity(trials_task, 10, 1)
-      end
     end
   end
 
   item_lib.return_items(e.self, e.other, e.trade)
+end
+
+function is_first_trial_done(e)
+  for step = 0, 4 do
+    if e.other:IsTaskActivityActive(task_ids.trials_task, step) then
+      return false
+    end
+  end
+  return true
+end
+
+function is_second_trial_done(e)
+  for step = 0, 10 do
+    if e.other:IsTaskActivityActive(task_ids.trials_task, step) then
+      return false
+    end
+  end
+  return true
 end

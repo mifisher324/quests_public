@@ -28,44 +28,20 @@ function event_trade(e)
 
   if item_lib.check_turn_in(e.trade, {item1 = 67562}) then --Sealed Confession
     e.other:Message(MT.NPCQuestSay, "L`diava Rexxen says 'Once again, a job well done. I hear you accomplished the tasks with flying colors. Now let's see what this says. Hm . . . this changes everything. I never suspected something like this, but now that I know, it all makes sense to me. Oh poor Kitren, why didn't you warn me first? Please leave me be. I must take sometime to think. Take this as proof of your accomplishments in Kod'Taz. It possesses a power that you can unlock when you combine it with the stone from Fezbin. Return to me later if you wish to investigate Yxtta.'")
-    e.other:UpdateTaskActivity(task_ids.bic_kodtaz, 4, 1)
     e.other:UpdateTaskActivity(task_ids.bic_abysmal, 9, 1)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 67561}) then --Kitren's Tattered Cloak
     e.other:Message(MT.NPCQuestSay, "L`diava Rexxen says 'Oh, thank you brave adventurer. We are now one step closer to finding out what happened to Kitren. Now, give me one second to look through the cloak here and . . . here it is, Kitren's notebook. There must be some information here that can help us more. While I read through this, I need you to return to Kevren Nalavat. He believes he may have found more clues to Kitren's whereabouts and since you did such a good job with the trials he believes you may be able to help him. Even though you have proven yourself by defeating the trials, he will not give you what I need unless you help him. When you return to him, show him this letter and it will confirm my trust in you. Hurry now. There no time to waste!'")
-    e.other:UpdateTaskActivity(task_ids.bic_kodtaz, 0, 1)
     e.other:SummonItem(67702)
   end
 
   if item_lib.check_turn_in(e.trade, {item1 = 67555}) then --Xounii's Journal Page 1
     e.other:Message(MT.NPCQuestSay, "L`diava Rexxen says 'Thank you for returning this to me. I wish the circumstances could have been different, but in honor of her memory, we will use this information to prevent the needless death of any other scouts. Now let me see what is written here. Hm. Seems she stumbled onto a secret ritual of some sort in an underground temple, called Uqua. Looks like the Muramites may be trying to reproduce another tear in space. This does not bode well for anyone. We must find out more about this. I must ask that you return to Yxtta and see if you can find any more of Xounii's entries. I cannot tell you where to start looking, but it seems that the best place to look would be in the caves where you found her. Xounii was very diligent about her reports so she would have written much about this. Try to find four more pieces of her journal entries and return them to me.'")
-    e.other:UpdateTaskActivity(task_ids.bic_yxtta, 0, 1)
   end
 
-  if item_lib.check_turn_in(e.trade, {item1 = 67556}) then -- Xounii's Journal Page 2 left
-    e.other:UpdateTaskActivity(task_ids.bic_yxtta, 1, 1)
-    if e.other:IsTaskCompleted(task_ids.bic_yxtta) then
-      e.other:UpdateTaskActivity(task_ids.bic_abysmal, 8, 1)
-    end
-  end
-  if item_lib.check_turn_in(e.trade, {item1 = 67703}) then -- Xounii's Journal Page 2 right
-    e.other:UpdateTaskActivity(task_ids.bic_yxtta, 2, 1)
-    if e.other:IsTaskCompleted(task_ids.bic_yxtta) then
-      e.other:UpdateTaskActivity(task_ids.bic_abysmal, 8, 1)
-    end
-  end
-  if item_lib.check_turn_in(e.trade, {item1 = 67557}) then -- Xounii's Journal Page 3 left
-    e.other:UpdateTaskActivity(task_ids.bic_yxtta, 3, 1)
-    if e.other:IsTaskCompleted(task_ids.bic_yxtta) then
-      e.other:UpdateTaskActivity(task_ids.bic_abysmal, 8, 1)
-    end
-  end
-  if item_lib.check_turn_in(e.trade, {item1 = 67558}) then -- Xounii's Journal Page 3 right
-    e.other:UpdateTaskActivity(task_ids.bic_yxtta, 4, 1)
-    if e.other:IsTaskCompleted(task_ids.bic_yxtta) then
-      e.other:UpdateTaskActivity(task_ids.bic_abysmal, 8, 1)
-    end
+  if item_lib.check_turn_in(e.trade, {item1 = 67556, item2 = 67703, item3 = 67557, item4 = 67558}) then -- Xounii's Journal Page 2 left
+    e.other:UpdateTaskActivity(task_ids.bic_abysmal, 8, 1)
   end
   item_lib.return_items(e.self, e.other, e.trade)
 end

@@ -1,11 +1,9 @@
-local trials_task = 19
-local kevren_task = 20
-local tublik_task = 21
-local trusik_task = 22
+task_ids = require("task_ids")
 
 function event_say(e)
+  local qvic_flag = tonumber(e.other:GetAccountBucket("god.flags.qvic")) or 0
   if e.message:findi('hail') then
-    if not e.other:IsTaskCompleted(trusik_task) then
+    if not e.other:IsTaskCompleted(task_ids.trusik_task) or qvic_flag ~= 1 then
       e.other:Message(MT.NPCQuestSay, "The Sentinel of the Altar ignores your every attempt to interact with it.")
     else
       get_expedition(e)
