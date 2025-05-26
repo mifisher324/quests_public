@@ -1,7 +1,7 @@
 local counter = 0;
 
 function event_spawn(e)
-	counter = 0;
+	counter = tonumber(eq.get_zone():GetVariable("island_2_azarack_killed")) or 0
 end
 
 function event_signal(e)
@@ -13,6 +13,8 @@ function event_signal(e)
 			eq.spawn2(71059,0,0,-602.2,-254.4,-333.5,403); -- NPC: Protector_of_Sky
 			counter = 0;
 		end
+		-- update the zone variable in case of zone restoration
+		eq.get_zone():SetVariable("island_2_azarack_killed",tostring(counter))
 	elseif(e.signal == 2) then
 		-- eq.set_timer("13",300000); what is this referred to?
 		--eq.set_global("keeper","1",3,"H2");
