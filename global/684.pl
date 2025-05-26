@@ -95,7 +95,11 @@ sub check_and_interrupt_spell {
     }
     
     # Calculate target's HP percentage
-    my $hp_percent = ($target->GetHP() / $target->GetMaxHP()) * 100;
+    my $max_hp = $target->GetMaxHP();
+    my $hp_percent = 0;
+    if ($max_hp > 0) {
+      $hp_percent = ($target->GetHP() / $max_hp) * 100;
+    }
     
     # Interrupt logic based on spell type
     if ($is_direct_heal && $hp_percent >= 75) {
