@@ -1,18 +1,6 @@
--- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
+task_ids = require('task_ids')
 
 function event_say(e)
-  local bar_bic = tonumber(e.other:GetBucket("god.bic.barindu")) or 0
   local rep = e.other:GetFaction(e.self)
 
   if rep > 2 then
@@ -21,7 +9,7 @@ function event_say(e)
     if e.message:findi('hail') then
       e.other:Message(MT.NPCQuestSay, "Proteri Amari glances around nervously. 'Leave me be. I can't be seen talking to outsiders.'")
     end
-    if e.other:IsTaskActivityActive(bic_barindu, 2) then
+    if e.other:IsTaskActivityActive(task_ids.bic_barindu, 2) then
       if e.message:findi('talwin') then
         e.other:Message(MT.NPCQuestSay, "Proteri Amari says 'Yes ... Talwin. He and I were becoming fast friends until Ixvet took him. I am not sure what has happend to him, but if you would be [" .. eq.say_link("interested") .. "] in helping me I may be able to assist you in return.'")
       end
@@ -41,18 +29,16 @@ function event_say(e)
 end
 
 function event_trade(e)
-  local bar_bic = tonumber(e.other:GetBucket("god.bic.barindu")) or 0
   local rep = e.other:GetFaction(e.self)
   local item_lib = require("items")
 
   if rep > 2 then
-    e.other:Message(MT.NPCQuestSay, "Kunimi Falade shrinks away from the items you offer.  Perhaps he would be more receptive if you were to gain the trust of the Nihil?")
+    e.other:Message(MT.NPCQuestSay, "Proteri Amari shrinks away from the items you offer.  Perhaps he would be more receptive if you were to gain the trust of the Nihil?")
     item_lib.return_items(e.self, e.other, e.trade)
   else
     if item_lib.check_turn_in(e.trade, {item1 = 64006}) then
       e.other:Message(MT.NPCQuestSay, "Proteri Amari says 'I knew Kunimi would come through! Our day of escape is almost here. Take this to Abena Taifa. She is the servant who brings Ixvet his meals and is loyal to our cause.'")
       e.other:SummonItem(64007)
-      e.other:UpdateTaskActivity(bic_barindu, 8, 1)
     end
   end
   item_lib.return_items(e.self, e.other, e.trade)

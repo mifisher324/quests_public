@@ -21,7 +21,7 @@ function event_say(e)
     if e.message:findi('completed') then
       if e.other:IsTaskCompleted(task_ids.bic_qinimi) and e.other:IsTaskCompleted(task_ids.bic_barindu) and e.other:IsTaskCompleted(task_ids.bic_riwwi) and e.other:IsTaskCompleted(task_ids.bic_ferubi) and e.other:IsTaskCompleted(task_ids.bic_sewers) and e.other:IsTaskCompleted(task_ids.bic_vxed) and e.other:IsTaskCompleted(task_ids.bic_tipt) and e.other:IsTaskCompleted(task_ids.bic_outer) and e.other:IsTaskCompleted(task_ids.bic_yxtta) and e.other:IsTaskCompleted(task_ids.bic_kodtaz) then
         e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles says 'So I have been told, " .. e.other:GetCleanName() .. ". Your help will long be remembered by the brotherhood. Since you first came to me, the stone should have grown in power and now I will give you the item that will unlock the stone's full potential. Please combine this with your stone after you have combined all of the other items given to you by the lead scouts and you will possess an item of immense power and a symbol of your fighting spirit. Once again, the brotherhood thanks you. I must bid you good day as I recently received some [" .. eq.say_link('interesting information') .. "].'")
-        e.other:UpdateTaskActivity(task_ids.bic_abysmal, 9, 1)
+        e.other:UpdateTaskActivity(task_ids.bic_abysmal, 10, 1)
         e.other:SummonItem(67571)
       else
         e.other:Message(MT.NPCQuestSay, "Fezbin Fizzles frowns and shakes his head.  'I haven't been informed of this.  You should check in with L`diava, Vaifan, and Taminoa to make sure they don't have anything else for you to do.'")

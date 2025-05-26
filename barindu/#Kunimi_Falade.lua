@@ -1,16 +1,4 @@
--- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
-
+task_ids = require('task_ids')
 function event_say(e)
   local rep = e.other:GetFaction(e.self)
 
@@ -40,31 +28,11 @@ function event_trade(e)
   else
     if item_lib.check_turn_in(e.trade, {item1 = 64001}) then
       e.other:Message(MT.NPCQuestSay, "Kunimi Falade takes the ring and studies it for a moment. 'So the time has finally come. Unfortunately, I have had little success. Our traditional poisons have absolutely no effect on these invaders. They don't even seem to notice the poison. But, there is some hope. I believe I can distill a poison that will affect them if I had the right [" .. eq.say_link("ingredients") .. "].'")
-      e.other:UpdateTaskActivity(bic_barindu, 3, 1)
     end
-    if item_lib.check_turn_in(e.trade, {item1 = 64002}) then --Black Hynid Bile
-      e.other:UpdateTaskActivity(bic_barindu, 4, 1)
-      check_full_turnin(e)
+    if item_lib.check_turn_in(e.trade, {item1 = 64002, item2 = 64003, item3 = 64004, item4 = 64005}) then --Black Hynid Bile
+      e.other:Message(MT.NPCQuestSay, "Kunimi Falade takes the ingredients and gets to work. Within a few minutes, she produces a viscous green liquid. Plucking a bunch of fruit from the nearby plant, she coats the fruit in the poison.")
+      e.other:Message(MT.NPCQuestSay, "Kunimi Falade says 'That should do it. I can't be positive that this will do more than give Ixvet an upset stomach, but we can hope. Please take this to Proteri Amari.'")
+      e.other:SummonItem(64006)
     end
-    if item_lib.check_turn_in(e.trade, {item1 = 64003}) then --Yellow Tide Feaster Bile
-      e.other:UpdateTaskActivity(bic_barindu, 5, 1)
-      check_full_turnin(e)
-    end
-    if item_lib.check_turn_in(e.trade, {item1 = 64004}) then --Writhing Mass of Insect Larva
-      e.other:UpdateTaskActivity(bic_barindu, 6, 1)
-      check_full_turnin(e)
-    end
-    if item_lib.check_turn_in(e.trade, {item1 = 64005}) then --Vial of Corrosive Slime
-      e.other:UpdateTaskActivity(bic_barindu, 7, 1)
-      check_full_turnin(e)
-    end
-  end
-end
-
-function check_full_turnin(e)
-  if e.other:IsTaskActivityActive(bic_barindu, 8) then
-    e.other:Message(MT.NPCQuestSay, "Kunimi Falade takes the ingredients and gets to work. Within a few minutes, she produces a viscous green liquid. Plucking a bunch of fruit from the nearby plant, she coats the fruit in the poison.")
-    e.other:Message(MT.NPCQuestSay, "Kunimi Falade says 'That should do it. I can't be positive that this will do more than give Ixvet an upset stomach, but we can hope. Please take this to Proteri Amari.'")
-    e.other:SummonItem(64006)
   end
 end

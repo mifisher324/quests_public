@@ -1,16 +1,4 @@
--- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
-
+task_ids = require('task_ids')
 function event_say(e)
   local rep = e.other:GetFaction(e.self)
 
@@ -40,14 +28,12 @@ function event_trade(e)
       e.other:SummonItem(52176)
       e.other:Faction(1770, 1)
       e.other:Faction(1771, -1)
-      e.other:UpdateTaskActivity(bic_riwwi, 3, 1)
     end
     if item_lib.check_turn_in(e.trade, {item1 = 52175}) then
       e.other:Message(MT.NPCQuestSay, "Namosa Bubundu says 'A drakelily? My aunt grew these in her garden. In fact, I helped her plant some of them myself. She always told me they were a sign of hope. Thank you, " .. e.other:GetCleanName() .. ". I'll inform our people of your kindness.'")
       e.other:SummonItem(52174)
       e.other:Faction(1770, 50)
       e.other:Faction(1771, -25)
-      e.other:UpdateTaskActivity(bic_riwwi, 6, 1)
       e.other:Message(MT.Yellow, "Namosa touches your shoulder and gazes at you with pleading eyes. 'I hope this isn't presumptuous of me. You've already done so much. Before you go, I need to ask you for another favor. Turlini is under heavy guard in one of the nearby towers. The Muramites think he's up to something and I'm concerned they may torture or kill him. Please have a talk with Turlini when you can.'")
     end
   end

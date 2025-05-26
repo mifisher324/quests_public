@@ -1,20 +1,8 @@
--- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
-
+task_ids = require('task_ids')
 function event_say(e)
   local started = tonumber(eq.get_zone():GetVariable("arena_started")) or 0
 
-  if e.other:IsTaskActivityActive(bic_riwwi, 10) or e.other:IsTaskActivityActive(bic_riwwi, 11) then
+  if e.other:IsTaskActivityActive(task_ids.bic_riwwi, 10) or e.other:IsTaskActivityActive(task_ids.bic_riwwi, 11) then
     if e.message:findi('hail') and started == 0 then
       e.other:Message(MT.NPCQuestSay, "An enslaved yunjo says 'It's you! The champion everyone has spoken of! Have you come to defy the Muramites?'")
     end

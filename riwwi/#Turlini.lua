@@ -1,16 +1,4 @@
--- Task ID definitions
-local bic_abysmal = 9
-local bic_qinimi = 8
-local bic_barindu = 10
-local bic_riwwi = 11
-local bic_ferubi = 12
-local bic_sewers = 13
-local bic_vxed = 14
-local bic_tipt = 15
-local bic_outer = 16
-local bic_yxtta = 17
-local bic_kodtaz = 18
-
+task_ids = require('task_ids')
 function event_say(e)
   local rep = e.other:GetFaction(e.self)
 
@@ -40,7 +28,6 @@ function event_trade(e)
       e.other:Message(MT.Yellow, "You have received a character flag!")
       e.other:Faction(1770, 50)
       e.other:Faction(1771, -25)
-      e.other:UpdateTaskActivity(bic_riwwi, 9, 1)
       e.other:Message(MT.NPCQuestSay, "Turlini can barely contain his excitement. 'This is wonderful news, friend. Freedom is within our grasp! The only problem remaining is the ever-present guards. They are always watching over us. We would need a monumental distraction to buy enough time for me to release everyone. Which is where you come in. One of your kind who goes by the name of Reyna has been taken to the arena and has been tortured daily in front of the Muramite masses. If you were to create enough of a ruckus in the arena trying to free her I think we could make our escape.'")
     end
     if item_lib.check_turn_in(e.trade, {item1 = 52233}) then --Blood-Soaked Satchel 1
