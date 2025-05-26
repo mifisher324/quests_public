@@ -53,7 +53,6 @@ function event_trade(e)
   elseif item_lib.check_turn_in(e.trade, {item1 = 67537}) then --Fully Charged Power Pack
     e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Wonderful. While the power cells were slightly damaged I was still able to increase the strength of the power pack for a short amount of time. This should give the scout just enough power to produce a legible copy the report. Thank you for the assistance, take this I scraped it off the side of the power cells. Looks like it might be able to add some power to the stone you recieived from Fezbin. There are still some areas left to explore, so when you are ready ask me about the next area you want to look into.'")
     e.other:SummonItem(67576)
-    e.other:UpdateTaskActivity(task_ids.bic_tipt, 2, 1)
     e.other:UpdateTaskActivity(task_ids.bic_abysmal, 6, 1)
     if e.other:IsTaskCompleted(task_ids.bic_sewers) and e.other:IsTaskCompleted(task_ids.bic_vxed) and e.other:IsTaskCompleted(task_ids.bic_tipt) then
       e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Now that we have all the functioning pieces, we can reassemble the scout. Take these instructions and this power pack adapter and return to either mountain area to assemble the scout. I would have you do it here, but I fear he may be unstable and . . . well, let's just say I don't want to put the ship in danger. Please return to me with the report once you have it. I am going to prepare my final report so when you return I can take it straight to Fezbin. Good luck to you.'")
@@ -67,7 +66,6 @@ function event_trade(e)
   --Vxed
   elseif item_lib.check_turn_in(e.trade, {item1 = 67554}) then --Clockwork Scout Shell
     e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'I can't believe you did it. Not a bad job if I do say so myself. You may have a future in tinkering my young friend. Now, if you will give me one second to change a few things and rip this part out, adjust this here, add a couple of these, and there you go, a nice new clockwork frame. Now we just need to collect the rest of the pieces to rebuild him. Oh, and before I forget, here is a reward for helping me out. Let me know if you wish to explore any of the other areas by asking me about them.'")
-    e.other:UpdateTaskActivity(task_ids.bic_vxed, 2, 1)
     e.other:UpdateTaskActivity(task_ids.bic_abysmal, 5, 1)
     e.other:SummonItem(67539)
     if e.other:IsTaskCompleted(task_ids.bic_sewers) and e.other:IsTaskCompleted(task_ids.bic_vxed) and e.other:IsTaskCompleted(task_ids.bic_tipt) then
@@ -82,7 +80,6 @@ function event_trade(e)
   --Sewers
   elseif item_lib.check_turn_in(e.trade, {item1 = 67534}) then --Mangled Report
     e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Grrr, I was afraid of this. Seems without the extra modules working together this one won't function completely. Nonetheless at least it is fixed now and with your assistance we should be able to reassemble the scout and place this module back inside. Take this. I found it in the gearbox when I first received it. Seems like it may have some affinity with the stone Fezbin gave to you. Let me know when you are ready to help out some more.'")
-    e.other:UpdateTaskActivity(task_ids.bic_sewers, 2, 1)
     e.other:UpdateTaskActivity(task_ids.bic_abysmal, 4, 1)
     if e.other:IsTaskCompleted(task_ids.bic_sewers) and e.other:IsTaskCompleted(task_ids.bic_vxed) and e.other:IsTaskCompleted(task_ids.bic_tipt) then
       e.other:Message(MT.NPCQuestSay, "Vaifan Cogswin says 'Now that we have all the functioning pieces, we can reassemble the scout. Take these instructions and this power pack adapter and return to either mountain area to assemble the scout. I would have you do it here, but I fear he may be unstable and . . . well, let's just say I don't want to put the ship in danger. Please return to me with the report once you have it. I am going to prepare my final report so when you return I can take it straight to Fezbin. Good luck to you.'")
