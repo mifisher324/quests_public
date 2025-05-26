@@ -11,7 +11,7 @@ function event_say(e)
     if e.message:findi('free') then
       e.other:Message(MT.NPCQuestSay, "Turlini says 'Bless you, we're saved! Listen up, friend. I've already formulated a plan to stage a quick and decisive escape, but first we need to get our hands on a complete set of shackle keys. Just a few won't suffice; it must be entire set. If we were to rescue only some of my brethren, those that remain behind would be brutally tortured beyond imagination. Now, I've watched the guards carefully and counted the silvery keys they carry. There are ten in total. Combine the set in this sack and return it to me. I knew you would help!'")
       e.other:SummonItem(52150)
-      e.other:UpdateTaskActivity(bic_riwwi, 7, 1)
+      e.other:UpdateTaskActivity(task_ids.bic_riwwi, 7, 1)
     end
   end
 end
@@ -79,7 +79,7 @@ function event_trade(e)
       eq.depop_with_timer(282048)
       eq.depop_with_timer()
       eq.get_zone():SetVariable("arena_started", "0")
-      e.other:UpdateTaskActivity(bic_riwwi, 11, 1)
+      e.other:UpdateTaskActivity(task_ids.bic_riwwi, 11, 1)
     end
   end
   item_lib.return_items(e.self, e.other, e.trade)

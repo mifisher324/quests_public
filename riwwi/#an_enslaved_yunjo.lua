@@ -16,14 +16,14 @@ function event_say(e)
       eq.unique_spawn(282098, 0, 0, -174, 625, 73, 258)
       e.other:SummonItem(52223)
       eq.get_zone():SetVariable("arena_started", "1")
-      e.other:UpdateTaskActivity(bic_riwwi, 10, 1)
+      e.other:UpdateTaskActivity(task_ids.bic_riwwi, 10, 1)
     end
   end
 end
 
 function event_signal(e)
   if e.signal == 1 then
-    e.self:Say(MT.NPCQuestSay, "Stand fast and prepare for a fight! They're sending a bloodthirsty beast into the arena to kill you as we speak. If you defeat it, place the head in this sack as proof and return it to Turlini. He is the leader of the resistance and may be able to assist you for helping us.")
+    e.self:Say("Stand fast and prepare for a fight! They're sending a bloodthirsty beast into the arena to kill you as we speak. If you defeat it, place the head in this sack as proof and return it to Turlini. He is the leader of the resistance and may be able to assist you for helping us.")
   end
 end
 

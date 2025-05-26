@@ -11,7 +11,7 @@ function event_say(e)
     if e.message:findi('favor') then
       e.other:Message(MT.NPCQuestSay, "Namosa Bubundu slips you a scuffed signet ring, 'Yes, yes. Here is a family heirloom that I have been keeping secret from our captors. If you deliver this ring to my kin, I can die in peace knowing it never fell into their hands. There are rumors that some of my family members have escaped the clutches of these monsters and made their way into a city that floats on water. I hope you understand, friend. Go quickly.'")
       e.other:SummonItem(52179)
-      e.other:UpdateTaskActivity(bic_riwwi, 1, 1)
+      e.other:UpdateTaskActivity(task_ids.bic_riwwi, 1, 1)
     end
   end
 end
