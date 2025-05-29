@@ -23,7 +23,7 @@ local rand = math.random(1,100);
 			end
 		  end
 		);
-		e.self:Emote("motions toward three attackers and throws them wildly around!");
+		e.self:Emote("motions toward his attackers and throws some wildly around!");
 			hate_list = e.self:CountHateList();
     			if (hate_list ~= nil and tonumber(hate_list) == 1) then
 				e.self:CastedSpellFinished(4185, e.self:GetHateTop());	-- Spell: Throw
