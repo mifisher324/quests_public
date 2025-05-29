@@ -42,13 +42,13 @@ local rand = math.random(1,100);
 				if (rand == 1) then
 					eq.signal(294344,1)
 				elseif (rand == 2) then
-					eq.signal(294344,2)
+					eq.signal(294345,2)
 				elseif (rand == 3) then
-					eq.signal(294344,3)
+					eq.signal(294346,3)
 				elseif (rand == 4) then
-					eq.signal(294344,4)
+					eq.signal(294346,4)
 				elseif (rand == 5) then
-					eq.signal(294344,5)
+					eq.signal(294346,5)
 				elseif (rand == 6) then
 					eq.signal(294344,6)
 				elseif (rand == 7) then
