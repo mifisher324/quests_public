@@ -32,20 +32,21 @@ function event_trade(e)
   local item_lib = require("items")
 
   -- Items: First Fragment of Utandi`s Map, Second Fragment of Utandi`s Map, Third Fragment of Utandi`s Map, Fourth Fragment of Utandi`s Map
-  if item_lib.check_turn_in(e.trade, {item1 = 55617, 55618, 55619, 55620}) then
+  if item_lib.check_turn_in(e.trade, {item1 = 55617, item2 = 55618, item3 = 55619, item4 = 55620}) then
     check_turnin(e)
   end
   item_lib.return_items(e.self, e.other, e.trade)
 end
 
 function check_turnin(e)
+  local item_lib = require("items")
   if e.other:IsTaskCompleted(task_ids.pool_task) then
     local client_list = eq.get_entity_list():GetClientList()
     for client in client_list.entries do
       if client.valid then
         client:UpdateTaskActivity(task_ids.sewers_task, 3, 1)
         if client:IsTaskCompleted(task_ids.sewers_task) then
-          client:SetAccountBucket("god.flags.sewers", 1)
+          client:SetAccountBucket("god.flags.sewers", "1")
         end
       end
     end
